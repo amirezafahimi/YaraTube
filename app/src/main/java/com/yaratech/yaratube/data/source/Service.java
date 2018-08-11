@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 
 public interface Service {
     @GET("store/16")
-    Call<Home> getStore();
+    Call<Home> getHome();
 
     @GET("category/16/463")
     Call<List<Category_list>> getCategory();
