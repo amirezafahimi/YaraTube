@@ -1,10 +1,10 @@
 
-package com.yaratech.yaratube.data.model;
+package com.yaratube.data.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Support {
+public class Support_ {
 
     @SerializedName("name")
     @Expose

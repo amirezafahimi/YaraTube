@@ -1,10 +1,9 @@
-
-package com.yaratech.yaratube.data.model;
+package com.yaratube.data.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Avatar_ {
+public class FeatureAvatar {
 
     @SerializedName("mdpi")
     @Expose

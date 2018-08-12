@@ -1,10 +1,10 @@
+package com.yaratube.data.model;
 
-package com.yaratech.yaratube.data.model;
-
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ParentCategory {
+public class Category_list {
 
     @SerializedName("id")
     @Expose
@@ -29,7 +29,10 @@ public class ParentCategory {
     private boolean isVisible;
     @SerializedName("parent")
     @Expose
-    private Object parent;
+    private int parent;
+    @SerializedName("childs")
+    @Expose
+    private List<Object> childs = null;
 
     public int getId() {
         return id;
@@ -87,12 +90,20 @@ public class ParentCategory {
         this.isVisible = isVisible;
     }
 
-    public Object getParent() {
+    public int getParent() {
         return parent;
     }
 
-    public void setParent(Object parent) {
+    public void setParent(int parent) {
         this.parent = parent;
+    }
+
+    public List<Object> getChilds() {
+        return childs;
+    }
+
+    public void setChilds(List<Object> childs) {
+        this.childs = childs;
     }
 
 }

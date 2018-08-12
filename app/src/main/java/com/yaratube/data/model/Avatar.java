@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.data.model;
+package com.yaratube.data.model;
 
 
 import com.google.gson.annotations.Expose;

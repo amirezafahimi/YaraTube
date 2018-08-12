@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.home;
+package com.yaratube.ui.home;
 
 import android.content.Context;
 import android.net.Uri;

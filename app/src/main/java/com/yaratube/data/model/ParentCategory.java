@@ -1,10 +1,9 @@
-
-package com.yaratech.yaratube.data.model;
+package com.yaratube.data.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Category {
+public class ParentCategory {
 
     @SerializedName("id")
     @Expose
@@ -29,7 +28,7 @@ public class Category {
     private boolean isVisible;
     @SerializedName("parent")
     @Expose
-    private int parent;
+    private Object parent;
 
     public int getId() {
         return id;
@@ -87,11 +86,11 @@ public class Category {
         this.isVisible = isVisible;
     }
 
-    public int getParent() {
+    public Object getParent() {
         return parent;
     }
 
-    public void setParent(int parent) {
+    public void setParent(Object parent) {
         this.parent = parent;
     }
 
