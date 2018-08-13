@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment implements HomeContract.View{
         super.onViewCreated(view, savedInstanceState);
         progressBar = view.findViewById(R.id.loading);
         progressBar.setVisibility(View.GONE);
-        homeRecyclerView = view.findViewById(R.id.home_recyclerview);
+        homeRecyclerView = view.findViewById(R.id.homeRecyclerView);
 
     }
 
