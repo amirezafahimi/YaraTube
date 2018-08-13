@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment implements HomeContract.View{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         homePresenter = new HomePresenter(this, new Repository());
-        homePresenter.fetchHomeFromRemote();
+        homePresenter.fetchHome();
         homeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new HomeRecyclerViewAdapter(getContext());
         homeRecyclerView.setAdapter(adapter);

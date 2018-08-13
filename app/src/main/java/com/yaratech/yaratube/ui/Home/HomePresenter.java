@@ -16,7 +16,7 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public void fetchHomeFromRemote() {
+    public void fetchHome() {
 
         homeViewListener.showProgrssBar();
         repository.getHome(new getHome());

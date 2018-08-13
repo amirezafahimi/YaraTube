@@ -16,7 +16,7 @@ public interface HomeContract {
     }
     interface Presenter{
 
-        void fetchHomeFromRemote();
+        void fetchHome();
     }
 
 }
