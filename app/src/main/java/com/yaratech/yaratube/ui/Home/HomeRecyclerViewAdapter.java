@@ -27,6 +27,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     private static final int HEADER_LIST_ITEM_VIEW = 1;
     private static final int HOME_ITEM_LIST_ITEM_VIEW = 2;
 
+
     // data is passed into the constructor
     public HomeRecyclerViewAdapter(Context context) {
         this.context = context;
@@ -63,7 +64,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             header_recyclerView.setAdapter(headerItemsRecyclerViewAdapter);
         }
 
-        public void bindViewHomeList(int pos, Homeitem homeitem) {
+        public void bindViewHomeList(Homeitem homeitem) {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, HORIZONTAL, false);
             home_recyclerView.setLayoutManager(linearLayoutManager);
             HomeItemsRecyclerViewAdapter homeItemsRecyclerViewAdapter = new HomeItemsRecyclerViewAdapter(context, homeitem.getProducts());
@@ -102,6 +103,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         }
     }
 
+
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -112,7 +114,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                 vh.bindViewHeaderList(position);
             } else if (holder instanceof HomeListItemViewHolder) {
                 HomeListItemViewHolder vh = (HomeListItemViewHolder) holder;
-                vh.bindViewHomeList(position, homeitems.get(position-1));
+                vh.bindViewHomeList(homeitems.get(position-1));
             }
         } catch (Exception e) {
             e.printStackTrace();
