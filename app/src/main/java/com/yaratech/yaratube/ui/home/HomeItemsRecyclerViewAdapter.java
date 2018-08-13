@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.Home;
+package com.yaratech.yaratube.ui.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

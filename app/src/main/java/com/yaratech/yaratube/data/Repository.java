@@ -5,7 +5,7 @@ import android.util.Log;
 import com.yaratech.yaratube.data.model.Home;
 import com.yaratech.yaratube.data.source.Services;
 import com.yaratech.yaratube.data.source.remote.Client;
-import com.yaratech.yaratube.ui.Home.HomePresenter;
+import com.yaratech.yaratube.ui.home.HomePresenter;
 
 import retrofit2.Call;
 import retrofit2.Callback;

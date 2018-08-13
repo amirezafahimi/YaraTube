@@ -1,8 +1,7 @@
-package com.yaratech.yaratube.ui.Home;
+package com.yaratech.yaratube.ui.home;
 
 import com.yaratech.yaratube.data.Repository;
 import com.yaratech.yaratube.data.model.Home;
-import com.yaratech.yaratube.data.model.Homeitem;
 
 public class HomePresenter implements HomeContract.Presenter {
 
