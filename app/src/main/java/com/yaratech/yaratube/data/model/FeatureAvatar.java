@@ -2,6 +2,7 @@ package com.yaratech.yaratube.data.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.yaratech.yaratube.util.AppConstants;
 
 public class FeatureAvatar {
 
@@ -30,7 +31,7 @@ public class FeatureAvatar {
     }
 
     public String getXxxdpi() {
-        return "https://api.vasapi.click/" + xxxdpi;
+        return AppConstants.BASE_URL + xxxdpi;
     }
 
     public void setXxxdpi(String xxxdpi) {
