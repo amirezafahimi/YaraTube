@@ -13,9 +13,6 @@ import com.yaratech.yaratube.R;
 
 import java.util.List;
 
-/**
- * Created by Vah on 8/4/2018.
- */
 
 public class HomeItemsRecyclerViewAdapter extends RecyclerView.Adapter<HomeItemsRecyclerViewAdapter.ViewHolder> {
 

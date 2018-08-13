@@ -13,10 +13,6 @@ import com.yaratube.util.Util;
 
 import java.util.List;
 
-/**
- * Created by Vah on 8/4/2018.
- */
-
 public class HeaderItemsRecyclerViewAdapter extends RecyclerView.Adapter<HeaderItemsRecyclerViewAdapter.ViewHolder> {
 
     private List<Headeritem> headeritems;
