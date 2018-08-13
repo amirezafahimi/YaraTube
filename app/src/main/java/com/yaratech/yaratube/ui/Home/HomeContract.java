@@ -8,11 +8,11 @@ public interface HomeContract {
 
         void showListHome(Home home);
 
-        void showMessage();
+        void showErrorMessage();
 
-        void showLoading();
+        void showProgrssBar();
 
-        void hideLoading();
+        void hideProgrssBar();
     }
     interface Presenter{
 

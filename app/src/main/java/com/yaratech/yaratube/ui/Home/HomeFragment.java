@@ -72,17 +72,17 @@ public class HomeFragment extends Fragment implements HomeContract.View{
     }
 
     @Override
-    public void showMessage() {
+    public void showErrorMessage() {
         Toast.makeText(getContext(),  "ترکید!" ,Toast.LENGTH_LONG);
     }
 
     @Override
-    public void showLoading() {
+    public void showProgrssBar() {
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void hideLoading() {
+    public void hideProgrssBar() {
         progressBar.setVisibility(View.GONE);
     }
 }

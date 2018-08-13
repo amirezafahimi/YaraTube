@@ -18,7 +18,7 @@ public class HomePresenter implements HomeContract.Presenter {
     @Override
     public void fetchHomeFromRemote() {
 
-        homeViewListener.showLoading();
+        homeViewListener.showProgrssBar();
         repository.getHome(new getHome());
 
     }
@@ -27,13 +27,13 @@ public class HomePresenter implements HomeContract.Presenter {
 
         @Override
         public void loadHomeData(Home home) {
-            homeViewListener.hideLoading();
+            homeViewListener.hideProgrssBar();
             homeViewListener.showListHome(home);
         }
 
         @Override
         public void onFail() {
-            homeViewListener.showMessage();
+            homeViewListener.showErrorMessage();
         }
     }
     public interface GetHomeInterface {
