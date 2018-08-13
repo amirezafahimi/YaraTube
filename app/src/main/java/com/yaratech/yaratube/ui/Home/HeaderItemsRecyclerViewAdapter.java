@@ -34,7 +34,7 @@ public class HeaderItemsRecyclerViewAdapter extends RecyclerView.Adapter<HeaderI
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String image_url = Util.BASE_URL + headeritems.get(position).getFeatureAvatar().getXxxdpi();
+        String image_url = headeritems.get(position).getFeatureAvatar().getXxxdpi();
         Glide.with(context).load(image_url).into(holder.header_image);
     }
 

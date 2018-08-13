@@ -30,7 +30,7 @@ public class FeatureAvatar {
     }
 
     public String getXxxdpi() {
-        return xxxdpi;
+        return "https://api.vasapi.click/" + xxxdpi;
     }
 
     public void setXxxdpi(String xxxdpi) {

@@ -6,6 +6,5 @@ import android.net.NetworkInfo;
 
 public class Util {
 
-    public static final String BASE_URL = "https://api.vasapi.click/";
 
 }

@@ -31,7 +31,7 @@ public class Avatar_ {
     }
 
     public String getXxxdpi() {
-        return xxxdpi;
+        return "https://api.vasapi.click/" + xxxdpi;
     }
 
     public void setXxxdpi(String xxxdpi) {
