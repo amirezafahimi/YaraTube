@@ -7,5 +7,6 @@ import android.net.NetworkInfo;
 public class AppConstants {
 
     public static final String BASE_URL = "https://api.vasapi.click/";
+    public static final String STORE_ID = "16";
 
 }

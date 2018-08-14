@@ -3,6 +3,7 @@ package com.yaratech.yaratube.data.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.yaratech.yaratube.util.AppConstants;
 
 public class Category {
 
@@ -56,7 +57,7 @@ public class Category {
     }
 
     public Object getAvatar() {
-        return avatar;
+        return AppConstants.BASE_URL + avatar;
     }
 
     public void setAvatar(Object avatar) {

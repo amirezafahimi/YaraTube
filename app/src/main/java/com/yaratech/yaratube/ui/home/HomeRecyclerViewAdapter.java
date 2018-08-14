@@ -71,7 +71,6 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             homeRecyclerView.setAdapter(homeItemsRecyclerViewAdapter);
             title_name.setText(homeitem.getTitle());
         }
-
     }
 
     private class HeaderListItemViewHolder extends ViewHolder {

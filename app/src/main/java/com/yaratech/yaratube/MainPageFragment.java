@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yaratech.yaratube.ui.categories.CategoriesFragment;
 import com.yaratech.yaratube.ui.home.HomeFragment;
 
 public class MainPageFragment extends Fragment {
@@ -49,7 +50,7 @@ public class MainPageFragment extends Fragment {
                                 setFragment(HomeFragment.newInstance());
                                 break;
                             case R.id.navigation_category:
-
+                                setFragment(CategoriesFragment.newInstance());
                                 break;
                         }
                         return false;
