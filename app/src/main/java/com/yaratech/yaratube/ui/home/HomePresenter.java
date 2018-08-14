@@ -1,6 +1,7 @@
 package com.yaratech.yaratube.ui.home;
 
-import com.yaratech.yaratube.data.Repository;
+import com.yaratech.yaratube.data.source.GetResultInterface;
+import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.data.model.Home;
 
 public class HomePresenter implements HomeContract.Presenter {
@@ -22,10 +23,10 @@ public class HomePresenter implements HomeContract.Presenter {
 
     }
 
-    private class getHome implements GetHomeInterface{
+    private class getHome implements GetResultInterface<Home> {
 
         @Override
-        public void loadHomeData(Home home) {
+        public void onSuccess(Home home) {
             homeViewListener.hideProgrssBar();
             homeViewListener.showListHome(home);
         }
@@ -35,8 +36,5 @@ public class HomePresenter implements HomeContract.Presenter {
             homeViewListener.showErrorMessage();
         }
     }
-    public interface GetHomeInterface {
-        void loadHomeData(Home home);
-        void onFail();
-    }
 }
+

@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.data;
+package com.yaratech.yaratube.data.source;
 
 import android.util.Log;
 
@@ -14,18 +14,17 @@ import retrofit2.Response;
 public class Repository {
     Home home;
 
-    public void getHome(final HomePresenter.GetHomeInterface homeInterfacee) {
+    public void getHome(final GetResultInterface<Home> homeInterfacee) {
 
         Client.getRetrofitInstance().create(Services.class).getHome().enqueue(new Callback<Home>() {
             @Override
             public void onResponse(Call<Home> call, Response<Home> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     home = response.body();
-                    homeInterfacee.loadHomeData(home);
+                    homeInterfacee.onSuccess(home);
 
-                }else {
-                    Log.e("Tag",response.errorBody()+"");
-                    homeInterfacee.onFail();
+                } else {
+                    Log.e("Tag", response.errorBody() + "");
                 }
 
 
@@ -33,7 +32,7 @@ public class Repository {
 
             @Override
             public void onFailure(Call<Home> call, Throwable t) {
-
+                homeInterfacee.onFail();
             }
         });
     }

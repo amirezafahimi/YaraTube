@@ -33,7 +33,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         this.context = context;
     }
 
-    public void setData(Home home){
+    public void setData(Home home) {
         headeritems = home.getHeaderitem();
         homeitems = home.getHomeitem();
         notifyDataSetChanged();
@@ -114,7 +114,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                 vh.bindViewHeaderList(position);
             } else if (holder instanceof HomeListItemViewHolder) {
                 HomeListItemViewHolder vh = (HomeListItemViewHolder) holder;
-                vh.bindViewHomeList(homeitems.get(position-1));
+                vh.bindViewHomeList(homeitems.get(position - 1));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -124,14 +124,14 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
 
     @Override
     public int getItemCount() {
-        return 1+homeitems.size();
+        return 1 + homeitems.size();
 
     }
 
     @Override
     public int getItemViewType(int position) {
 
-        switch (position){
+        switch (position) {
             case 0:
                 return HEADER_LIST_ITEM_VIEW;
 
