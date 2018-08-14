@@ -8,17 +8,17 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.yaratech.yaratube.R;
-import com.yaratech.yaratube.data.model.Headeritem;
+import com.yaratech.yaratube.data.model.HeaderItem;
 
 import java.util.List;
 
 public class HeaderItemsRecyclerViewAdapter extends RecyclerView.Adapter<HeaderItemsRecyclerViewAdapter.ViewHolder> {
 
-    private List<Headeritem> headeritems;
+    private List<HeaderItem> headeritems;
     private Context context;
 
     // data is passed into the constructor
-    HeaderItemsRecyclerViewAdapter(Context context, List<Headeritem> headeritems) {
+    HeaderItemsRecyclerViewAdapter(Context context, List<HeaderItem> headeritems) {
         this.context = context;
         this.headeritems = headeritems;
     }
@@ -53,5 +53,4 @@ public class HeaderItemsRecyclerViewAdapter extends RecyclerView.Adapter<HeaderI
             header_image = itemView.findViewById(R.id.header_image);
         }
     }
-
 }

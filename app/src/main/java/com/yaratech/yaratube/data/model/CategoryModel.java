@@ -1,12 +1,10 @@
 
 package com.yaratech.yaratube.data.model;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.yaratech.yaratube.util.AppConstants;
 
-public class CategoryList {
+public class CategoryModel {
 
     @SerializedName("id")
     @Expose
@@ -19,7 +17,7 @@ public class CategoryList {
     private String title;
     @SerializedName("avatar")
     @Expose
-    private Object avatar;
+    private String avatar;
     @SerializedName("position")
     @Expose
     private int position;
@@ -32,9 +30,6 @@ public class CategoryList {
     @SerializedName("parent")
     @Expose
     private int parent;
-    @SerializedName("childs")
-    @Expose
-    private List<Object> childs = null;
 
     public int getId() {
         return id;
@@ -60,12 +55,12 @@ public class CategoryList {
         this.title = title;
     }
 
-    public Object getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Object avatar) {
-        this.avatar = AppConstants.BASE_URL+avatar;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public int getPosition() {
@@ -98,14 +93,6 @@ public class CategoryList {
 
     public void setParent(int parent) {
         this.parent = parent;
-    }
-
-    public List<Object> getChilds() {
-        return childs;
-    }
-
-    public void setChilds(List<Object> childs) {
-        this.childs = childs;
     }
 
 }

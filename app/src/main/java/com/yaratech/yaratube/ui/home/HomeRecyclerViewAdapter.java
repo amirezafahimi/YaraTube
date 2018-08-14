@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yaratech.yaratube.R;
-import com.yaratech.yaratube.data.model.Headeritem;
-import com.yaratech.yaratube.data.model.Homeitem;
+import com.yaratech.yaratube.data.model.HeaderItem;
+import com.yaratech.yaratube.data.model.HomeItem;
 import com.yaratech.yaratube.data.model.Home;
 
 import java.util.ArrayList;
@@ -21,8 +21,8 @@ import static android.support.v7.widget.LinearLayoutManager.*;
 public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder> {
 
     private Home home;
-    List<Headeritem> headeritems = new ArrayList<>();
-    List<Homeitem> homeitems = new ArrayList<>();
+    List<HeaderItem> headeritems = new ArrayList<>();
+    List<HomeItem> homeitems = new ArrayList<>();
     private Context context;
     private static final int HEADER_LIST_ITEM_VIEW = 1;
     private static final int HOME_ITEM_LIST_ITEM_VIEW = 2;
@@ -64,7 +64,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             headerRecyclerView.setAdapter(headerItemsRecyclerViewAdapter);
         }
 
-        public void bindViewHomeList(Homeitem homeitem) {
+        public void bindViewHomeList(HomeItem homeitem) {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, HORIZONTAL, false);
             homeRecyclerView.setLayoutManager(linearLayoutManager);
             HomeItemsRecyclerViewAdapter homeItemsRecyclerViewAdapter = new HomeItemsRecyclerViewAdapter(context, homeitem.getProducts());

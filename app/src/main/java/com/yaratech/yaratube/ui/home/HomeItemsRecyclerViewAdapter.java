@@ -10,13 +10,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.yaratech.yaratube.R;
+import com.yaratech.yaratube.data.model.Product;
 
 import java.util.List;
 
 
 public class HomeItemsRecyclerViewAdapter extends RecyclerView.Adapter<HomeItemsRecyclerViewAdapter.ViewHolder> {
 
-    private List<com.yaratech.yaratube.data.model.Product> products;
+    private List<Product> products;
     private Context context;
 
     // data is passed into the constructor

@@ -1,6 +1,5 @@
 package com.yaratech.yaratube.data.source;
-
-import com.yaratech.yaratube.data.model.CategoryList;
+import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Home;
 
 import java.util.List;
@@ -13,5 +12,5 @@ public interface Services {
     Call<Home> getHome();
 
     @GET("category/16/463")
-    Call<List<CategoryList>> getCategory();
+    Call<List<Category>> getCategory();
 }

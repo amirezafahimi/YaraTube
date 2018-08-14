@@ -1,10 +1,11 @@
+
 package com.yaratech.yaratube.data.model;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Headeritem {
+public class ProductList {
 
     @SerializedName("id")
     @Expose
@@ -36,6 +37,9 @@ public class Headeritem {
     @SerializedName("rank")
     @Expose
     private double rank;
+    @SerializedName("totalInstalled")
+    @Expose
+    private int totalInstalled;
     @SerializedName("short_description")
     @Expose
     private String shortDescription;
@@ -51,12 +55,27 @@ public class Headeritem {
     @SerializedName("sku")
     @Expose
     private String sku;
+    @SerializedName("tags")
+    @Expose
+    private List<String> tags = null;
+    @SerializedName("category_model")
+    @Expose
+    private List<CategoryModel> categoryModel = null;
+    @SerializedName("comments_summery")
+    @Expose
+    private List<Object> commentsSummery = null;
     @SerializedName("price_unit")
     @Expose
     private String priceUnit;
     @SerializedName("total_view")
     @Expose
     private int totalView;
+    @SerializedName("custom_json")
+    @Expose
+    private Object customJson;
+    @SerializedName("polls")
+    @Expose
+    private List<Object> polls = null;
     @SerializedName("date_added")
     @Expose
     private String dateAdded;
@@ -162,6 +181,14 @@ public class Headeritem {
         this.rank = rank;
     }
 
+    public int getTotalInstalled() {
+        return totalInstalled;
+    }
+
+    public void setTotalInstalled(int totalInstalled) {
+        this.totalInstalled = totalInstalled;
+    }
+
     public String getShortDescription() {
         return shortDescription;
     }
@@ -202,6 +229,30 @@ public class Headeritem {
         this.sku = sku;
     }
 
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public List<CategoryModel> getCategoryModel() {
+        return categoryModel;
+    }
+
+    public void setCategoryModel(List<CategoryModel> categoryModel) {
+        this.categoryModel = categoryModel;
+    }
+
+    public List<Object> getCommentsSummery() {
+        return commentsSummery;
+    }
+
+    public void setCommentsSummery(List<Object> commentsSummery) {
+        this.commentsSummery = commentsSummery;
+    }
+
     public String getPriceUnit() {
         return priceUnit;
     }
@@ -216,6 +267,22 @@ public class Headeritem {
 
     public void setTotalView(int totalView) {
         this.totalView = totalView;
+    }
+
+    public Object getCustomJson() {
+        return customJson;
+    }
+
+    public void setCustomJson(Object customJson) {
+        this.customJson = customJson;
+    }
+
+    public List<Object> getPolls() {
+        return polls;
+    }
+
+    public void setPolls(List<Object> polls) {
+        this.polls = polls;
     }
 
     public String getDateAdded() {

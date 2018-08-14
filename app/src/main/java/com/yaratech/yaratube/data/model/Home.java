@@ -1,3 +1,4 @@
+
 package com.yaratech.yaratube.data.model;
 
 import java.util.List;
@@ -23,10 +24,10 @@ public class Home {
     private List<Object> tabStrip = null;
     @SerializedName("headeritem")
     @Expose
-    private List<Headeritem> headeritem = null;
+    private List<HeaderItem> headeritem = null;
     @SerializedName("homeitem")
     @Expose
-    private List<Homeitem> homeitem = null;
+    private List<HomeItem> homeitem = null;
 
     public int getId() {
         return id;
@@ -68,19 +69,19 @@ public class Home {
         this.tabStrip = tabStrip;
     }
 
-    public List<Headeritem> getHeaderitem() {
+    public List<HeaderItem> getHeaderitem() {
         return headeritem;
     }
 
-    public void setHeaderitem(List<Headeritem> headeritem) {
+    public void setHeaderitem(List<HeaderItem> headeritem) {
         this.headeritem = headeritem;
     }
 
-    public List<Homeitem> getHomeitem() {
+    public List<HomeItem> getHomeitem() {
         return homeitem;
     }
 
-    public void setHomeitem(List<Homeitem> homeitem) {
+    public void setHomeitem(List<HomeItem> homeitem) {
         this.homeitem = homeitem;
     }
 
