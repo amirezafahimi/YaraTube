@@ -9,7 +9,7 @@
         android:text="عنوان"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:textSize="@dimen/textSize"
         android:textStyle="bold"
         android:layout_marginRight="10.67dp"
         android:layout_marginTop="32dp"

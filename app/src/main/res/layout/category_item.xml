@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#ffffff">
 
     <ImageView
         android:id="@+id/category_avatar"
@@ -24,6 +25,7 @@
         android:id="@+id/category_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="12sp"
         android:layout_marginStart="10.67dp"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"

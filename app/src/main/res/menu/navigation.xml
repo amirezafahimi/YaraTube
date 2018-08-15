@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/navigation_category"
-        android:icon="@drawable/ic_reorder_black_24dp"
+        android:icon="@drawable/ic_dehaze_black_24dp"
         android:title="@string/categories" />
 
 </menu>

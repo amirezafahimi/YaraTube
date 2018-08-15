@@ -40,17 +40,18 @@ public class MainPageFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setFragment(HomeFragment.newInstance());
-        BottomNavigationView bottomNavigationView = view.findViewById(R.id.navigation);
+        final BottomNavigationView bottomNavigationView = view.findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
-
+                                item.setChecked(true);
                                 setFragment(HomeFragment.newInstance());
                                 break;
                             case R.id.navigation_category:
+                                item.setChecked(true);
                                 setFragment(CategoriesFragment.newInstance());
                                 break;
                         }
