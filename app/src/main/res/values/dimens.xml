@@ -9,4 +9,5 @@
     <dimen name="cardview_height">200dp</dimen>
     <dimen name="cardview_margin">5dp</dimen>
     <dimen name="textSize">13sp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
 </resources>

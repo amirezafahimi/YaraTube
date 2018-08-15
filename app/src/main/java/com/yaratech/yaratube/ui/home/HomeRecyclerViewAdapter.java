@@ -1,9 +1,13 @@
 package com.yaratech.yaratube.ui.home;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,39 +26,45 @@ import static android.support.v7.widget.LinearLayoutManager.*;
 public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Home home;
+    SectionsPagerAdapter sectionsPagerAdapter;
     List<HeaderItem> headeritems = new ArrayList<>();
     List<HomeItem> homeitems = new ArrayList<>();
     private Context context;
+    private FragmentManager fragmentManager;
     private static final int HEADER_LIST_ITEM_VIEW = 1;
     private static final int HOME_ITEM_LIST_ITEM_VIEW = 2;
 
 
     // data is passed into the constructor
-    public HomeRecyclerViewAdapter(Context context) {
+    public HomeRecyclerViewAdapter(Context context, FragmentManager fragmentManager) {
         this.context = context;
+        this.fragmentManager = fragmentManager;
+        sectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager);
     }
 
     public void setData(Home home) {
         headeritems = home.getHeaderitem();
         homeitems = home.getHomeitem();
+        sectionsPagerAdapter.setData(headeritems);
         notifyDataSetChanged();
     }
 
     private class HeaderListItemViewHolder extends RecyclerView.ViewHolder {
 
-        RecyclerView headerRecyclerView;
+        ViewPager viewPager;
 
         public HeaderListItemViewHolder(View itemView) {
             super(itemView);
-            headerRecyclerView = itemView.findViewById(R.id.header_item_recycler);
+            viewPager = itemView.findViewById(R.id.header_item_viewpager);
         }
 
         public void bindViewHeaderList() {
-
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, HORIZONTAL, false);
-            headerRecyclerView.setLayoutManager(linearLayoutManager);
-            HeaderItemsRecyclerViewAdapter headerItemsRecyclerViewAdapter = new HeaderItemsRecyclerViewAdapter(context, headeritems);
-            headerRecyclerView.setAdapter(headerItemsRecyclerViewAdapter);
+            Log.e("TAG","one");
+            viewPager.setAdapter(sectionsPagerAdapter);
+//            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, HORIZONTAL, false);
+//            headerRecyclerView.setLayoutManager(linearLayoutManager);
+//            HeaderItemsRecyclerViewAdapter headerItemsRecyclerViewAdapter = new HeaderItemsRecyclerViewAdapter(context, headeritems);
+//            headerRecyclerView.setAdapter(headerItemsRecyclerViewAdapter);
         }
 
     }

@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,9 +18,16 @@ import com.yaratech.yaratube.ui.home.HomeFragment;
 
 public class MainPageFragment extends Fragment {
 
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+    HomeFragment homeFragment;
+    CategoriesFragment categoriesFragment;
+
     public MainPageFragment() {
         // Required empty public constructor
     }
+
+
 
     public static MainPageFragment newInstance() {
         MainPageFragment fragment = new MainPageFragment();
@@ -39,7 +47,7 @@ public class MainPageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setFragment(HomeFragment.newInstance());
+        setHomeFragment();
         final BottomNavigationView bottomNavigationView = view.findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -48,11 +56,26 @@ public class MainPageFragment extends Fragment {
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
                                 item.setChecked(true);
-                                setFragment(HomeFragment.newInstance());
+                                if (homeFragment == null) {
+                                    Log.e("tg", "home");
+                                    setHomeFragment();
+                                } else {
+                                    Log.e("tg", "not home");
+                                    fragmentTransaction.hide(categoriesFragment);
+                                    fragmentTransaction.show(homeFragment);
+                                }
                                 break;
                             case R.id.navigation_category:
                                 item.setChecked(true);
-                                setFragment(CategoriesFragment.newInstance());
+                                if (categoriesFragment == null) {
+                                    Log.e("tg", "category");
+                                    fragmentTransaction.hide(homeFragment);
+                                    setCategoryFragment();
+                                } else {
+                                    Log.e("tg", "not category");
+                                    fragmentTransaction.hide(homeFragment);
+                                    fragmentTransaction.show(categoriesFragment);
+                                }
                                 break;
                         }
                         return false;
@@ -60,10 +83,21 @@ public class MainPageFragment extends Fragment {
                 });
     }
 
-    private void setFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getChildFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.homeFragmentContainer, fragment).commit();
-        fragmentTransaction.addToBackStack(null);
+    private void setHomeFragment() {
+        fragmentManager = getChildFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        homeFragment = HomeFragment.newInstance();
+        fragmentTransaction.add(R.id.homeFragmentContainer, homeFragment).commit();
+        fragmentTransaction.addToBackStack("home");
+
+    }
+
+    private void setCategoryFragment() {
+        fragmentManager = getChildFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        categoriesFragment = CategoriesFragment.newInstance();
+        fragmentTransaction.add(R.id.homeFragmentContainer, categoriesFragment).commit();
+        fragmentTransaction.addToBackStack("category");
+
     }
 }
