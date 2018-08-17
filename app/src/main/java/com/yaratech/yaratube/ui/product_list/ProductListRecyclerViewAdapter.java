@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<ProductListRecyclerViewAdapter.ViewHolder> {
 
-    private List<Product> Products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
     private Context context;
 
     // data is passed into the constructor
@@ -28,8 +28,8 @@ public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<Product
         this.context = context;
     }
 
-    public void setData(List<Product> Products){
-        this.Products = Products;
+    public void setData(List<Product> products){
+        this.products = products;
         notifyDataSetChanged();
     }
     @NonNull
@@ -41,14 +41,14 @@ public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<Product
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Glide.with(context).load(Products.get(position).getAvatar().getXxxdpi()).into(holder.productAvatar);
-        holder.productTitle.setText(Products.get(position).getName());
+        Glide.with(context).load(products.get(position).getAvatar().getXxxdpi()).into(holder.productAvatar);
+        holder.productTitle.setText(products.get(position).getName());
 
     }
 
     @Override
     public int getItemCount() {
-        return Products.size();
+        return products.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

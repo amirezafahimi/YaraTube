@@ -69,6 +69,7 @@ public class Repository {
                 if (response.isSuccessful()) {
                     List<Product> products = response.body();
                     productInterface.onSuccess(products);
+                    Log.e("kl", products.get(0).getName()+"");
 
                 } else {
 
@@ -78,6 +79,7 @@ public class Repository {
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
 
+                productInterface.onFail();
             }
         });
     }

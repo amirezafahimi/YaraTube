@@ -64,15 +64,15 @@ public class ProductListFragment extends Fragment implements ProductListContract
         productsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2,
                 LinearLayoutManager.VERTICAL, false));
         adapter = new ProductListRecyclerViewAdapter(getContext());
+        productsRecyclerView.setAdapter(adapter);
         productListPresenter = new ProductListPresenter(this, new Repository());
         productListPresenter.fetchProducts(getArguments().getInt("category_id"));
-        adapter.setData(products);
     }
 
     @Override
     public void showListProducts(List<Product> categories) {
         this.products = categories;
-        Toast.makeText(getContext(), "ترکید!", Toast.LENGTH_LONG);
+        adapter.setData(products);
     }
 
     @Override
