@@ -62,18 +62,17 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.v
         super.onActivityCreated(savedInstanceState);
         categoriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new CategoryItemsRecyclerViewAdapter(getContext());
-        adapter.setData(categories);
-        adapter.setClickListener(CategoriesFragment.this);
         categoriesRecyclerView.setAdapter(adapter);
         categoriesPresenter = new CategoriesPresenter(this, new Repository());
         categoriesPresenter.fetchCategories();
+        adapter.setData(categories);
+        adapter.setClickListener(CategoriesFragment.this);
     }
 
     @Override
     public void showListCategories(List<Category> categories) {
         this.categories = categories;
         Toast.makeText(getContext(), "ترکید!", Toast.LENGTH_LONG);
-        Log.e("nm", categories.get(0).getTitle());
     }
 
     @Override

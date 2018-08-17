@@ -18,6 +18,6 @@ public interface ProductListContract {
     }
 
     interface presenter{
-        public void fetchProducts();
+        public void fetchProducts(int id);
     }
 }

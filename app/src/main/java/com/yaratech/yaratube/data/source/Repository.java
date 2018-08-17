@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Home;
+import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.source.Services;
 import com.yaratech.yaratube.data.source.remote.Client;
 import com.yaratech.yaratube.ui.home.HomePresenter;
@@ -55,6 +56,27 @@ public class Repository {
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getProducts(int id, final GetResultInterface<List<Product>> productInterface) {
+
+        Client.getRetrofitInstance().create(Services.class).getProductList(id).enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    List<Product> products = response.body();
+                    productInterface.onSuccess(products);
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
 
             }
         });
