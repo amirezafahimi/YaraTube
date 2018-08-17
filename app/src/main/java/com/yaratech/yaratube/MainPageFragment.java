@@ -56,26 +56,11 @@ public class MainPageFragment extends Fragment {
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
                                 item.setChecked(true);
-                                if (homeFragment == null) {
-                                    Log.e("tg", "home");
-                                    setHomeFragment();
-                                } else {
-                                    Log.e("tg", "not home");
-                                    fragmentTransaction.hide(categoriesFragment);
-                                    fragmentTransaction.show(homeFragment);
-                                }
+                                setHomeFragment();
                                 break;
                             case R.id.navigation_category:
                                 item.setChecked(true);
-                                if (categoriesFragment == null) {
-                                    Log.e("tg", "category");
-                                    fragmentTransaction.hide(homeFragment);
-                                    setCategoryFragment();
-                                } else {
-                                    Log.e("tg", "not category");
-                                    fragmentTransaction.hide(homeFragment);
-                                    fragmentTransaction.show(categoriesFragment);
-                                }
+                                setCategoryFragment();
                                 break;
                         }
                         return false;
@@ -84,20 +69,33 @@ public class MainPageFragment extends Fragment {
     }
 
     private void setHomeFragment() {
-        fragmentManager = getChildFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        homeFragment = HomeFragment.newInstance();
-        fragmentTransaction.add(R.id.homeFragmentContainer, homeFragment).commit();
-        fragmentTransaction.addToBackStack("home");
+        if (homeFragment == null) {
+            if (categoriesFragment != null && categoriesFragment.isVisible()){
+                fragmentManager.beginTransaction().hide(categoriesFragment).commit();
+            }
+            homeFragment = HomeFragment.newInstance();
+            fragmentManager = getChildFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.homeFragmentContainer, homeFragment).commit();
 
+        }else if (!homeFragment.isVisible()){
+            fragmentManager.beginTransaction().hide(categoriesFragment).commit();
+            fragmentManager.beginTransaction().show(homeFragment).commit();
+        }
     }
 
     private void setCategoryFragment() {
-        fragmentManager = getChildFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        categoriesFragment = CategoriesFragment.newInstance();
-        fragmentTransaction.add(R.id.homeFragmentContainer, categoriesFragment).commit();
-        fragmentTransaction.addToBackStack("category");
-
+        if (categoriesFragment == null) {
+            if (homeFragment !=null && homeFragment.isVisible()){
+                fragmentManager.beginTransaction().hide(homeFragment).commit();
+            }
+            categoriesFragment = categoriesFragment.newInstance();
+            fragmentManager = getChildFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.homeFragmentContainer, categoriesFragment).commit();
+        }else if (!categoriesFragment.isVisible()){
+            fragmentManager.beginTransaction().hide(homeFragment).commit();
+            fragmentManager.beginTransaction().show(categoriesFragment).commit();
+        }
     }
 }
