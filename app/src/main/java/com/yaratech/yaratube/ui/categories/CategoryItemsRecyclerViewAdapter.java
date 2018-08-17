@@ -67,6 +67,8 @@ public class CategoryItemsRecyclerViewAdapter
             super(itemView);
             category_avatar = itemView.findViewById(R.id.category_avatar);
             category_title = itemView.findViewById(R.id.category_title);
+
+            itemView.setOnClickListener(this);
         }
 
         @Override
