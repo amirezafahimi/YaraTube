@@ -25,8 +25,10 @@ public class ProductListPresenter implements ProductListContract.presenter {
             }
 
             @Override
-            public void onFail() {
-                productsViewListener.showErrorMessage();
+            public void onFail(String err) {
+                productsViewListener.hideProgrssBar();
+                productsViewListener.showErrorMessage(err);
+
             }
         });
 

@@ -28,8 +28,9 @@ public class CategoriesPresenter implements CategoriesContract.presenter {
             }
 
             @Override
-            public void onFail() {
-                categoriesViewListener.showErrorMessage();
+            public void onFail(String err) {
+                categoriesViewListener.hideProgrssBar();
+                categoriesViewListener.showErrorMessage(err);
 
             }
         });

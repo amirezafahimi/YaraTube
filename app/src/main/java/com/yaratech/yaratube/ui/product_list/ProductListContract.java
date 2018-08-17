@@ -9,7 +9,7 @@ public interface ProductListContract {
 
         void showListProducts(List<Product> categories);
 
-        void showErrorMessage();
+        void showErrorMessage(String err);
 
         void showProgrssBar();
 
@@ -18,6 +18,6 @@ public interface ProductListContract {
     }
 
     interface presenter{
-        public void fetchProducts(int id);
+        void fetchProducts(int id);
     }
 }

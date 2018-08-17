@@ -8,6 +8,7 @@ import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.source.Services;
 import com.yaratech.yaratube.data.source.remote.Client;
 import com.yaratech.yaratube.ui.home.HomePresenter;
+import com.yaratech.yaratube.util.AppConstants;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class Repository {
                     homeInterfacee.onSuccess(home);
 
                 } else {
-                    Log.e("Tag", response.errorBody() + "");
+                    homeInterfacee.onFail("عملیات با خطا مواجه شد!");
                 }
 
 
@@ -35,13 +36,12 @@ public class Repository {
 
             @Override
             public void onFailure(Call<Home> call, Throwable t) {
-                homeInterfacee.onFail();
+                homeInterfacee.onFail("عملیات با خطا مواجه شد!");
             }
         });
     }
 
     public void getCategories(final GetResultInterface<List<Category>> categoryInterface) {
-
         Client.getRetrofitInstance().create(Services.class).getCategory().enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
@@ -50,13 +50,13 @@ public class Repository {
                     categoryInterface.onSuccess(categories);
 
                 } else {
-
+                    categoryInterface.onFail("عملیات با خطا مواجه شد!");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-
+                categoryInterface.onFail("عملیات با خطا مواجه شد!");
             }
         });
     }
@@ -72,14 +72,13 @@ public class Repository {
                     Log.e("kl", products.get(0).getName()+"");
 
                 } else {
-
+                    productInterface.onFail("عملیات با خطا مواجه شد!");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-
-                productInterface.onFail();
+                productInterface.onFail("عملیات با خطا مواجه شد!");
             }
         });
     }

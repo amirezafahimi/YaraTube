@@ -17,24 +17,23 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void fetchHome() {
-        //view 1:
+
         homeViewListener.showProgrssBar();
 
         repository.getHome(new GetResultInterface<Home>() {
 
             @Override
             public void onSuccess(Home home) {
-                //view 2:
+
                 homeViewListener.hideProgrssBar();
 
-                //view 3:
                 homeViewListener.showListHome(home);
             }
 
             @Override
-            public void onFail() {
-                //view 4:
-                homeViewListener.showErrorMessage();
+            public void onFail(String err) {
+                homeViewListener.hideProgrssBar();
+                homeViewListener.showErrorMessage(err);
             }
         });
     }

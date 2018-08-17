@@ -8,7 +8,7 @@ public interface HomeContract {
 
         void showListHome(Home home);
 
-        void showErrorMessage();
+        void showErrorMessage(String err);
 
         void showProgrssBar();
 

@@ -9,7 +9,7 @@ public interface CategoriesContract {
 
         void showListCategories(List<Category> categories);
 
-        void showErrorMessage();
+        void showErrorMessage(String err);
 
         void showProgrssBar();
 
