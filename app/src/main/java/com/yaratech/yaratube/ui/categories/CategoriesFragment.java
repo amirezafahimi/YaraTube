@@ -21,7 +21,7 @@ import com.yaratech.yaratube.ui.home.HomePresenter;
 import java.util.List;
 
 
-public class CategoriesFragment extends Fragment implements CategoriesContract.view {
+public class CategoriesFragment extends Fragment implements CategoriesContract.view, CategoryItemsRecyclerViewAdapter.ItemClickListener{
 
     List<Category> categories;
     CategoriesPresenter categoriesPresenter;
@@ -62,6 +62,8 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.v
         super.onActivityCreated(savedInstanceState);
         categoriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new CategoryItemsRecyclerViewAdapter(getContext());
+        adapter.setData(categories);
+        adapter.setClickListener(CategoriesFragment.this);
         categoriesRecyclerView.setAdapter(adapter);
         categoriesPresenter = new CategoriesPresenter(this, new Repository());
         categoriesPresenter.fetchCategories();
@@ -70,7 +72,6 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.v
     @Override
     public void showListCategories(List<Category> categories) {
         this.categories = categories;
-        adapter.setData(categories);
         Toast.makeText(getContext(), "ترکید!", Toast.LENGTH_LONG);
         Log.e("nm", categories.get(0).getTitle());
     }
@@ -89,4 +90,17 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.v
     public void hideProgrssBar() {
         progressBar.setVisibility(View.GONE);
     }
+
+
+
+    @Override
+    public void onItemClick(View view, int position) {
+        ((OnCategoryFragmentActionListener) getContext()).goFromCategoryToProductList(categories.get(position));
+    }
+
+
+    public interface OnCategoryFragmentActionListener {
+        void goFromCategoryToProductList(Category category);
+    }
+
 }

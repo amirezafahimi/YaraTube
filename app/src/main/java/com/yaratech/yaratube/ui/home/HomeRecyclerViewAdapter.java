@@ -7,12 +7,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.HeaderItem;
 import com.yaratech.yaratube.data.model.HomeItem;
@@ -56,6 +59,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         public HeaderListItemViewHolder(View itemView) {
             super(itemView);
             viewPager = itemView.findViewById(R.id.header_item_viewpager);
+            viewPager.setRotationY(180);
+
         }
 
         public void bindViewHeaderList() {
@@ -82,8 +87,9 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
 
         public void bindViewHomeList(HomeItem homeitem) {
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, HORIZONTAL, false);
-            homeRecyclerView.setLayoutManager(linearLayoutManager);
+            homeRecyclerView.setLayoutManager(new LinearLayoutManager(context, HORIZONTAL, false));
+            /*SnapHelper snapHelper = new GravitySnapHelper(Gravity.START);
+            snapHelper.attachToRecyclerView(homeRecyclerView);*/
             HomeItemsRecyclerViewAdapter homeItemsRecyclerViewAdapter = new HomeItemsRecyclerViewAdapter(context, homeitem.getProducts());
             homeRecyclerView.setAdapter(homeItemsRecyclerViewAdapter);
             title_name.setText(homeitem.getTitle());

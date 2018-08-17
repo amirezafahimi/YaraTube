@@ -1,4 +1,4 @@
-package com.yaratech.yaratube;
+package com.yaratech.yaratube.ui;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -13,13 +13,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.yaratech.yaratube.R;
+import com.yaratech.yaratube.data.model.Category;
+import com.yaratech.yaratube.ui.categories.CategoriesFragment;
+import com.yaratech.yaratube.ui.product_list.ProductListFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        CategoriesFragment.OnCategoryFragmentActionListener{
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -75,9 +78,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
-        fragmentTransaction.addToBackStack(null);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+    }
+
+    @Override
+    public void goFromCategoryToProductList(Category category) {
+        setFragment(ProductListFragment.newInstance(category.getId()));
+        getSupportFragmentManager().beginTransaction().addToBackStack("product_list");
     }
 }

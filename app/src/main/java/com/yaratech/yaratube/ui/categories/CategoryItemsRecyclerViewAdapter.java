@@ -23,6 +23,7 @@ public class CategoryItemsRecyclerViewAdapter
 
     private List<Category> categories = new ArrayList<>();
     private Context context;
+    private ItemClickListener mClickListener;
 
     // data is passed into the constructor
     CategoryItemsRecyclerViewAdapter(Context context) {
@@ -58,7 +59,7 @@ public class CategoryItemsRecyclerViewAdapter
 
 
     // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView category_avatar;
         TextView category_title;
 
@@ -67,6 +68,20 @@ public class CategoryItemsRecyclerViewAdapter
             category_avatar = itemView.findViewById(R.id.category_avatar);
             category_title = itemView.findViewById(R.id.category_title);
         }
+
+        @Override
+        public void onClick(View view) {
+            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+        }
     }
 
+    // allows clicks events to be caught
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
+    }
 }

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.yaratech.yaratube.GlideApp;
 import com.yaratech.yaratube.R;
 
 public class HeaderFragment extends Fragment {
@@ -50,6 +49,6 @@ public class HeaderFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.e("TAG", "MAG" + getArguments().getString("URL"));
-        GlideApp.with(getContext()).load(getArguments().getString("URL")).into(imageView);
+        Glide.with(getContext()).load(getArguments().getString("URL")).into(imageView);
     }
 }

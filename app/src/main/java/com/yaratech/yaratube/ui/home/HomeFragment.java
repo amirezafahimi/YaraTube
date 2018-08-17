@@ -1,5 +1,6 @@
 package com.yaratech.yaratube.ui.home;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -83,4 +84,5 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     public void hideProgrssBar() {
         progressBar.setVisibility(View.GONE);
     }
+
 }
