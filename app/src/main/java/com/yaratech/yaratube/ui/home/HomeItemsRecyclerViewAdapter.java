@@ -36,10 +36,7 @@ public class HomeItemsRecyclerViewAdapter extends RecyclerView.Adapter<HomeItems
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String image_url = products.get(position).getAvatar().getXxxdpi();
-        String title = products.get(position).getName();
-        Glide.with(context).load(image_url).into(holder.product_avatar);
-        holder.product_title.setText(title);
+        holder.onBind(products.get(position));
     }
 
     // total number of rows
@@ -58,6 +55,12 @@ public class HomeItemsRecyclerViewAdapter extends RecyclerView.Adapter<HomeItems
             super(itemView);
             product_avatar = itemView.findViewById(R.id.product_image);
             product_title = itemView.findViewById(R.id.product_title);
+        }
+
+        public void onBind(Product product) {
+            Glide.with(context).load(product.getFeatureAvatar().getXxxdpi()).into(product_avatar);
+            product_title.setText(product.getName());
+
         }
     }
 

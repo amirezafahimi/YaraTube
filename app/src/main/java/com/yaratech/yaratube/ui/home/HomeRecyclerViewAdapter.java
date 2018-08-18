@@ -60,7 +60,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         public HeaderListItemViewHolder(View itemView) {
             super(itemView);
             viewPager = itemView.findViewById(R.id.header_item_viewpager);
-            viewPager.setRotationY(180);
+            /*iewPager.setRotationY(180);*/
 
         }
 

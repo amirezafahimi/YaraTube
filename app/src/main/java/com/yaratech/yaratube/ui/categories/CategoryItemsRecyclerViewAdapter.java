@@ -46,10 +46,7 @@ public class CategoryItemsRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(@NonNull CategoryItemsRecyclerViewAdapter.ViewHolder holder, int position) {
-        String image_url = categories.get(position).getAvatar().toString();
-        String title = categories.get(position).getTitle();
-        Glide.with(context).load(image_url).into(holder.category_avatar);
-        holder.category_title.setText(title);
+        holder.onBind(categories.get(position));
     }
 
     // total number of rows
@@ -75,6 +72,11 @@ public class CategoryItemsRecyclerViewAdapter
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+        }
+
+        public void onBind(Category category) {
+            Glide.with(context).load(category.getAvatar().toString()).into(category_avatar);
+            category_title.setText(category.getTitle());
         }
     }
 

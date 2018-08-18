@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.product_list;
+package com.yaratech.yaratube.ui.products;
 
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.source.GetResultInterface;

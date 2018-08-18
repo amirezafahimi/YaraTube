@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.product_list;
+package com.yaratech.yaratube.ui.products;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,10 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.yaratech.yaratube.R;
@@ -41,9 +39,7 @@ public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<Product
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Glide.with(context).load(products.get(position).getAvatar().getXxxdpi()).into(holder.productAvatar);
-        holder.productTitle.setText(products.get(position).getName());
-
+        holder.onBind(products.get(position));
     }
 
     @Override
@@ -58,6 +54,11 @@ public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<Product
             super(itemView);
             productAvatar = itemView.findViewById(R.id.product_image);
             productTitle = itemView.findViewById(R.id.product_title);
+        }
+
+        public void onBind(Product product) {
+            Glide.with(context).load(product.getFeatureAvatar().getXxxdpi()).into(productAvatar);
+            productTitle.setText(product.getName());
         }
     }
 }

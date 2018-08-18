@@ -4,9 +4,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,7 +16,7 @@ import android.view.MenuItem;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.ui.categories.CategoriesFragment;
-import com.yaratech.yaratube.ui.product_list.ProductListFragment;
+import com.yaratech.yaratube.ui.products.ProductListFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -79,12 +76,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
     }
 
     @Override
     public void goFromCategoryToProductList(Category category) {
         setFragment(ProductListFragment.newInstance(category.getId()));
-        getSupportFragmentManager().beginTransaction().addToBackStack("product_list");
     }
 }
