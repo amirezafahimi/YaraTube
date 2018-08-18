@@ -61,8 +61,7 @@ public class ProductListFragment extends Fragment implements ProductListContract
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        productsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2,
-                LinearLayoutManager.VERTICAL, false));
+        productsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         adapter = new ProductListRecyclerViewAdapter(getContext());
         productsRecyclerView.setAdapter(adapter);
         productListPresenter = new ProductListPresenter(this, new Repository());

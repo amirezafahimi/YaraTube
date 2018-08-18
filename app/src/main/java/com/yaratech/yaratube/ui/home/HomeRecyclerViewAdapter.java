@@ -20,6 +20,7 @@ import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.HeaderItem;
 import com.yaratech.yaratube.data.model.HomeItem;
 import com.yaratech.yaratube.data.model.Home;
+import com.yaratech.yaratube.util.StartSnapHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,8 +89,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         public void bindViewHomeList(HomeItem homeitem) {
             homeRecyclerView.setLayoutManager(new LinearLayoutManager(context, HORIZONTAL, false));
-            /*SnapHelper snapHelper = new GravitySnapHelper(Gravity.START);
-            snapHelper.attachToRecyclerView(homeRecyclerView);*/
+            SnapHelper snapHelperStart = new GravitySnapHelper(Gravity.START);
+            snapHelperStart.attachToRecyclerView(homeRecyclerView);
             HomeItemsRecyclerViewAdapter homeItemsRecyclerViewAdapter = new HomeItemsRecyclerViewAdapter(context, homeitem.getProducts());
             homeRecyclerView.setAdapter(homeItemsRecyclerViewAdapter);
             title_name.setText(homeitem.getTitle());

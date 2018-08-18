@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,6 +20,9 @@ import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.ui.home.HomePresenter;
 
 import java.util.List;
+
+import static android.widget.GridLayout.HORIZONTAL;
+import static android.widget.GridLayout.VERTICAL;
 
 
 public class CategoriesFragment extends Fragment implements CategoriesContract.view, CategoryItemsRecyclerViewAdapter.ItemClickListener{
@@ -61,6 +65,8 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.v
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         categoriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        DividerItemDecoration itemDecor = new DividerItemDecoration(categoriesRecyclerView.getContext(), VERTICAL);
+        categoriesRecyclerView.addItemDecoration(itemDecor);
         adapter = new CategoryItemsRecyclerViewAdapter(getContext());
         adapter.setClickListener(CategoriesFragment.this);
         categoriesRecyclerView.setAdapter(adapter);
