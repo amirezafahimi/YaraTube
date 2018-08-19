@@ -5,10 +5,8 @@ import android.util.Log;
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Home;
 import com.yaratech.yaratube.data.model.Product;
-import com.yaratech.yaratube.data.source.Services;
+import com.yaratech.yaratube.data.source.remote.Services;
 import com.yaratech.yaratube.data.source.remote.Client;
-import com.yaratech.yaratube.ui.home.HomePresenter;
-import com.yaratech.yaratube.util.AppConstants;
 
 import java.util.List;
 

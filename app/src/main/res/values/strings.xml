@@ -13,4 +13,6 @@
     <string name="home_page">صفحه اصلی</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="comment_button_text">نظر دهید</string>
+    <string name="users_comment">نظرات کاربران</string>
 </resources>

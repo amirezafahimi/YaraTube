@@ -47,6 +47,7 @@ public class CategoryItemsRecyclerViewAdapter
     @Override
     public void onBindViewHolder(@NonNull CategoryItemsRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.onBind(categories.get(position));
+
     }
 
     // total number of rows

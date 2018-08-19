@@ -14,11 +14,14 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.yaratech.yaratube.R;
+import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.data.model.Home;
+import com.yaratech.yaratube.ui.OnProductActionListener;
 
 
-public class HomeFragment extends Fragment implements HomeContract.View {
+public class HomeFragment extends Fragment implements HomeContract.View
+        , HomeItemsRecyclerViewAdapter.HomeItemClickListener{
 
     Home home;
     HomePresenter homePresenter;
@@ -85,4 +88,9 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         progressBar.setVisibility(View.GONE);
     }
 
+    @Override
+    public void onItemClick(View view, int productId) {
+        ((OnProductActionListener) getContext()).goFromProductToProdutDetails(productId);
+
+    }
 }

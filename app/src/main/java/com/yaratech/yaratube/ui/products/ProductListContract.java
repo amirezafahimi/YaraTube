@@ -7,7 +7,7 @@ import java.util.List;
 public interface ProductListContract {
     interface view{
 
-        void showListProducts(List<Product> categories);
+        void showListProducts(List<Product> products);
 
         void showErrorMessage(String err);
 

@@ -18,7 +18,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return HeaderFragment.newInstance(headerItemList.get(position).getFeatureAvatar().getXxxdpi());}
+        return HeaderItemsFragment.newInstance(headerItemList.get(position).getFeatureAvatar().getXxxdpi());}
 
     @Override
     public int getCount() {

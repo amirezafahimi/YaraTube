@@ -13,19 +13,19 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.yaratech.yaratube.R;
 
-public class HeaderFragment extends Fragment {
+public class HeaderItemsFragment extends Fragment {
 
     ImageView imageView;
 
-    public HeaderFragment() {
+    public HeaderItemsFragment() {
     }
 
-    public static HeaderFragment newInstance(String url) {
+    public static HeaderItemsFragment newInstance(String url) {
 
         Bundle args = new Bundle();
         Log.e("taraghe", url);
         args.putString("URL", url);
-        HeaderFragment fragment = new HeaderFragment();
+        HeaderItemsFragment fragment = new HeaderItemsFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -33,7 +33,7 @@ public class HeaderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_header, container, false);
+        return inflater.inflate(R.layout.fragment_header_items, container, false);
 //        Log.e("taraghe ", getArguments().getString("URL"));
     }
 

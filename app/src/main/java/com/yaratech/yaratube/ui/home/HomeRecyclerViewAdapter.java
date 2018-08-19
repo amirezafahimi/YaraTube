@@ -1,9 +1,7 @@
 package com.yaratech.yaratube.ui.home;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +18,6 @@ import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.HeaderItem;
 import com.yaratech.yaratube.data.model.HomeItem;
 import com.yaratech.yaratube.data.model.Home;
-import com.yaratech.yaratube.util.StartSnapHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +57,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         public HeaderListItemViewHolder(View itemView) {
             super(itemView);
             viewPager = itemView.findViewById(R.id.header_item_viewpager);
-            /*iewPager.setRotationY(180);*/
+            viewPager.setRotationY(180);
 
         }
 
@@ -88,8 +85,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
 
         public void bindViewHomeList(HomeItem homeitem) {
-            homeRecyclerView.setLayoutManager(new LinearLayoutManager(context, HORIZONTAL, false));
-            SnapHelper snapHelperStart = new GravitySnapHelper(Gravity.START);
+            homeRecyclerView.setLayoutManager(new LinearLayoutManager(context, HORIZONTAL, true));
+            SnapHelper snapHelperStart = new GravitySnapHelper(Gravity.END);
             snapHelperStart.attachToRecyclerView(homeRecyclerView);
             HomeItemsRecyclerViewAdapter homeItemsRecyclerViewAdapter = new HomeItemsRecyclerViewAdapter(context, homeitem.getProducts());
             homeRecyclerView.setAdapter(homeItemsRecyclerViewAdapter);

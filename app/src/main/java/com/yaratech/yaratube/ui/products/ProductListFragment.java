@@ -22,8 +22,8 @@ import java.util.List;
 
 public class ProductListFragment extends Fragment implements ProductListContract.view{
 
-    List<Product> products = new ArrayList<>();
     ProductListPresenter productListPresenter;
+    List<Product> products = new ArrayList<>();
     ProductListRecyclerViewAdapter adapter;
     RecyclerView productsRecyclerView;
     ProgressBar progressBar;
@@ -68,8 +68,8 @@ public class ProductListFragment extends Fragment implements ProductListContract
     }
 
     @Override
-    public void showListProducts(List<Product> categories) {
-        this.products = categories;
+    public void showListProducts(List<Product> products) {
+        this.products = products;
         adapter.setData(products);
     }
 

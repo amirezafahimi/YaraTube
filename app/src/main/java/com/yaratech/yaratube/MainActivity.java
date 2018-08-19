@@ -1,9 +1,11 @@
-package com.yaratech.yaratube.ui;
+package com.yaratech.yaratube;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,12 +17,20 @@ import android.view.MenuItem;
 
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Category;
+import com.yaratech.yaratube.data.model.Product;
+import com.yaratech.yaratube.ui.MainPageFragment;
+import com.yaratech.yaratube.ui.OnProductActionListener;
+import com.yaratech.yaratube.ui.Productdetails.ProductDetailsFragment;
 import com.yaratech.yaratube.ui.categories.CategoriesFragment;
 import com.yaratech.yaratube.ui.products.ProductListFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        CategoriesFragment.OnCategoryFragmentActionListener{
+        CategoriesFragment.OnCategoryFragmentActionListener,
+        OnProductActionListener{
+
+    FragmentTransaction fragmentTransaction;
+    FragmentManager fragmentManager;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -76,11 +86,21 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_container, fragment).commit();
+
     }
 
     @Override
     public void goFromCategoryToProductList(Category category) {
         setFragment(ProductListFragment.newInstance(category.getId()));
+        fragmentTransaction.addToBackStack("product_list");
+
+    }
+
+    @Override
+    public void goFromProductToProdutDetails(int productId) {
+        setFragment(ProductDetailsFragment.newInstance(productId));
     }
 }
