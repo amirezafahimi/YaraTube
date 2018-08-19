@@ -3,8 +3,10 @@ package com.yaratech.yaratube.data.source;
 import android.util.Log;
 
 import com.yaratech.yaratube.data.model.Category;
+import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.Home;
 import com.yaratech.yaratube.data.model.Product;
+import com.yaratech.yaratube.data.model.ProductDetail;
 import com.yaratech.yaratube.data.source.remote.Services;
 import com.yaratech.yaratube.data.source.remote.Client;
 
@@ -79,5 +81,45 @@ public class Repository {
                 productInterface.onFail("عملیات با خطا مواجه شد!");
             }
         });
+    }
+
+    public void getProductDetails(int id, final GetResultInterface<ProductDetail> productDetailsInterface) {
+
+        Client.getRetrofitInstance().create(Services.class).getProductDetail(id).enqueue(new Callback<ProductDetail>() {
+            @Override
+            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                if (response.isSuccessful()) {
+                    productDetailsInterface.onSuccess(response.body());
+
+                } else {
+                    productDetailsInterface.onFail("عملیات با خطا مواجه شد!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetail> call, Throwable t) {
+                productDetailsInterface.onFail("عملیات با خطا مواجه شد!");
+            }
+        });
+    }
+
+    public void getCommentList(int id, final GetResultInterface<List<Comment>> commentListInterface) {
+        Client.getRetrofitInstance().create(Services.class).getCommentList(id).enqueue(new Callback<List<Comment>>() {
+            @Override
+            public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
+                if(response.isSuccessful()){
+                    commentListInterface.onSuccess(response.body());
+                }else{
+                    commentListInterface.onFail("عملیات با خطا مواجه شد!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Comment>> call, Throwable t) {
+                commentListInterface.onFail("عملیات با خطا مواجه شد!");
+
+            }
+        });
+
     }
 }

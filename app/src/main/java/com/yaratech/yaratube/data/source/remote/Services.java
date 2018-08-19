@@ -1,5 +1,6 @@
 package com.yaratech.yaratube.data.source.remote;
 import com.yaratech.yaratube.data.model.Category;
+import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.Home;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.model.ProductDetail;
@@ -23,4 +24,9 @@ public interface Services {
 
     @GET("product/{product_id}")
     Call<ProductDetail> getProductDetail(@Path("product_id") int productId);
+
+    @GET("comment/{product_id}")
+    Call<List<Comment>> getCommentList(@Path("product_id") int productId);
+
+
 }

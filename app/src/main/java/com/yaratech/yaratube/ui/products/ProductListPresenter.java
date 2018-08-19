@@ -6,10 +6,10 @@ import com.yaratech.yaratube.data.source.Repository;
 
 import java.util.List;
 
-public class ProductListPresenter implements ProductListContract.presenter {
-    ProductListContract.view productsViewListener;
+public class ProductListPresenter implements ProductListContract.Presenter {
+    ProductListContract.View productsViewListener;
     Repository repository;
-    public ProductListPresenter(ProductListContract.view productsViewListener, Repository repository) {
+    public ProductListPresenter(ProductListContract.View productsViewListener, Repository repository) {
         this.productsViewListener = productsViewListener;
         this.repository = repository;
     }

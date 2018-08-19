@@ -23,9 +23,10 @@ public class HomeItemsRecyclerViewAdapter extends RecyclerView.Adapter<HomeItems
     private HomeItemClickListener mClickListener;
 
     // data is passed into the constructor
-    HomeItemsRecyclerViewAdapter(Context context, List<com.yaratech.yaratube.data.model.Product> products) {
+    HomeItemsRecyclerViewAdapter(Context context, List<com.yaratech.yaratube.data.model.Product> products, HomeItemClickListener mClickListener) {
         this.context = context;
         this.products = products;
+        this.mClickListener = mClickListener;
     }
 
     // inflates the row layout from xml when needed
@@ -73,9 +74,9 @@ public class HomeItemsRecyclerViewAdapter extends RecyclerView.Adapter<HomeItems
 
 
     // allows clicks events to be caught
-    public void setClickListener(HomeItemsRecyclerViewAdapter.HomeItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
+//    public void setClickListener(HomeItemsRecyclerViewAdapter.HomeItemClickListener itemClickListener) {
+//        this.mClickListener = itemClickListener;
+//    }
 
     // parent activity will implement this method to respond to click events
     public interface HomeItemClickListener {

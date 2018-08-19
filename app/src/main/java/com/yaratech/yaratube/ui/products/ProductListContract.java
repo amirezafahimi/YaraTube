@@ -5,7 +5,7 @@ import com.yaratech.yaratube.data.model.Product;
 import java.util.List;
 
 public interface ProductListContract {
-    interface view{
+    interface View{
 
         void showListProducts(List<Product> products);
 
@@ -17,7 +17,7 @@ public interface ProductListContract {
 
     }
 
-    interface presenter{
+    interface Presenter{
         void fetchProducts(int id);
     }
 }

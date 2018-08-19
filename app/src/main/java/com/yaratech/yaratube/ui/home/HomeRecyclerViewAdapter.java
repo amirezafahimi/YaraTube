@@ -32,12 +32,13 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     List<HomeItem> homeitems = new ArrayList<>();
     private Context context;
     private FragmentManager fragmentManager;
+    private HomeItemsRecyclerViewAdapter.HomeItemClickListener mClickListener;
     private static final int HEADER_LIST_ITEM_VIEW = 1;
     private static final int HOME_ITEM_LIST_ITEM_VIEW = 2;
 
 
     // data is passed into the constructor
-    public HomeRecyclerViewAdapter(Context context, FragmentManager fragmentManager) {
+    public HomeRecyclerViewAdapter(Context context, FragmentManager fragmentManager, HomeItemsRecyclerViewAdapter.HomeItemClickListener mClickListener) {
         this.context = context;
         this.fragmentManager = fragmentManager;
         sectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager);
@@ -88,7 +89,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             homeRecyclerView.setLayoutManager(new LinearLayoutManager(context, HORIZONTAL, true));
             SnapHelper snapHelperStart = new GravitySnapHelper(Gravity.END);
             snapHelperStart.attachToRecyclerView(homeRecyclerView);
-            HomeItemsRecyclerViewAdapter homeItemsRecyclerViewAdapter = new HomeItemsRecyclerViewAdapter(context, homeitem.getProducts());
+            HomeItemsRecyclerViewAdapter homeItemsRecyclerViewAdapter = new HomeItemsRecyclerViewAdapter(context, homeitem.getProducts(), mClickListener);
             homeRecyclerView.setAdapter(homeItemsRecyclerViewAdapter);
             title_name.setText(homeitem.getTitle());
         }

@@ -1,5 +1,6 @@
 package com.yaratech.yaratube.ui.Productdetails;
 
+import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.ProductDetail;
 
 import java.util.List;
@@ -9,7 +10,9 @@ public interface ProductDetailsContract {
     interface View{
 
 
-        void showListProducts(ProductDetail productDetail);
+        void showProductDetail(ProductDetail productDetail);
+
+        void showCommentList(List<Comment> comments);
 
         void showErrorMessage(String err);
 
@@ -19,7 +22,6 @@ public interface ProductDetailsContract {
     }
     interface Presenter{
         void fetchProductDetails(int id);
-        void fetchCommentList(int id);
     }
 
 }
