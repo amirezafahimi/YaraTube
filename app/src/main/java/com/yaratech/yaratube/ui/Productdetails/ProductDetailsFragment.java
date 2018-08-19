@@ -1,6 +1,8 @@
 package com.yaratech.yaratube.ui.Productdetails;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +15,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,12 +38,15 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     ProductDetail productDetail;
     List<Comment> comments;
     VideoView videoView;
+    ImageView imageView;
     TextView title;
     TextView description;
     ProgressBar progressBar;
     ProductDetailsRecyclerViewAdpter adpter;
     RecyclerView productDetailsRecyclerView;
+    ProgressDialog progressDialog;
 
+    private String videoUri;
 
     public ProductDetailsFragment() {
         // Required empty public constructor
@@ -63,6 +70,7 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        imageView =  view.findViewById(R.id.play);
         videoView = view.findViewById(R.id.product_video);
         title = view.findViewById(R.id.product_name);
         description = view.findViewById(R.id.product_explain);
@@ -74,6 +82,12 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                playVideo();
+            }
+        });
         productDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration itemDecor = new DividerItemDecoration(productDetailsRecyclerView.getContext(), VERTICAL);
         productDetailsRecyclerView.addItemDecoration(itemDecor);
@@ -84,8 +98,40 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
 
     }
 
+
+    public void playVideo() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Please wait");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        try {
+            if (videoView.isPlaying()) {
+                videoView.setVideoURI(Uri.parse(videoUri));
+                videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                    }
+                });
+            } else
+                videoView.pause();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        videoView.requestFocus();
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                progressDialog.dismiss();
+                mp.setLooping(true);
+                videoView.start();
+            }
+        });
+    }
+
     @Override
     public void showProductDetail(ProductDetail productDetail) {
+        videoUri = productDetail.getFiles().get(0).getFile();
         this.productDetail = productDetail;
         title.setText(productDetail.getName());
         description.setText(productDetail.getDescription());
