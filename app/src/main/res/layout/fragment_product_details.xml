@@ -28,15 +28,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.halilibo.bettervideoplayer.BetterVideoPlayer
+                    <!--<com.halilibo.bettervideoplayer.BetterVideoPlayer
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/product_video"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/videoview_height" />
-                    <!--<VideoView
+                        android:layout_height="@dimen/videoview_height" />-->
+                    <VideoView
                         android:id="@+id/product_video"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/videoview_height" />-->
+                        android:layout_height="@dimen/videoview_height" />
 
                     <android.support.constraint.ConstraintLayout
                         android:id="@+id/constraintLayout"
