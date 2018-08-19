@@ -41,6 +41,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     public HomeRecyclerViewAdapter(Context context, FragmentManager fragmentManager, HomeItemsRecyclerViewAdapter.HomeItemClickListener mClickListener) {
         this.context = context;
         this.fragmentManager = fragmentManager;
+        this.mClickListener = mClickListener;
         sectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager);
     }
 
@@ -98,6 +99,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     // inflates the row layout from xml when needed
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View v;
 
         switch (viewType) {

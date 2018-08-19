@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Comment;
@@ -24,11 +26,14 @@ import com.yaratech.yaratube.data.source.Repository;
 
 import java.util.List;
 
+import static android.widget.GridLayout.VERTICAL;
+
 public class ProductDetailsFragment extends Fragment implements ProductDetailsContract.View {
 
     ProductDetailsPresenter productDetailsPresenter;
     ProductDetail productDetail;
     List<Comment> comments;
+    VideoView videoView;
     TextView title;
     TextView description;
     ProgressBar progressBar;
@@ -58,15 +63,20 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        videoView = view.findViewById(R.id.product_video);
+        title = view.findViewById(R.id.product_name);
+        description = view.findViewById(R.id.product_explain);
+        productDetailsRecyclerView = view.findViewById(R.id.product_comments);
         progressBar = view.findViewById(R.id.loading_product_details);
         progressBar.setVisibility(View.GONE);
-        productDetailsRecyclerView = view.findViewById(R.id.product_comments);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         productDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        DividerItemDecoration itemDecor = new DividerItemDecoration(productDetailsRecyclerView.getContext(), VERTICAL);
+        productDetailsRecyclerView.addItemDecoration(itemDecor);
         adpter = new ProductDetailsRecyclerViewAdpter(getContext());
         productDetailsRecyclerView.setAdapter(adpter);
         productDetailsPresenter = new ProductDetailsPresenter(this, new Repository());
@@ -77,6 +87,8 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     @Override
     public void showProductDetail(ProductDetail productDetail) {
         this.productDetail = productDetail;
+        title.setText(productDetail.getName());
+        description.setText(productDetail.getDescription());
     }
 
     @Override

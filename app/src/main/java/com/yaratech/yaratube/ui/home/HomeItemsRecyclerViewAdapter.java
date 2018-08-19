@@ -2,6 +2,7 @@ package com.yaratech.yaratube.ui.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,19 +65,16 @@ public class HomeItemsRecyclerViewAdapter extends RecyclerView.Adapter<HomeItems
             Glide.with(context).load(product.getFeatureAvatar().getXxxdpi()).into(product_avatar);
             product_title.setText(product.getName());
 
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, products.get(getAdapterPosition()).getId());
+            Log.e("OOO", "123456786434684694646");
         }
     }
 
-
-    // allows clicks events to be caught
-//    public void setClickListener(HomeItemsRecyclerViewAdapter.HomeItemClickListener itemClickListener) {
-//        this.mClickListener = itemClickListener;
-//    }
 
     // parent activity will implement this method to respond to click events
     public interface HomeItemClickListener {

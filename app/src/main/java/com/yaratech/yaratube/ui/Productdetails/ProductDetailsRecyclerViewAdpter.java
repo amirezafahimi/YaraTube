@@ -12,17 +12,19 @@ import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.ProductDetail;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDetailsRecyclerViewAdpter extends RecyclerView.Adapter<ProductDetailsRecyclerViewAdpter.ViewHolder>{
+public class ProductDetailsRecyclerViewAdpter extends RecyclerView.Adapter<ProductDetailsRecyclerViewAdpter.ViewHolder> {
 
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
     private Context context;
+
     public ProductDetailsRecyclerViewAdpter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<Comment> comments){
+    public void setData(List<Comment> comments) {
         this.comments = comments;
         notifyDataSetChanged();
     }
@@ -46,6 +48,7 @@ public class ProductDetailsRecyclerViewAdpter extends RecyclerView.Adapter<Produ
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView username;
         TextView comment;
+
         public ViewHolder(View itemView) {
             super(itemView);
             username = itemView.findViewById(R.id.username);

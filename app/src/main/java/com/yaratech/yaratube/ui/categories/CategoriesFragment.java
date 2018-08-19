@@ -100,7 +100,6 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.v
     @Override
     public void onItemClick(View view, int position) {
         ((OnCategoryFragmentActionListener) getContext()).goFromCategoryToProductList(categories.get(position));
-        Log.e("kol", categories.get(position).getTitle());
     }
 
 

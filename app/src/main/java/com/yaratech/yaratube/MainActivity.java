@@ -102,5 +102,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void goFromProductToProdutDetails(int productId) {
         setFragment(ProductDetailsFragment.newInstance(productId));
+        fragmentTransaction.addToBackStack("product_list");
     }
 }
