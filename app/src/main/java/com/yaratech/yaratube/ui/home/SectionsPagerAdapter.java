@@ -12,21 +12,23 @@ import java.util.List;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     private List<HeaderItem> headerItemList = new ArrayList<>();
+
     public SectionsPagerAdapter(FragmentManager fm) {
         super(fm);
-    }
-
-    @Override
-    public Fragment getItem(int position) {
-        return HeaderItemsFragment.newInstance(headerItemList.get(position).getFeatureAvatar().getXxxdpi());}
-
-    @Override
-    public int getCount() {
-        return headerItemList.size();
     }
 
     public void setData(List<HeaderItem> headeritems) {
         headerItemList = headeritems;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        return HeaderItemsFragment.newInstance(headerItemList.get(position));
+    }
+
+    @Override
+    public int getCount() {
+        return headerItemList.size();
     }
 }

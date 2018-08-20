@@ -1,11 +1,14 @@
 
 package com.yaratech.yaratube.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class HeaderItem {
+public class HeaderItem implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -36,7 +39,7 @@ public class HeaderItem {
     private FeatureAvatar featureAvatar;
     @SerializedName("rank")
     @Expose
-    private double rank;
+    private int rank;
     @SerializedName("short_description")
     @Expose
     private String shortDescription;
@@ -82,6 +85,38 @@ public class HeaderItem {
     @SerializedName("customjson")
     @Expose
     private Object customjson;
+
+    protected HeaderItem(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        nameEnglish = in.readString();
+        productType = in.readInt();
+        producerName = in.readString();
+        price = in.readInt();
+        rank = in.readInt();
+        shortDescription = in.readString();
+        isPurchased = in.readByte() != 0;
+        comments = in.readInt();
+        isBookmarked = in.readByte() != 0;
+        sku = in.readString();
+        priceUnit = in.readString();
+        totalView = in.readInt();
+        dateAdded = in.readString();
+        isSpecial = in.readByte() != 0;
+        datePublished = in.readString();
+    }
+
+    public static final Creator<HeaderItem> CREATOR = new Creator<HeaderItem>() {
+        @Override
+        public HeaderItem createFromParcel(Parcel in) {
+            return new HeaderItem(in);
+        }
+
+        @Override
+        public HeaderItem[] newArray(int size) {
+            return new HeaderItem[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -159,7 +194,7 @@ public class HeaderItem {
         return rank;
     }
 
-    public void setRank(double rank) {
+    public void setRank(int rank) {
         this.rank = rank;
     }
 
@@ -283,4 +318,30 @@ public class HeaderItem {
         this.customjson = customjson;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeString(nameEnglish);
+        parcel.writeInt(productType);
+        parcel.writeString(producerName);
+        parcel.writeInt(price);
+        parcel.writeInt(rank);
+        parcel.writeString(shortDescription);
+        parcel.writeByte((byte) (isPurchased ? 1 : 0));
+        parcel.writeInt(comments);
+        parcel.writeByte((byte) (isBookmarked ? 1 : 0));
+        parcel.writeString(sku);
+        parcel.writeString(priceUnit);
+        parcel.writeInt(totalView);
+        parcel.writeString(dateAdded);
+        parcel.writeByte((byte) (isSpecial ? 1 : 0));
+        parcel.writeString(datePublished);
+    }
 }

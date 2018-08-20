@@ -24,7 +24,6 @@ public class ProductDetailsPresenter implements ProductDetailsContract.Presenter
         repository.getProductDetails(id, new GetResultInterface<ProductDetail>() {
             @Override
             public void onSuccess(ProductDetail result) {
-                productDetailsViewListener.hideProgrssBar();
                 productDetailsViewListener.showProductDetail(result);
             }
 

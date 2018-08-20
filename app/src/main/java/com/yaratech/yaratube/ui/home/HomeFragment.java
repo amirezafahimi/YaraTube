@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment implements HomeContract.View
     }
 
     @Override
-    public void onItemClick(View view, int productId) {
-        ((OnProductActionListener) getContext()).goFromProductToProdutDetails(productId);
+    public void onItemClick(View view, Product product) {
+        ((OnProductActionListener) getContext()).goFromProductToProdutDetails(product);
     }
 }

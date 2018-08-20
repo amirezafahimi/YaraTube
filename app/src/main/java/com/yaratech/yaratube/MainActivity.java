@@ -17,17 +17,20 @@ import android.view.MenuItem;
 
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Category;
+import com.yaratech.yaratube.data.model.HeaderItem;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.ui.MainPageFragment;
 import com.yaratech.yaratube.ui.OnProductActionListener;
 import com.yaratech.yaratube.ui.Productdetails.ProductDetailsFragment;
 import com.yaratech.yaratube.ui.categories.CategoriesFragment;
+import com.yaratech.yaratube.ui.home.HeaderItemsFragment;
 import com.yaratech.yaratube.ui.products.ProductListFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         CategoriesFragment.OnCategoryFragmentActionListener,
-        OnProductActionListener{
+        OnProductActionListener,
+        HeaderItemsFragment.OnHeaderItemsInteractionListener {
 
     FragmentTransaction fragmentTransaction;
     FragmentManager fragmentManager;
@@ -100,8 +103,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void goFromProductToProdutDetails(int productId) {
-        setFragment(ProductDetailsFragment.newInstance(productId));
+    public void goFromProductToProdutDetails(Product product) {
+        setFragment(ProductDetailsFragment.newInstance(product.getId()));
+        fragmentTransaction.addToBackStack("product_list");
+    }
+
+    @Override
+    public void showRequestedHeaderItemDetails(HeaderItem item) {
+        setFragment(ProductDetailsFragment.newInstance(item.getId()));
         fragmentTransaction.addToBackStack("product_list");
     }
 }

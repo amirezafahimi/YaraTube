@@ -70,17 +70,13 @@ public class HomeItemsRecyclerViewAdapter extends RecyclerView.Adapter<HomeItems
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, products.get(getAdapterPosition()).getId());
-            Log.e("OOO", "123456786434684694646");
+            if (mClickListener != null) mClickListener.onItemClick(view, products.get(getAdapterPosition()));
         }
     }
 
 
     // parent activity will implement this method to respond to click events
     public interface HomeItemClickListener {
-        void onItemClick(View view, int productId);
+        void onItemClick(View view, Product product);
     }
-
-
-
 }

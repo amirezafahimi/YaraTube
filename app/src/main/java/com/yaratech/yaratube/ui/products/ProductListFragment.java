@@ -15,12 +15,14 @@ import android.widget.Toast;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.source.Repository;
+import com.yaratech.yaratube.ui.OnProductActionListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProductListFragment extends Fragment implements ProductListContract.View{
+public class ProductListFragment extends Fragment implements ProductListContract.View,
+        ProductListRecyclerViewAdapter.ProductClickListener{
 
     ProductListPresenter productListPresenter;
     List<Product> products = new ArrayList<>();
@@ -61,7 +63,7 @@ public class ProductListFragment extends Fragment implements ProductListContract
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         productsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        adapter = new ProductListRecyclerViewAdapter(getContext());
+        adapter = new ProductListRecyclerViewAdapter(getContext(), ProductListFragment.this);
         productsRecyclerView.setAdapter(adapter);
         productListPresenter = new ProductListPresenter(this, new Repository());
         productListPresenter.fetchProducts(getArguments().getInt("category_id"));
@@ -86,5 +88,10 @@ public class ProductListFragment extends Fragment implements ProductListContract
     @Override
     public void hideProgrssBar() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onItemClick(View view, Product product) {
+        ((OnProductActionListener) getContext()).goFromProductToProdutDetails(product);
     }
 }

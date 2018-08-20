@@ -70,18 +70,18 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        progressBar = view.findViewById(R.id.loading_product_details);
         imageView =  view.findViewById(R.id.play);
         videoView = view.findViewById(R.id.product_video);
         title = view.findViewById(R.id.product_name);
         description = view.findViewById(R.id.product_explain);
         productDetailsRecyclerView = view.findViewById(R.id.product_comments);
-        progressBar = view.findViewById(R.id.loading_product_details);
-        progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        progressBar.setVisibility(View.GONE);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
