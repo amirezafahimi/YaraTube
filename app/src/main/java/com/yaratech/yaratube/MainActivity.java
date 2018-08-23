@@ -15,22 +15,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Category;
-import com.yaratech.yaratube.data.model.HeaderItem;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.ui.MainPageFragment;
 import com.yaratech.yaratube.ui.OnProductActionListener;
-import com.yaratech.yaratube.ui.Productdetails.ProductDetailsFragment;
+import com.yaratech.yaratube.ui.productdetails.ProductDetailsFragment;
 import com.yaratech.yaratube.ui.categories.CategoriesFragment;
-import com.yaratech.yaratube.ui.home.HeaderItemsFragment;
 import com.yaratech.yaratube.ui.products.ProductListFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         CategoriesFragment.OnCategoryFragmentActionListener,
-        OnProductActionListener,
-        HeaderItemsFragment.OnHeaderItemsInteractionListener {
+        OnProductActionListener {
 
     FragmentTransaction fragmentTransaction;
     FragmentManager fragmentManager;
@@ -104,13 +100,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void goFromProductToProdutDetails(Product product) {
-        setFragment(ProductDetailsFragment.newInstance(product.getId()));
+        setFragment(ProductDetailsFragment.newInstance(product));
         fragmentTransaction.addToBackStack("product_list");
     }
 
-    @Override
-    public void showRequestedHeaderItemDetails(HeaderItem item) {
-        setFragment(ProductDetailsFragment.newInstance(item.getId()));
-        fragmentTransaction.addToBackStack("product_list");
-    }
 }

@@ -52,18 +52,22 @@ public class HomeItemsRecyclerViewAdapter extends RecyclerView.Adapter<HomeItems
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        ImageView product_avatar;
-        TextView product_title;
+        ImageView productAvatar;
+        TextView productTitle;
+        TextView productDescriptin;
 
         ViewHolder(View itemView) {
             super(itemView);
-            product_avatar = itemView.findViewById(R.id.product_image);
-            product_title = itemView.findViewById(R.id.product_title);
+            productAvatar = itemView.findViewById(R.id.product_image);
+            productTitle = itemView.findViewById(R.id.product_title);
+            productDescriptin = itemView.findViewById(R.id.description_product);
         }
 
         public void onBind(Product product) {
-            Glide.with(context).load(product.getFeatureAvatar().getXxxdpi()).into(product_avatar);
-            product_title.setText(product.getName());
+            Glide.with(context).load(product.getFeatureAvatar().getXxxdpi()).into(productAvatar);
+            productTitle.setText(product.getName());
+            productDescriptin.setText(product.getShortDescription());
+
 
             itemView.setOnClickListener(this);
         }

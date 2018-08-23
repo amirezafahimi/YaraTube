@@ -3,21 +3,20 @@ package com.yaratech.yaratube.ui.home;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
-import com.yaratech.yaratube.data.model.HeaderItem;
+import com.yaratech.yaratube.data.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    private List<HeaderItem> headerItemList = new ArrayList<>();
+    private List<Product> headerItemList = new ArrayList<>();
 
     public SectionsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public void setData(List<HeaderItem> headeritems) {
+    public void setData(List<Product> headeritems) {
         headerItemList = headeritems;
         notifyDataSetChanged();
     }

@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.Productdetails;
+package com.yaratech.yaratube.ui.productdetails;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Comment;
-import com.yaratech.yaratube.data.model.ProductDetail;
 
 import java.util.ArrayList;
 import java.util.List;

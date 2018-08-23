@@ -1,6 +1,8 @@
 package com.yaratech.yaratube.ui.home;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -14,18 +16,19 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.yaratech.yaratube.R;
-import com.yaratech.yaratube.data.model.HeaderItem;
+import com.yaratech.yaratube.data.model.Product;
+import com.yaratech.yaratube.ui.OnProductActionListener;
 
 public class HeaderItemsFragment extends Fragment {
 
     ImageView imageView;
-    private HeaderItem headerItem;
-    private OnHeaderItemsInteractionListener mListener;
+    private Product headerItem;
+    private OnProductActionListener mListener;
 
     public HeaderItemsFragment() {
     }
 
-    public static HeaderItemsFragment newInstance(HeaderItem headerItem) {
+    public static HeaderItemsFragment newInstance(Product headerItem) {
 
         Bundle args = new Bundle();
         args.putParcelable("HEADER_ITEM", headerItem);
@@ -37,8 +40,8 @@ public class HeaderItemsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnHeaderItemsInteractionListener) {
-            mListener = (OnHeaderItemsInteractionListener) context;
+        if (context instanceof OnProductActionListener) {
+            mListener = (OnProductActionListener) context;
         }
     }
 
@@ -63,13 +66,11 @@ public class HeaderItemsFragment extends Fragment {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.showRequestedHeaderItemDetails(headerItem);
+                mListener.goFromProductToProdutDetails(headerItem);
             }
         });
         Glide.with(getContext()).load(headerItem.getFeatureAvatar().getXxxdpi()).into(imageView);
+        /*imageView.setScaleX(-1);*/
     }
 
-    public interface OnHeaderItemsInteractionListener {
-        void showRequestedHeaderItemDetails(HeaderItem item);
-    }
 }

@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.Productdetails;
+package com.yaratech.yaratube.ui.productdetails;
 
 import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.ProductDetail;

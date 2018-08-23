@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.yaratech.yaratube.R;
-import com.yaratech.yaratube.data.model.HeaderItem;
 import com.yaratech.yaratube.data.model.HomeItem;
 import com.yaratech.yaratube.data.model.Home;
+import com.yaratech.yaratube.data.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private Home home;
     SectionsPagerAdapter sectionsPagerAdapter;
-    List<HeaderItem> headeritems = new ArrayList<>();
+    List<Product> headeritems = new ArrayList<>();
     List<HomeItem> homeitems = new ArrayList<>();
     private Context context;
     private FragmentManager fragmentManager;

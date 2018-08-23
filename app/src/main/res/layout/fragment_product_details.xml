@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".ui.Productdetails.ProductDetailsFragment">
+    tools:context=".ui.productdetails.ProductDetailsFragment">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                         android:id="@+id/product_video"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/videoview_height" />-->
-                    <VideoView
+                    <ImageView
                         android:id="@+id/product_video"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/videoview_height" />
@@ -158,7 +158,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_gravity="center"
+        android:layout_gravity="top"
         />
 
 
