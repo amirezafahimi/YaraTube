@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui;
+package com.yaratech.yaratube.ui.MainPage;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yaratech.yaratube.R;
-import com.yaratech.yaratube.ui.categories.CategoriesFragment;
-import com.yaratech.yaratube.ui.home.HomeFragment;
+import com.yaratech.yaratube.ui.MainPage.categories.CategoriesFragment;
+import com.yaratech.yaratube.ui.MainPage.home.HomeFragment;
 
 public class MainPageFragment extends Fragment {
 

@@ -17,10 +17,11 @@ import android.view.MenuItem;
 
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Product;
-import com.yaratech.yaratube.ui.MainPageFragment;
+import com.yaratech.yaratube.ui.MainPage.MainPageFragment;
 import com.yaratech.yaratube.ui.OnProductActionListener;
+import com.yaratech.yaratube.ui.login.LoginDialog;
 import com.yaratech.yaratube.ui.productdetails.ProductDetailsFragment;
-import com.yaratech.yaratube.ui.categories.CategoriesFragment;
+import com.yaratech.yaratube.ui.MainPage.categories.CategoriesFragment;
 import com.yaratech.yaratube.ui.products.ProductListFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity
 
     FragmentTransaction fragmentTransaction;
     FragmentManager fragmentManager;
+    LoginDialog loginDialog = new LoginDialog();
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -98,10 +100,19 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    boolean a = true;
+
     @Override
     public void goFromProductToProdutDetails(Product product) {
-        setFragment(ProductDetailsFragment.newInstance(product));
-        fragmentTransaction.addToBackStack("product_list");
+        a = !a;
+        if (a) {
+            loginDialog.show(fragmentManager, "login dialog");
+        } else {
+            setFragment(ProductDetailsFragment.newInstance(product));
+            fragmentTransaction.addToBackStack("product_list");
+        }
+
+
     }
 
 }

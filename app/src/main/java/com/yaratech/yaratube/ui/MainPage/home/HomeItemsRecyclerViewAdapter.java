@@ -1,8 +1,7 @@
-package com.yaratech.yaratube.ui.home;
+package com.yaratech.yaratube.ui.MainPage.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Product;
-import com.yaratech.yaratube.ui.categories.CategoryItemsRecyclerViewAdapter;
+import com.yaratech.yaratube.ui.MainPage.categories.CategoryItemsRecyclerViewAdapter;
 
 import java.util.List;
 

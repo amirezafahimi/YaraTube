@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.categories;
+package com.yaratech.yaratube.ui.MainPage.categories;
 
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.source.GetResultInterface;

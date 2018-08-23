@@ -1,14 +1,12 @@
-package com.yaratech.yaratube.ui.categories;
+package com.yaratech.yaratube.ui.MainPage.categories;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +16,9 @@ import android.widget.Toast;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.source.Repository;
-import com.yaratech.yaratube.ui.home.HomePresenter;
 
 import java.util.List;
 
-import static android.widget.GridLayout.HORIZONTAL;
 import static android.widget.GridLayout.VERTICAL;
 
 

@@ -21,7 +21,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:gravity="start" />
 
     <TextView
         android:id="@+id/comment"
@@ -34,6 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/username" />
+        app:layout_constraintTop_toBottomOf="@id/username"
+        android:gravity="start" />
 
 </android.support.constraint.ConstraintLayout>

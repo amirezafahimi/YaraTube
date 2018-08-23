@@ -16,4 +16,6 @@
     <string name="comment_button_text">نظر دهید</string>
     <string name="users_comment">نظرات کاربران</string>
     <string name="send">ثبت</string>
+    <string name="login_with_phone_number_text">از طریق شماره موبایل</string>
+    <string name="login_google_account_text">از طریق حساب google</string>
 </resources>

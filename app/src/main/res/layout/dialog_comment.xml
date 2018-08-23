@@ -4,13 +4,13 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:padding="@dimen/comment_dialog_padding">
+    android:padding="@dimen/dialog_padding">
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/dialog_component_marginTop"
         android:pointerIcon="@drawable/ic_star_black_24dp" />
 
     <EditText
@@ -18,7 +18,7 @@
         android:hint="نظر"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/dialog_component_marginTop"
         android:background="@drawable/edittext_background"
         android:padding="10dp"
         android:textDirection="rtl"/>
@@ -26,10 +26,10 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/dialog_component_marginTop"
         android:backgroundTint="#3B89D2"
         android:text="@string/send"
         android:textSize="@dimen/textSize"
-        android:textColor="#ffffff" />
+        android:textColor="@color/white" />
 
 </LinearLayout>
