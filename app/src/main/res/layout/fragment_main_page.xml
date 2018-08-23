@@ -7,7 +7,7 @@
     tools:context=".ui.MainPage.MainPageFragment">
 
     <FrameLayout
-        android:id="@+id/homeFragmentContainer"
+        android:id="@+id/mainPageFragmentContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/navigation"

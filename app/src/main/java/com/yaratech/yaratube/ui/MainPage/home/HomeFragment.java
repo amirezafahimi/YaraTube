@@ -19,8 +19,7 @@ import com.yaratech.yaratube.data.model.Home;
 import com.yaratech.yaratube.ui.OnProductActionListener;
 
 
-public class HomeFragment extends Fragment implements HomeContract.View
-        , HomeItemsRecyclerViewAdapter.HomeItemClickListener{
+public class HomeFragment extends Fragment implements HomeContract.View, OnProductActionListener{
 
     Home home;
     HomePresenter homePresenter;
@@ -88,7 +87,7 @@ public class HomeFragment extends Fragment implements HomeContract.View
     }
 
     @Override
-    public void onItemClick(View view, Product product) {
+    public void goFromProductToProdutDetails(Product product) {
         ((OnProductActionListener) getContext()).goFromProductToProdutDetails(product);
     }
 }

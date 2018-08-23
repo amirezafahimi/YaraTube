@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.ui.MainPage.categories.CategoryItemsRecyclerViewAdapter;
+import com.yaratech.yaratube.ui.OnProductActionListener;
 
 import java.util.List;
 
@@ -20,10 +21,10 @@ public class HomeItemsRecyclerViewAdapter extends RecyclerView.Adapter<HomeItems
 
     private List<Product> products;
     private Context context;
-    private HomeItemClickListener mClickListener;
+    private OnProductActionListener mClickListener;
 
     // data is passed into the constructor
-    HomeItemsRecyclerViewAdapter(Context context, List<com.yaratech.yaratube.data.model.Product> products, HomeItemClickListener mClickListener) {
+    HomeItemsRecyclerViewAdapter(Context context, List<com.yaratech.yaratube.data.model.Product> products, OnProductActionListener mClickListener) {
         this.context = context;
         this.products = products;
         this.mClickListener = mClickListener;
@@ -50,7 +51,7 @@ public class HomeItemsRecyclerViewAdapter extends RecyclerView.Adapter<HomeItems
 
 
     // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView productAvatar;
         TextView productTitle;
         TextView productDescriptin;
@@ -73,13 +74,7 @@ public class HomeItemsRecyclerViewAdapter extends RecyclerView.Adapter<HomeItems
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, products.get(getAdapterPosition()));
+            if (mClickListener != null) mClickListener.goFromProductToProdutDetails(products.get(getAdapterPosition()));
         }
-    }
-
-
-    // parent activity will implement this method to respond to click events
-    public interface HomeItemClickListener {
-        void onItemClick(View view, Product product);
     }
 }

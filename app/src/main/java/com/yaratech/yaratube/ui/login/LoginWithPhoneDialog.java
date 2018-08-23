@@ -3,30 +3,23 @@ package com.yaratech.yaratube.ui.login;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.yaratech.yaratube.R;
 
-
-public class LoginDialog extends DialogFragment {
+public class LoginWithPhoneDialog extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    LinearLayout loginWithPhone, loginWithGoogle;
 
-    public LoginDialog() {
+    public LoginWithPhoneDialog() {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static LoginDialog newInstance() {
-        LoginDialog fragment = new LoginDialog();
+    public static LoginWithPhoneDialog newInstance() {
+        LoginWithPhoneDialog fragment = new LoginWithPhoneDialog();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -36,7 +29,6 @@ public class LoginDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
         }
     }
 
@@ -44,12 +36,14 @@ public class LoginDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login_dialog, container, false);
+        return inflater.inflate(R.layout.fragment_login_with_phone_dialog, container, false);
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
     }
 
     public interface OnFragmentInteractionListener {

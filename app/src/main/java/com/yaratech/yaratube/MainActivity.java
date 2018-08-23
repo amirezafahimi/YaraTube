@@ -23,14 +23,13 @@ import com.yaratech.yaratube.ui.login.LoginDialog;
 import com.yaratech.yaratube.ui.productdetails.ProductDetailsFragment;
 import com.yaratech.yaratube.ui.MainPage.categories.CategoriesFragment;
 import com.yaratech.yaratube.ui.products.ProductListFragment;
+import com.yaratech.yaratube.util.AppConstants;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         CategoriesFragment.OnCategoryFragmentActionListener,
         OnProductActionListener {
 
-    FragmentTransaction fragmentTransaction;
-    FragmentManager fragmentManager;
     LoginDialog loginDialog = new LoginDialog();
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -52,7 +51,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setFragment(MainPageFragment.newInstance());
+        AppConstants.setFragment(R.id.fragment_container,
+                getSupportFragmentManager(),
+                MainPageFragment.newInstance(),
+                "mainPageFragment",
+                false);
 
     }
 
@@ -86,17 +89,14 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void setFragment(Fragment fragment) {
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, fragment).commit();
-
-    }
 
     @Override
     public void goFromCategoryToProductList(Category category) {
-        setFragment(ProductListFragment.newInstance(category.getId()));
-        fragmentTransaction.addToBackStack("product_list");
+        AppConstants.setFragment(R.id.fragment_container,
+                getSupportFragmentManager(),
+                ProductListFragment.newInstance(category.getId()),
+                "productListFragment",
+                true);
 
     }
 
@@ -106,10 +106,13 @@ public class MainActivity extends AppCompatActivity
     public void goFromProductToProdutDetails(Product product) {
         a = !a;
         if (a) {
-            loginDialog.show(fragmentManager, "login dialog");
+            loginDialog.show(getSupportFragmentManager(), "login dialog");
         } else {
-            setFragment(ProductDetailsFragment.newInstance(product));
-            fragmentTransaction.addToBackStack("product_list");
+            AppConstants.setFragment(R.id.fragment_container,
+                    getSupportFragmentManager(),
+                    ProductDetailsFragment.newInstance(product),
+                    "productDetailsFragment",
+                    true);
         }
 
 

@@ -18,6 +18,7 @@ import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.HomeItem;
 import com.yaratech.yaratube.data.model.Home;
 import com.yaratech.yaratube.data.model.Product;
+import com.yaratech.yaratube.ui.OnProductActionListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +33,13 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     List<HomeItem> homeitems = new ArrayList<>();
     private Context context;
     private FragmentManager fragmentManager;
-    private HomeItemsRecyclerViewAdapter.HomeItemClickListener mClickListener;
+    private OnProductActionListener mClickListener;
     private static final int HEADER_LIST_ITEM_VIEW = 1;
     private static final int HOME_ITEM_LIST_ITEM_VIEW = 2;
 
 
     // data is passed into the constructor
-    public HomeRecyclerViewAdapter(Context context, FragmentManager fragmentManager, HomeItemsRecyclerViewAdapter.HomeItemClickListener mClickListener) {
+    public HomeRecyclerViewAdapter(Context context, FragmentManager fragmentManager, OnProductActionListener mClickListener) {
         this.context = context;
         this.fragmentManager = fragmentManager;
         this.mClickListener = mClickListener;

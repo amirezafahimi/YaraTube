@@ -75,7 +75,7 @@ public class MainPageFragment extends Fragment {
             homeFragment = HomeFragment.newInstance();
             fragmentManager = getChildFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.homeFragmentContainer, homeFragment).commit();
+            fragmentTransaction.add(R.id.mainPageFragmentContainer, homeFragment).commit();
             fragmentTransaction.addToBackStack("home_fragment");
 
         } else if (!homeFragment.isVisible()) {
@@ -92,7 +92,7 @@ public class MainPageFragment extends Fragment {
             categoriesFragment = categoriesFragment.newInstance();
             fragmentManager = getChildFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.homeFragmentContainer, categoriesFragment).commit();
+            fragmentTransaction.add(R.id.mainPageFragmentContainer, categoriesFragment).commit();
             fragmentTransaction.addToBackStack("category_fragment");
         } else if (!categoriesFragment.isVisible()) {
             fragmentManager.beginTransaction().hide(homeFragment).commit();
