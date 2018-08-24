@@ -1,9 +1,11 @@
 package com.yaratech.yaratube;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,9 +14,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
 import com.yaratech.yaratube.data.model.Category;
+import com.yaratech.yaratube.data.model.MobileLoginStep1;
+import com.yaratech.yaratube.data.model.MobileLoginStep2;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.ui.MainPage.MainPageFragment;
 import com.yaratech.yaratube.ui.OnProductActionListener;
@@ -31,15 +36,16 @@ public class MainActivity extends AppCompatActivity
         CategoriesFragment.OnCategoryFragmentActionListener,
         OnProductActionListener,
         LoginDialog.DismissDialog,
-        LoginWithPhoneDialog.DismissDialog {
+        LoginWithPhoneDialog.DismissDialog,
+        ConfirmDialog.DismissDialog {
 
 
     /*public static SharedPreferences sharedPreferences;*/
 
 
-    LoginDialog loginDialog = new LoginDialog();
-    LoginWithPhoneDialog loginWithPhoneDialog = new LoginWithPhoneDialog();
-    ConfirmDialog confirmDialog = new ConfirmDialog();
+    LoginDialog loginDialog = LoginDialog.newInstance();
+    LoginWithPhoneDialog loginWithPhoneDialog = LoginWithPhoneDialog.newInstance();
+    ConfirmDialog confirmDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -67,8 +73,8 @@ public class MainActivity extends AppCompatActivity
                 false);
 
         /*sharedPreferences = getSharedPreferences("USER_LOGIN", MODE_PRIVATE);*/
-        Hawk.init(this).build();
 
+        Hawk.init(this).build();
 
     }
 
@@ -131,16 +137,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void dismissLoginDialog() {
+    public void goToLoginWithPhoneDialog() {
         loginDialog.dismiss();
         loginWithPhoneDialog.show(getSupportFragmentManager(), "enter phone");
     }
 
     @Override
-    public void dismissLoginWithPhoneDialog() {
+    public void goToConfirmDialog(MobileLoginStep1 step1, String phoneNum) {
         loginWithPhoneDialog.dismiss();
+        confirmDialog = ConfirmDialog.newInstance(step1, phoneNum);
         confirmDialog.show(getSupportFragmentManager(), "Get the code");
-        /*sharedPreferences.edit().putBoolean("USER_LOGIN", true).apply();*/
+        Toast.makeText(this, step1.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void dissmissConfirmDialog(MobileLoginStep2 step2) {
+        confirmDialog.dismiss();
+        Toast.makeText(this, step2.getMessage(), Toast.LENGTH_LONG);
         Hawk.put("USER_LOGIN", true);
+        /*sharedPreferences.edit().putBoolean("USER_LOGIN", true).apply();*/
     }
 }

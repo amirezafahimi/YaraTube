@@ -5,6 +5,8 @@ import android.util.Log;
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.Home;
+import com.yaratech.yaratube.data.model.MobileLoginStep1;
+import com.yaratech.yaratube.data.model.MobileLoginStep2;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.model.ProductDetail;
 import com.yaratech.yaratube.data.source.remote.Services;
@@ -106,9 +108,9 @@ public class Repository {
         Client.getRetrofitInstance().create(Services.class).getCommentList(id).enqueue(new Callback<List<Comment>>() {
             @Override
             public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     commentListInterface.onSuccess(response.body());
-                }else{
+                } else {
                     commentListInterface.onFail("عملیات با خطا مواجه شد!");
                 }
             }
@@ -117,6 +119,65 @@ public class Repository {
             public void onFailure(Call<List<Comment>> call, Throwable t) {
                 commentListInterface.onFail("عملیات با خطا مواجه شد!");
 
+            }
+        });
+
+    }
+
+    public void requestActivationCode(String num,
+                                      String deviceId,
+                                      String deviceModel,
+                                      String deviceOs,
+                                      String gcm,
+                                      final GetResultInterface<MobileLoginStep1> mobileLoginInterface) {
+        System.out.println(Client.getRetrofitInstance().create(Services.class).sendPhoneNumber(num,
+                deviceId,
+                deviceModel,
+                deviceOs,
+                gcm).toString());
+        Client.getRetrofitInstance().create(Services.class).sendPhoneNumber(num,
+                deviceId,
+                deviceModel,
+                deviceOs,
+                gcm).enqueue(new Callback<MobileLoginStep1>() {
+            @Override
+            public void onResponse(Call<MobileLoginStep1> call, Response<MobileLoginStep1> response) {
+                if (response.isSuccessful()) {
+                    mobileLoginInterface.onSuccess(response.body());
+                } else {
+                    mobileLoginInterface.onFail(response.code()+"");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MobileLoginStep1> call, Throwable t) {
+                mobileLoginInterface.onFail("عملیات با خطا مواجه شد!");
+            }
+        });
+
+    }
+
+    public void confirmationCode(String num,
+                                 String deviceId,
+                                 String activationCode,
+                                 String nickname,
+                                 final GetResultInterface<MobileLoginStep2> mobileLoginInterface) {
+        Client.getRetrofitInstance().create(Services.class).sendActivationCode(num,
+                deviceId,
+                activationCode,
+                nickname).enqueue(new Callback<MobileLoginStep2>() {
+            @Override
+            public void onResponse(Call<MobileLoginStep2> call, Response<MobileLoginStep2> response) {
+                if (response.isSuccessful()) {
+                    mobileLoginInterface.onSuccess(response.body());
+                } else {
+                    mobileLoginInterface.onFail(response.code()+"");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MobileLoginStep2> call, Throwable t) {
+                mobileLoginInterface.onFail("عملیات با خطا مواجه شد!");
             }
         });
 

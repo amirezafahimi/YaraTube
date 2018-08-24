@@ -1,8 +1,11 @@
 package com.yaratech.yaratube.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,6 +28,20 @@ public class AppConstants {
                 fragmentTransaction.addToBackStack(tag);
             fragmentTransaction.commit();
         }
+    }
+
+    @SuppressLint("HardwareIds")
+    public static String getDeviceId(Context context) {
+        return Settings.Secure.getString(context.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+    }
+
+    public static String getDeviceOS() {
+        return android.os.Build.VERSION.RELEASE;
+    }
+
+    public static String getDeviceModel() {
+        return Build.MODEL;
     }
 
 }

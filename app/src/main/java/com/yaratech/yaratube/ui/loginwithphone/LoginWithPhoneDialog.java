@@ -6,18 +6,26 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.yaratech.yaratube.R;
+import com.yaratech.yaratube.data.model.MobileLoginStep1;
+import com.yaratech.yaratube.data.source.Repository;
+import com.yaratech.yaratube.util.AppConstants;
 
-public class LoginWithPhoneDialog extends DialogFragment {
+public class LoginWithPhoneDialog extends DialogFragment implements LoginWithPhoneContract.View {
 
     private DismissDialog mListener;
     Button send;
+    EditText phoneNumber;
 
+    LoginWithPhonePresenter loginWithPhonePresenter;
 
 
     public LoginWithPhoneDialog() {
@@ -49,16 +57,21 @@ public class LoginWithPhoneDialog extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         send = view.findViewById(R.id.send_phone_button);
-
+        phoneNumber = view.findViewById(R.id.phone_edit_text);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        loginWithPhonePresenter = new LoginWithPhonePresenter(new Repository(), this);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.dismissLoginWithPhoneDialog();
+                loginWithPhonePresenter.sendPhoneNumber(phoneNumber.getText().toString(),
+                        AppConstants.getDeviceId(getContext()),
+                        AppConstants.getDeviceModel(),
+                        AppConstants.getDeviceOS(),
+                        "");
             }
         });
     }
@@ -71,8 +84,18 @@ public class LoginWithPhoneDialog extends DialogFragment {
         }
     }
 
+    @Override
+    public void goToNextDialog(MobileLoginStep1 step1) {
+        mListener.goToConfirmDialog(step1, phoneNumber.getText().toString());
+    }
+
+    @Override
+    public void showErrorMessage(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+    }
+
 
     public interface DismissDialog {
-        void dismissLoginWithPhoneDialog();
+        void goToConfirmDialog(MobileLoginStep1 step1, String phoneNum);
     }
 }

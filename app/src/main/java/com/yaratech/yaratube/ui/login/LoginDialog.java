@@ -25,6 +25,12 @@ public class LoginDialog extends DialogFragment {
         // Required empty public constructor
     }
 
+    public static LoginDialog newInstance() {
+        LoginDialog fragment = new LoginDialog();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +52,7 @@ public class LoginDialog extends DialogFragment {
         loginWithPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.dismissLoginDialog();
+                mListener.goToLoginWithPhoneDialog();
             }
         });
     }
@@ -62,6 +68,6 @@ public class LoginDialog extends DialogFragment {
 
 
     public interface DismissDialog {
-        void dismissLoginDialog();
+        void goToLoginWithPhoneDialog();
     }
 }

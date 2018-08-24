@@ -19,7 +19,7 @@
         android:layout_marginBottom="16dp"/>
 
     <EditText
-        android:id="@+id/phone_edit_text"
+        android:id="@+id/code_edit_text"
         android:hint="کد فعالسازی"
         android:textSize="@dimen/phone_edit_text_size"
         android:textAlignment="textStart"
