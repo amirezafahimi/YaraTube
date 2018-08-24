@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity
     public void dissmissConfirmDialog(MobileLoginStep2 step2) {
         confirmDialog.dismiss();
         Toast.makeText(this, step2.getMessage(), Toast.LENGTH_LONG).show();
-        Hawk.put("USER_LOGIN", true);
+        Hawk.put("USER_LOGIN", step2);
         /*sharedPreferences.edit().putBoolean("USER_LOGIN", true).apply();*/
     }
 }
