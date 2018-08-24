@@ -1,11 +1,9 @@
 package com.yaratech.yaratube;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +18,8 @@ import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.ui.MainPage.MainPageFragment;
 import com.yaratech.yaratube.ui.OnProductActionListener;
 import com.yaratech.yaratube.ui.login.LoginDialog;
+import com.yaratech.yaratube.ui.loginconfirmphone.ConfirmDialog;
+import com.yaratech.yaratube.ui.loginwithphone.LoginWithPhoneDialog;
 import com.yaratech.yaratube.ui.productdetails.ProductDetailsFragment;
 import com.yaratech.yaratube.ui.MainPage.categories.CategoriesFragment;
 import com.yaratech.yaratube.ui.products.ProductListFragment;
@@ -28,9 +28,17 @@ import com.yaratech.yaratube.util.AppConstants;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         CategoriesFragment.OnCategoryFragmentActionListener,
-        OnProductActionListener {
+        OnProductActionListener,
+        LoginDialog.DismissDialog,
+        LoginWithPhoneDialog.DismissDialog {
+
+
+    public static SharedPreferences sharedPreferences;
+    ;
 
     LoginDialog loginDialog = new LoginDialog();
+    LoginWithPhoneDialog loginWithPhoneDialog = new LoginWithPhoneDialog();
+    ConfirmDialog confirmDialog = new ConfirmDialog();
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -56,6 +64,8 @@ public class MainActivity extends AppCompatActivity
                 MainPageFragment.newInstance(),
                 "mainPageFragment",
                 false);
+
+        sharedPreferences = getSharedPreferences("USER_LOGIN", MODE_PRIVATE);
 
     }
 
@@ -100,22 +110,33 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    boolean a = true;
 
     @Override
     public void goFromProductToProdutDetails(Product product) {
-        a = !a;
-        if (a) {
-            loginDialog.show(getSupportFragmentManager(), "login dialog");
-        } else {
+        boolean isLoggedIn = sharedPreferences.getBoolean("USER_LOGIN", false);
+        if (isLoggedIn) {
             AppConstants.setFragment(R.id.fragment_container,
                     getSupportFragmentManager(),
                     ProductDetailsFragment.newInstance(product),
                     "productDetailsFragment",
                     true);
+        } else {
+            loginDialog.show(getSupportFragmentManager(), "login dialog");
         }
 
 
     }
 
+    @Override
+    public void dismissLoginDialog() {
+        loginDialog.dismiss();
+        loginWithPhoneDialog.show(getSupportFragmentManager(), "enter phone");
+    }
+
+    @Override
+    public void dismissLoginWithPhoneDialog() {
+        loginWithPhoneDialog.dismiss();
+        confirmDialog.show(getSupportFragmentManager(), "Get the code");
+        sharedPreferences.edit().putBoolean("USER_LOGIN", true).apply();
+    }
 }

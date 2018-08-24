@@ -16,6 +16,7 @@
     <EditText
         android:id="@+id/comment_edit_text"
         android:hint="نظر"
+        android:textSize="@dimen/comment_edit_text_size"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dialog_component_marginTop"

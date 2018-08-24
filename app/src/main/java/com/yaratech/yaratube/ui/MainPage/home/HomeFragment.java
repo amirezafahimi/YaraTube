@@ -19,7 +19,7 @@ import com.yaratech.yaratube.data.model.Home;
 import com.yaratech.yaratube.ui.OnProductActionListener;
 
 
-public class HomeFragment extends Fragment implements HomeContract.View, OnProductActionListener{
+public class HomeFragment extends Fragment implements HomeContract.View {
 
     Home home;
     HomePresenter homePresenter;
@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, OnProdu
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         homeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new HomeRecyclerViewAdapter(getContext(), getFragmentManager(), HomeFragment.this);
+        adapter = new HomeRecyclerViewAdapter(getContext(), getFragmentManager(), (OnProductActionListener) getContext());
         homeRecyclerView.setAdapter(adapter);
         homePresenter = new HomePresenter(this, new Repository());
         homePresenter.fetchHome();
@@ -86,8 +86,4 @@ public class HomeFragment extends Fragment implements HomeContract.View, OnProdu
         progressBar.setVisibility(View.GONE);
     }
 
-    @Override
-    public void goFromProductToProdutDetails(Product product) {
-        ((OnProductActionListener) getContext()).goFromProductToProdutDetails(product);
-    }
 }

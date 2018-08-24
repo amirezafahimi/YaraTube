@@ -43,13 +43,13 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/login_google_account"
+        android:id="@+id/login_with_google_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/dialog_component_marginTop"
         android:layout_marginBottom="@dimen/dialog_component_marginBottom"
-        android:background="@color/login_google_account_color"
+        android:background="@color/login_with_google_account_color"
         android:layoutDirection="rtl"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"

@@ -18,4 +18,5 @@
     <string name="send">ثبت</string>
     <string name="login_with_phone_number_text">از طریق شماره موبایل</string>
     <string name="login_google_account_text">از طریق حساب google</string>
+    <string name="phone_correction">تصحیح شماره</string>
 </resources>

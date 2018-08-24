@@ -17,16 +17,23 @@
         android:layout_marginBottom="16dp"/>
 
     <EditText
-        android:id="@+id/comment_edit_text"
+        android:id="@+id/phone_edit_text"
         android:hint="شماره موبایل خود را وارد کنید"
+        android:textSize="@dimen/phone_edit_text_size"
+        android:textAlignment="textStart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dialog_component_marginTop"
         android:background="@drawable/edittext_background"
-        android:padding="10dp"
-        android:textDirection="rtl"/>
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="48dp"
+        android:textDirection="rtl"
+        android:gravity="start" />
 
     <Button
+        android:id="@+id/send_phone_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dialog_component_marginTop"
