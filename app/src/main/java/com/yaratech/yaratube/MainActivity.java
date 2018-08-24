@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.orhanobut.hawk.Hawk;
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.ui.MainPage.MainPageFragment;
@@ -33,8 +34,8 @@ public class MainActivity extends AppCompatActivity
         LoginWithPhoneDialog.DismissDialog {
 
 
-    public static SharedPreferences sharedPreferences;
-    ;
+    /*public static SharedPreferences sharedPreferences;*/
+
 
     LoginDialog loginDialog = new LoginDialog();
     LoginWithPhoneDialog loginWithPhoneDialog = new LoginWithPhoneDialog();
@@ -65,7 +66,9 @@ public class MainActivity extends AppCompatActivity
                 "mainPageFragment",
                 false);
 
-        sharedPreferences = getSharedPreferences("USER_LOGIN", MODE_PRIVATE);
+        /*sharedPreferences = getSharedPreferences("USER_LOGIN", MODE_PRIVATE);*/
+        Hawk.init(this).build();
+
 
     }
 
@@ -113,8 +116,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void goFromProductToProdutDetails(Product product) {
-        boolean isLoggedIn = sharedPreferences.getBoolean("USER_LOGIN", false);
-        if (isLoggedIn) {
+        /*boolean isLoggedIn = sharedPreferences.getBoolean("USER_LOGIN", false);*/
+        if (Hawk.contains("USER_LOGIN")) {
             AppConstants.setFragment(R.id.fragment_container,
                     getSupportFragmentManager(),
                     ProductDetailsFragment.newInstance(product),
@@ -137,6 +140,7 @@ public class MainActivity extends AppCompatActivity
     public void dismissLoginWithPhoneDialog() {
         loginWithPhoneDialog.dismiss();
         confirmDialog.show(getSupportFragmentManager(), "Get the code");
-        sharedPreferences.edit().putBoolean("USER_LOGIN", true).apply();
+        /*sharedPreferences.edit().putBoolean("USER_LOGIN", true).apply();*/
+        Hawk.put("USER_LOGIN", true);
     }
 }
