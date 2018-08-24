@@ -102,7 +102,7 @@ public class ConfirmDialog extends DialogFragment implements ConfirmContract.Vie
 
     @Override
     public void showErrorMessage(String err) {
-        Toast.makeText(getContext(), err, Toast.LENGTH_LONG);
+        Toast.makeText(getContext(), err, Toast.LENGTH_LONG).show();
     }
 
     public interface DismissDialog {

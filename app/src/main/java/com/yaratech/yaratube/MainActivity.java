@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity
     /*public static SharedPreferences sharedPreferences;*/
 
 
-    LoginDialog loginDialog = LoginDialog.newInstance();
-    LoginWithPhoneDialog loginWithPhoneDialog = LoginWithPhoneDialog.newInstance();
+    LoginDialog loginDialog;
+    LoginWithPhoneDialog loginWithPhoneDialog;
     ConfirmDialog confirmDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         AppConstants.setFragment(R.id.fragment_container,
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity
                     "productDetailsFragment",
                     true);
         } else {
+            loginDialog = LoginDialog.newInstance();
             loginDialog.show(getSupportFragmentManager(), "login dialog");
         }
 
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void goToLoginWithPhoneDialog() {
         loginDialog.dismiss();
+        loginWithPhoneDialog = LoginWithPhoneDialog.newInstance();
         loginWithPhoneDialog.show(getSupportFragmentManager(), "enter phone");
     }
 
@@ -153,7 +155,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void dissmissConfirmDialog(MobileLoginStep2 step2) {
         confirmDialog.dismiss();
-        Toast.makeText(this, step2.getMessage(), Toast.LENGTH_LONG);
+        Toast.makeText(this, step2.getMessage(), Toast.LENGTH_LONG).show();
         Hawk.put("USER_LOGIN", true);
         /*sharedPreferences.edit().putBoolean("USER_LOGIN", true).apply();*/
     }
