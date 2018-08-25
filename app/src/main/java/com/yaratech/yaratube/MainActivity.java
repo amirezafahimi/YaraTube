@@ -1,11 +1,8 @@
 package com.yaratech.yaratube;
 
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,9 +20,10 @@ import com.yaratech.yaratube.data.model.MobileLoginStep2;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.ui.MainPage.MainPageFragment;
 import com.yaratech.yaratube.ui.OnProductActionListener;
-import com.yaratech.yaratube.ui.login.LoginDialog;
-import com.yaratech.yaratube.ui.loginconfirmphone.ConfirmDialog;
-import com.yaratech.yaratube.ui.loginwithphone.LoginWithPhoneDialog;
+import com.yaratech.yaratube.ui.login.DialogContainer;
+import com.yaratech.yaratube.ui.login.logintype.LoginDialog;
+import com.yaratech.yaratube.ui.login.loginconfirmphone.ConfirmDialog;
+import com.yaratech.yaratube.ui.login.loginwithphone.LoginWithPhoneDialog;
 import com.yaratech.yaratube.ui.productdetails.ProductDetailsFragment;
 import com.yaratech.yaratube.ui.MainPage.categories.CategoriesFragment;
 import com.yaratech.yaratube.ui.products.ProductListFragment;
@@ -34,18 +32,13 @@ import com.yaratech.yaratube.util.AppConstants;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         CategoriesFragment.OnCategoryFragmentActionListener,
-        OnProductActionListener,
-        LoginDialog.DismissDialog,
-        LoginWithPhoneDialog.DismissDialog,
-        ConfirmDialog.DismissDialog {
+        OnProductActionListener {
 
 
     /*public static SharedPreferences sharedPreferences;*/
 
 
-    LoginDialog loginDialog;
-    LoginWithPhoneDialog loginWithPhoneDialog;
-    ConfirmDialog confirmDialog;
+    DialogContainer dialogContainer;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -130,33 +123,8 @@ public class MainActivity extends AppCompatActivity
                     "productDetailsFragment",
                     true);
         } else {
-            loginDialog = LoginDialog.newInstance();
-            loginDialog.show(getSupportFragmentManager(), "login dialog");
+            dialogContainer = DialogContainer.newInstance();
+            dialogContainer.show(getSupportFragmentManager(), "login dialog");
         }
-
-
-    }
-
-    @Override
-    public void goToLoginWithPhoneDialog() {
-        loginDialog.dismiss();
-        loginWithPhoneDialog = LoginWithPhoneDialog.newInstance();
-        loginWithPhoneDialog.show(getSupportFragmentManager(), "enter phone");
-    }
-
-    @Override
-    public void goToConfirmDialog(MobileLoginStep1 step1, String phoneNum) {
-        loginWithPhoneDialog.dismiss();
-        confirmDialog = ConfirmDialog.newInstance(step1, phoneNum);
-        confirmDialog.show(getSupportFragmentManager(), "Get the code");
-        Toast.makeText(this, step1.getMessage(), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void dissmissConfirmDialog(MobileLoginStep2 step2) {
-        confirmDialog.dismiss();
-        Toast.makeText(this, step2.getMessage(), Toast.LENGTH_LONG).show();
-        Hawk.put("USER_LOGIN", step2);
-        /*sharedPreferences.edit().putBoolean("USER_LOGIN", true).apply();*/
     }
 }

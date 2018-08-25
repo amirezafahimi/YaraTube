@@ -1,13 +1,10 @@
-package com.yaratech.yaratube.ui.loginconfirmphone;
+package com.yaratech.yaratube.ui.login.loginconfirmphone;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +21,6 @@ import com.yaratech.yaratube.util.AppConstants;
 
 public class ConfirmDialog extends DialogFragment implements ConfirmContract.View {
 
-
-    private DismissDialog mListener;
     String phoneNumber;
     MobileLoginStep1 step1;
     EditText activtionCode;
@@ -47,6 +42,7 @@ public class ConfirmDialog extends DialogFragment implements ConfirmContract.Vie
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,17 +83,11 @@ public class ConfirmDialog extends DialogFragment implements ConfirmContract.Vie
         });
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof DismissDialog) {
-            mListener = (DismissDialog) context;
-        }
-    }
+    //-----------------------------------------------------------------------------
 
     @Override
     public void loginMessege(MobileLoginStep2 step2) {
-        mListener.dissmissConfirmDialog(step2);
+        ((DismissDialog)getParentFragment()).dissmissConfirmDialog(step2.getMessage());
     }
 
     @Override
@@ -105,8 +95,10 @@ public class ConfirmDialog extends DialogFragment implements ConfirmContract.Vie
         Toast.makeText(getContext(), err, Toast.LENGTH_LONG).show();
     }
 
+    //-----------------------------------------------------------------------------
+
     public interface DismissDialog {
         // TODO: Update argument type and name
-        void dissmissConfirmDialog(MobileLoginStep2 step2);
+        void dissmissConfirmDialog(String msg);
     }
 }

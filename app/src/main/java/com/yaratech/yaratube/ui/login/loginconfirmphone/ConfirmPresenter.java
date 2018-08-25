@@ -1,11 +1,8 @@
-package com.yaratech.yaratube.ui.loginconfirmphone;
-
-import android.util.Log;
+package com.yaratech.yaratube.ui.login.loginconfirmphone;
 
 import com.yaratech.yaratube.data.model.MobileLoginStep2;
 import com.yaratech.yaratube.data.source.GetResultInterface;
 import com.yaratech.yaratube.data.source.Repository;
-import com.yaratech.yaratube.util.AppConstants;
 
 public class ConfirmPresenter implements ConfirmContract.Presenter {
 

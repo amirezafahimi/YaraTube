@@ -30,6 +30,16 @@ public class AppConstants {
         }
     }
 
+    public static void setDialogFragment(int container, FragmentManager fragmentManager, Fragment fragment, String tag, boolean addToBackStack) {
+        if (!fragment.isVisible()) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(container, fragment, tag);
+            if (addToBackStack)
+                fragmentTransaction.addToBackStack(tag);
+            fragmentTransaction.commit();
+        }
+    }
+
     @SuppressLint("HardwareIds")
     public static String getDeviceId(Context context) {
         return Settings.Secure.getString(context.getContentResolver(),
