@@ -1,6 +1,7 @@
 package com.yaratech.yaratube.ui.login;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.MobileLoginStep1;
@@ -36,7 +35,6 @@ public class DialogContainer
     LoginDialog loginDialog;
     LoginWithPhoneDialog loginWithPhoneDialog;
     ConfirmDialog confirmDialog;
-
     String phoneNumber;
 
     public DialogContainer() {
@@ -79,6 +77,7 @@ public class DialogContainer
             AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(), loginDialog, "loginDialog", true);
         }
     }
+
 
 
     @Override

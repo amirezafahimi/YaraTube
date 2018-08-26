@@ -1,8 +1,10 @@
 package com.yaratech.yaratube;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -40,8 +42,8 @@ public class MainActivity extends AppCompatActivity
 
     /*public static SharedPreferences sharedPreferences;*/
 
-
     DialogContainer dialogContainer;
+
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -97,14 +99,13 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.callUs) {
             DataGenerator
-                .with(AppDatabase.getAppDatabase(this)).deleteUser(1);
+                    .with(AppDatabase.getAppDatabase(this)).deleteUser(1);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
     @Override
     public void goFromCategoryToProductList(Category category) {
