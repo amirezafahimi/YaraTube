@@ -16,13 +16,13 @@ import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.MobileLoginStep1;
 import com.yaratech.yaratube.data.model.MobileLoginStep2;
 import com.yaratech.yaratube.data.source.Repository;
+import com.yaratech.yaratube.ui.login.logintype.LoginDialog;
 import com.yaratech.yaratube.util.AppConstants;
 
 
 public class ConfirmDialog extends DialogFragment implements ConfirmContract.View {
 
     String phoneNumber;
-    MobileLoginStep1 step1;
     EditText activtionCode;
     Button send, numberCorrection;
 
@@ -34,11 +34,10 @@ public class ConfirmDialog extends DialogFragment implements ConfirmContract.Vie
 
 
     // TODO: Rename and change types and number of parameters
-    public static ConfirmDialog newInstance(MobileLoginStep1 step1, String phoneNum) {
+    public static ConfirmDialog newInstance(String phoneNum) {
         ConfirmDialog fragment = new ConfirmDialog();
         Bundle args = new Bundle();
         args.putString("phone_number", phoneNum);
-        args.putParcelable("step1", step1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,7 +48,6 @@ public class ConfirmDialog extends DialogFragment implements ConfirmContract.Vie
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             phoneNumber = getArguments().getString("phone_number");
-            step1 = getArguments().getParcelable("step1");
         }
     }
 
@@ -78,7 +76,13 @@ public class ConfirmDialog extends DialogFragment implements ConfirmContract.Vie
                 confirmPresenter.sendActivaionCode(phoneNumber,
                         AppConstants.getDeviceId(getContext()),
                         activtionCode.getText().toString(),
-                        step1.getNickname());
+                        "");
+            }
+        });
+        numberCorrection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((LoginDialog.DismissDialog)getParentFragment()).goToLoginWithPhoneDialog();
             }
         });
     }
@@ -87,7 +91,7 @@ public class ConfirmDialog extends DialogFragment implements ConfirmContract.Vie
 
     @Override
     public void loginMessege(MobileLoginStep2 step2) {
-        ((DismissDialog)getParentFragment()).dissmissConfirmDialog(step2.getMessage());
+        ((DismissDialog)getParentFragment()).dissmissConfirmDialog(step2);
     }
 
     @Override
@@ -99,6 +103,6 @@ public class ConfirmDialog extends DialogFragment implements ConfirmContract.Vie
 
     public interface DismissDialog {
         // TODO: Update argument type and name
-        void dissmissConfirmDialog(String msg);
+        void dissmissConfirmDialog(MobileLoginStep2 step2);
     }
 }

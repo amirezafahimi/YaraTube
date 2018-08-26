@@ -145,7 +145,7 @@ public class Repository {
                 if (response.isSuccessful()) {
                     mobileLoginInterface.onSuccess(response.body());
                 } else {
-                    mobileLoginInterface.onFail(response.code()+" error");
+                    mobileLoginInterface.onFail(response.code()+"");
                 }
             }
 
@@ -171,7 +171,7 @@ public class Repository {
                 if (response.isSuccessful()) {
                     mobileLoginInterface.onSuccess(response.body());
                 } else {
-                    mobileLoginInterface.onFail(response.code()+" error");
+                    mobileLoginInterface.onFail(response.code()+"");
                 }
             }
 

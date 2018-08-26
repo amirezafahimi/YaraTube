@@ -18,6 +18,9 @@ import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.MobileLoginStep1;
 import com.yaratech.yaratube.data.model.MobileLoginStep2;
 import com.yaratech.yaratube.data.model.Product;
+import com.yaratech.yaratube.data.source.local.AppDatabase;
+import com.yaratech.yaratube.data.source.local.utilities.DataGenerator;
+import com.yaratech.yaratube.data.source.local.utilities.LocalDataSource;
 import com.yaratech.yaratube.ui.MainPage.MainPageFragment;
 import com.yaratech.yaratube.ui.OnProductActionListener;
 import com.yaratech.yaratube.ui.login.DialogContainer;
@@ -93,7 +96,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.aboutUs) {
 
         } else if (id == R.id.callUs) {
-
+            DataGenerator
+                .with(AppDatabase.getAppDatabase(this)).deleteUser(1);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -116,7 +120,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void goFromProductToProdutDetails(Product product) {
         /*boolean isLoggedIn = sharedPreferences.getBoolean("USER_LOGIN", false);*/
-        if (Hawk.contains("USER_LOGIN")) {
+        if (LocalDataSource.with(AppDatabase.getAppDatabase(this)).userIsLogin()) {
             AppConstants.setFragment(R.id.fragment_container,
                     getSupportFragmentManager(),
                     ProductDetailsFragment.newInstance(product),

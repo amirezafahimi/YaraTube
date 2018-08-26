@@ -12,11 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.MobileLoginStep1;
 import com.yaratech.yaratube.data.model.MobileLoginStep2;
 import com.yaratech.yaratube.data.source.Repository;
+import com.yaratech.yaratube.data.source.local.AppDatabase;
+import com.yaratech.yaratube.data.source.local.utilities.DataGenerator;
 import com.yaratech.yaratube.ui.login.loginconfirmphone.ConfirmDialog;
 import com.yaratech.yaratube.ui.login.logintype.LoginDialog;
 import com.yaratech.yaratube.ui.login.loginwithphone.LoginWithPhoneDialog;
@@ -35,8 +38,6 @@ public class DialogContainer
     ConfirmDialog confirmDialog;
 
     String phoneNumber;
-    MobileLoginStep1 step1;
-    MobileLoginStep2 step2;
 
     public DialogContainer() {
         // Required empty public constructor
@@ -68,31 +69,43 @@ public class DialogContainer
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loginDialog = LoginDialog.newInstance();
-        AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(), loginDialog, "loginDialog", true);
+        if (Hawk.contains("phone_number")) {
+            phoneNumber = Hawk.get("phone_number");
+            confirmDialog = ConfirmDialog.newInstance(phoneNumber);
+            AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(), confirmDialog, "confirmDialog", true);
+
+        } else {
+            loginDialog = LoginDialog.newInstance();
+            AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(), loginDialog, "loginDialog", true);
+        }
     }
 
 
     @Override
     public void goToLoginWithPhoneDialog() {
+        if (Hawk.contains("phone_number"))
+            Hawk.delete("phone_number");
         loginWithPhoneDialog = LoginWithPhoneDialog.newInstance();
         AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(), loginWithPhoneDialog, "loginWithPhoneDialog", true);
     }
 
     @Override
     public void goToConfirmDialog(MobileLoginStep1 step1, String phoneNum) {
-        confirmDialog = ConfirmDialog.newInstance(step1, phoneNum);
-        this.step1 = step1;
+        confirmDialog = ConfirmDialog.newInstance(phoneNum);
         this.phoneNumber = phoneNum;
         AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(), confirmDialog, "confirmDialog", true);
         Toast.makeText(getContext(), step1.getMessage(), Toast.LENGTH_LONG).show();
+        Hawk.put("phone_number", phoneNumber);
     }
 
     @Override
-    public void dissmissConfirmDialog(String msg) {
+    public void dissmissConfirmDialog(MobileLoginStep2 step2) {
+        if (Hawk.contains("phone_number"))
+            Hawk.delete("phone_number");
         dismiss();
-        Hawk.put("USER_LOGIN", msg);
-        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
-
+        DataGenerator
+                .with(AppDatabase.getAppDatabase(getContext()))
+                .addUser(1, step2.getFinoToken(), step2.getNickname(), step2.getToken(), step2.getMessage(), phoneNumber, 1);
+        Toast.makeText(getContext(), step2.getMessage(), Toast.LENGTH_LONG).show();
     }
 }
