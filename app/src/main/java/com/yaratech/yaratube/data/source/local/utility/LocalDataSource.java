@@ -1,12 +1,6 @@
-package com.yaratech.yaratube.data.source.local.utilities;
+package com.yaratech.yaratube.data.source.local.utility;
 
-import android.util.Log;
-
-import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.source.local.AppDatabase;
-import com.yaratech.yaratube.data.source.local.entity.User;
-
-import java.util.List;
 
 
 public class LocalDataSource {

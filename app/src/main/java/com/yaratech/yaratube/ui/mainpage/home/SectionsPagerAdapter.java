@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.MainPage.home;
+package com.yaratech.yaratube.ui.mainpage.home;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

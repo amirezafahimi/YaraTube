@@ -1,5 +1,7 @@
 package com.yaratech.yaratube.ui.login.loginwithphone;
 
+import android.util.Log;
+
 import com.yaratech.yaratube.data.model.MobileLoginStep1;
 import com.yaratech.yaratube.data.source.GetResultInterface;
 import com.yaratech.yaratube.data.source.Repository;
@@ -19,6 +21,7 @@ public class LoginWithPhonePresenter implements LoginWithPhoneContract.Presenter
                                 String deviceModel,
                                 String deviceOs,
                                 String gcm) {
+        Log.e("666",num);
 
         repository.requestActivationCode(num,
                 deviceId,

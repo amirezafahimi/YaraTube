@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.MainPage.categories;
+package com.yaratech.yaratube.ui.mainpage.categories;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

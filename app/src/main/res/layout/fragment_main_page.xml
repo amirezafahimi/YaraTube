@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.MainPage.MainPageFragment">
+    tools:context=".ui.mainpage.MainPageFragment">
 
     <FrameLayout
         android:id="@+id/mainPageFragmentContainer"

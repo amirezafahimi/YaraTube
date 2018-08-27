@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.MainPage.home;
+package com.yaratech.yaratube.ui.mainpage.home;
 
 import android.content.Context;
 import android.os.Bundle;

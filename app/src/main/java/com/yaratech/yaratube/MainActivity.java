@@ -1,11 +1,8 @@
 package com.yaratech.yaratube;
 
-import android.app.FragmentTransaction;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,24 +11,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
 import com.yaratech.yaratube.data.model.Category;
-import com.yaratech.yaratube.data.model.MobileLoginStep1;
-import com.yaratech.yaratube.data.model.MobileLoginStep2;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.source.local.AppDatabase;
-import com.yaratech.yaratube.data.source.local.utilities.DataGenerator;
-import com.yaratech.yaratube.data.source.local.utilities.LocalDataSource;
-import com.yaratech.yaratube.ui.MainPage.MainPageFragment;
+import com.yaratech.yaratube.data.source.local.utility.DataGenerator;
+import com.yaratech.yaratube.data.source.local.utility.LocalDataSource;
+import com.yaratech.yaratube.ui.mainpage.MainPageFragment;
 import com.yaratech.yaratube.ui.OnProductActionListener;
 import com.yaratech.yaratube.ui.login.DialogContainer;
-import com.yaratech.yaratube.ui.login.logintype.LoginDialog;
-import com.yaratech.yaratube.ui.login.loginconfirmphone.ConfirmDialog;
-import com.yaratech.yaratube.ui.login.loginwithphone.LoginWithPhoneDialog;
 import com.yaratech.yaratube.ui.productdetails.ProductDetailsFragment;
-import com.yaratech.yaratube.ui.MainPage.categories.CategoriesFragment;
+import com.yaratech.yaratube.ui.mainpage.categories.CategoriesFragment;
 import com.yaratech.yaratube.ui.products.ProductListFragment;
 import com.yaratech.yaratube.util.AppConstants;
 

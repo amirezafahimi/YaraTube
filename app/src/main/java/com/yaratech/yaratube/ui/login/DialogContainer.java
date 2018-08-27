@@ -1,13 +1,9 @@
 package com.yaratech.yaratube.ui.login;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +12,8 @@ import com.orhanobut.hawk.Hawk;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.MobileLoginStep1;
 import com.yaratech.yaratube.data.model.MobileLoginStep2;
-import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.data.source.local.AppDatabase;
-import com.yaratech.yaratube.data.source.local.utilities.DataGenerator;
+import com.yaratech.yaratube.data.source.local.utility.DataGenerator;
 import com.yaratech.yaratube.ui.login.loginconfirmphone.ConfirmDialog;
 import com.yaratech.yaratube.ui.login.logintype.LoginDialog;
 import com.yaratech.yaratube.ui.login.loginwithphone.LoginWithPhoneDialog;
@@ -32,7 +27,7 @@ public class DialogContainer
         ConfirmDialog.DismissDialog,
         DialogContainerContract.View {
 
-    LoginDialog loginDialog;
+    public LoginDialog loginDialog;
     LoginWithPhoneDialog loginWithPhoneDialog;
     ConfirmDialog confirmDialog;
     String phoneNumber;
@@ -70,11 +65,13 @@ public class DialogContainer
         if (Hawk.contains("phone_number")) {
             phoneNumber = Hawk.get("phone_number");
             confirmDialog = ConfirmDialog.newInstance(phoneNumber);
-            AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(), confirmDialog, "confirmDialog", true);
+            AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
+                    confirmDialog, "confirmDialog", true);
 
         } else {
             loginDialog = LoginDialog.newInstance();
-            AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(), loginDialog, "loginDialog", true);
+            AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
+                    loginDialog, "loginDialog", true);
         }
     }
 
@@ -83,16 +80,24 @@ public class DialogContainer
         if (Hawk.contains("phone_number"))
             Hawk.delete("phone_number");
         loginWithPhoneDialog = LoginWithPhoneDialog.newInstance();
-        AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(), loginWithPhoneDialog, "loginWithPhoneDialog", true);
+        AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
+                loginWithPhoneDialog, "loginWithPhoneDialog", true);
     }
 
     @Override
     public void goToConfirmDialog(MobileLoginStep1 step1, String phoneNum) {
         confirmDialog = ConfirmDialog.newInstance(phoneNum);
         this.phoneNumber = phoneNum;
-        AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(), confirmDialog, "confirmDialog", true);
+        AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
+                confirmDialog, "confirmDialog", true);
         Toast.makeText(getContext(), step1.getMessage(), Toast.LENGTH_LONG).show();
         Hawk.put("phone_number", phoneNumber);
+    }
+
+    @Override
+    public void goToSelectLoginType() {
+        AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
+                loginDialog, "loginDialog", true);
     }
 
     @Override
@@ -102,7 +107,13 @@ public class DialogContainer
         dismiss();
         DataGenerator
                 .with(AppDatabase.getAppDatabase(getContext()))
-                .addUser(1, step2.getFinoToken(), step2.getNickname(), step2.getToken(), step2.getMessage(), phoneNumber, 1);
+                .addUser(1,
+                        step2.getFinoToken(),
+                        step2.getNickname(),
+                        step2.getToken(),
+                        step2.getMessage(),
+                        phoneNumber,
+                        1);
         Toast.makeText(getContext(), step2.getMessage(), Toast.LENGTH_LONG).show();
     }
 }

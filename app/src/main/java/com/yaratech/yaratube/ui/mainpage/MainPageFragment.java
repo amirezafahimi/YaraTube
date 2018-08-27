@@ -1,7 +1,5 @@
-package com.yaratech.yaratube.ui.MainPage;
+package com.yaratech.yaratube.ui.mainpage;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,11 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yaratech.yaratube.MainActivity;
 import com.yaratech.yaratube.R;
-import com.yaratech.yaratube.ui.MainPage.categories.CategoriesFragment;
-import com.yaratech.yaratube.ui.MainPage.home.HomeFragment;
-import com.yaratech.yaratube.util.AppConstants;
+import com.yaratech.yaratube.ui.mainpage.categories.CategoriesFragment;
+import com.yaratech.yaratube.ui.mainpage.home.HomeFragment;
 
 public class MainPageFragment extends Fragment {
 

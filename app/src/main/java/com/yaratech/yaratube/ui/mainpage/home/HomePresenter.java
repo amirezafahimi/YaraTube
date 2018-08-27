@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.MainPage.home;
+package com.yaratech.yaratube.ui.mainpage.home;
 
 import com.yaratech.yaratube.data.source.GetResultInterface;
 import com.yaratech.yaratube.data.source.Repository;

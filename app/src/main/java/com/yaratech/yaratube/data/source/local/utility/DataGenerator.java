@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.data.source.local.utilities;
+package com.yaratech.yaratube.data.source.local.utility;
 
 import com.yaratech.yaratube.data.source.local.AppDatabase;
 import com.yaratech.yaratube.data.source.local.entity.User;

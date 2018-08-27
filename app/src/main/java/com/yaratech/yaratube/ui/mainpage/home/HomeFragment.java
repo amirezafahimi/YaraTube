@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.MainPage.home;
+package com.yaratech.yaratube.ui.mainpage.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +13,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.yaratech.yaratube.R;
-import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.data.model.Home;
 import com.yaratech.yaratube.ui.OnProductActionListener;

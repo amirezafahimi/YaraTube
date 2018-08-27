@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.ui.login.DialogContainer;
 import com.yaratech.yaratube.ui.login.DialogContainerContract;
 import com.yaratech.yaratube.ui.login.DialogContainerPresenter;
+import com.yaratech.yaratube.ui.login.logintype.LoginDialog;
 import com.yaratech.yaratube.util.AppConstants;
 
 public class LoginWithPhoneDialog extends Fragment implements LoginWithPhoneContract.View{
@@ -88,7 +91,31 @@ public class LoginWithPhoneDialog extends Fragment implements LoginWithPhoneCont
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(getView() == null){
+            return;
+        }
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                    ((DismissDialog)getParentFragment()).goToSelectLoginType();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+
     public interface DismissDialog {
         void goToConfirmDialog(MobileLoginStep1 step1, String phoneNum);
+        void goToSelectLoginType();
     }
 }
