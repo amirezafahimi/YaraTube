@@ -1,5 +1,6 @@
 package com.yaratech.yaratube;
 
+import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -129,6 +130,10 @@ public class MainActivity extends AppCompatActivity
                     true);
         } else {
             dialogContainer = DialogContainer.newInstance();
+            /*dialogContainer.setCancelable(false);
+            FragmentTransaction ft=
+                    getFragmentManager().beginTransaction();
+            ft.addToBackStack("login dialog");*/
             dialogContainer.show(getSupportFragmentManager(), "login dialog");
         }
     }

@@ -78,8 +78,6 @@ public class DialogContainer
         }
     }
 
-
-
     @Override
     public void goToLoginWithPhoneDialog() {
         if (Hawk.contains("phone_number"))

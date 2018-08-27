@@ -54,6 +54,7 @@ public class LoginDialog extends DialogFragment {
         });
     }
 
+
     public interface DismissDialog {
         void goToLoginWithPhoneDialog();
     }
