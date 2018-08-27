@@ -157,7 +157,7 @@ public class Repository {
 
     }
 
-    public void confirmationCode(String num,
+    public void varificationationCode(String num,
                                  String deviceId,
                                  String activationCode,
                                  String nickname,

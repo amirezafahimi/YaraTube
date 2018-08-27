@@ -14,32 +14,31 @@ import com.yaratech.yaratube.data.model.MobileLoginStep1;
 import com.yaratech.yaratube.data.model.MobileLoginStep2;
 import com.yaratech.yaratube.data.source.local.AppDatabase;
 import com.yaratech.yaratube.data.source.local.utility.DataGenerator;
-import com.yaratech.yaratube.ui.login.loginconfirmphone.ConfirmDialog;
-import com.yaratech.yaratube.ui.login.logintype.LoginDialog;
-import com.yaratech.yaratube.ui.login.loginwithphone.LoginWithPhoneDialog;
+import com.yaratech.yaratube.ui.login.logintype.SelectLoginTypeFragment;
+import com.yaratech.yaratube.ui.login.loginvarifification.VarificationFragment;
+import com.yaratech.yaratube.ui.login.loginwithphone.LoginWithPhoneFragment;
 import com.yaratech.yaratube.util.AppConstants;
 
 
-public class DialogContainer
+public class LoginDialogContainer
         extends DialogFragment
-        implements LoginDialog.DismissDialog,
-        LoginWithPhoneDialog.DismissDialog,
-        ConfirmDialog.DismissDialog,
-        DialogContainerContract.View {
+        implements OnLoginDialogActionListener,
+        LoginDialogContainerContract.View {
 
-    public LoginDialog loginDialog;
-    LoginWithPhoneDialog loginWithPhoneDialog;
-    ConfirmDialog confirmDialog;
+    public SelectLoginTypeFragment selectLoginTypeFragment;
+    LoginWithPhoneFragment loginWithPhoneFragment;
+    VarificationFragment varificationFragment;
     String phoneNumber;
+    MobileLoginStep2 step2;
 
-    public DialogContainer() {
+    public LoginDialogContainer() {
         // Required empty public constructor
     }
 
 
     // TODO: Rename and change types and number of parameters
-    public static DialogContainer newInstance() {
-        DialogContainer fragment = new DialogContainer();
+    public static LoginDialogContainer newInstance() {
+        LoginDialogContainer fragment = new LoginDialogContainer();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -64,32 +63,38 @@ public class DialogContainer
         super.onViewCreated(view, savedInstanceState);
         if (Hawk.contains("phone_number")) {
             phoneNumber = Hawk.get("phone_number");
-            confirmDialog = ConfirmDialog.newInstance(phoneNumber);
+            varificationFragment = VarificationFragment.newInstance(phoneNumber);
             AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
-                    confirmDialog, "confirmDialog", true);
+                    varificationFragment, "varificationFragment", true);
 
         } else {
-            loginDialog = LoginDialog.newInstance();
+            selectLoginTypeFragment = SelectLoginTypeFragment.newInstance();
             AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
-                    loginDialog, "loginDialog", true);
+                    selectLoginTypeFragment, "selectLoginTypeFragment", true);
         }
     }
 
     @Override
-    public void goToLoginWithPhoneDialog() {
-        if (Hawk.contains("phone_number"))
-            Hawk.delete("phone_number");
-        loginWithPhoneDialog = LoginWithPhoneDialog.newInstance();
-        AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
-                loginWithPhoneDialog, "loginWithPhoneDialog", true);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
     }
 
     @Override
-    public void goToConfirmDialog(MobileLoginStep1 step1, String phoneNum) {
-        confirmDialog = ConfirmDialog.newInstance(phoneNum);
+    public void goTologinWithPhoneFragment() {
+        if (Hawk.contains("phone_number"))
+            Hawk.delete("phone_number");
+        loginWithPhoneFragment = LoginWithPhoneFragment.newInstance();
+        AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
+                loginWithPhoneFragment, "loginWithPhoneFragment", true);
+    }
+
+    @Override
+    public void goTovarificationFragment(MobileLoginStep1 step1, String phoneNum) {
+        varificationFragment = VarificationFragment.newInstance(phoneNum);
         this.phoneNumber = phoneNum;
         AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
-                confirmDialog, "confirmDialog", true);
+                varificationFragment, "varificationFragment", true);
         Toast.makeText(getContext(), step1.getMessage(), Toast.LENGTH_LONG).show();
         Hawk.put("phone_number", phoneNumber);
     }
@@ -97,11 +102,11 @@ public class DialogContainer
     @Override
     public void goToSelectLoginType() {
         AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
-                loginDialog, "loginDialog", true);
+                selectLoginTypeFragment, "selectLoginTypeFragment", true);
     }
 
     @Override
-    public void dissmissConfirmDialog(MobileLoginStep2 step2) {
+    public void dissmissVarificationFragment(MobileLoginStep2 step2) {
         if (Hawk.contains("phone_number"))
             Hawk.delete("phone_number");
         dismiss();
@@ -116,4 +121,8 @@ public class DialogContainer
                         1);
         Toast.makeText(getContext(), step2.getMessage(), Toast.LENGTH_LONG).show();
     }
+
+    //----------------------------------------------------------------------------------------------
+
+
 }

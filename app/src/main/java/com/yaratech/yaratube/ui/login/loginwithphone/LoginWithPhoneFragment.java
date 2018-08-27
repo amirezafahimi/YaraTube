@@ -1,12 +1,9 @@
 package com.yaratech.yaratube.ui.login.loginwithphone;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +15,10 @@ import android.widget.Toast;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.MobileLoginStep1;
 import com.yaratech.yaratube.data.source.Repository;
-import com.yaratech.yaratube.ui.login.DialogContainer;
-import com.yaratech.yaratube.ui.login.DialogContainerContract;
-import com.yaratech.yaratube.ui.login.DialogContainerPresenter;
-import com.yaratech.yaratube.ui.login.logintype.LoginDialog;
+import com.yaratech.yaratube.ui.login.OnLoginDialogActionListener;
 import com.yaratech.yaratube.util.AppConstants;
 
-public class LoginWithPhoneDialog extends Fragment implements LoginWithPhoneContract.View{
+public class LoginWithPhoneFragment extends Fragment implements LoginWithPhoneContract.View{
 
     Button send;
     EditText phoneNumber;
@@ -32,12 +26,12 @@ public class LoginWithPhoneDialog extends Fragment implements LoginWithPhoneCont
     LoginWithPhonePresenter loginWithPhonePresenter;
 
 
-    public LoginWithPhoneDialog() {
+    public LoginWithPhoneFragment() {
         // Required empty public constructor
     }
 
-    public static LoginWithPhoneDialog newInstance() {
-        LoginWithPhoneDialog fragment = new LoginWithPhoneDialog();
+    public static LoginWithPhoneFragment newInstance() {
+        LoginWithPhoneFragment fragment = new LoginWithPhoneFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -82,40 +76,11 @@ public class LoginWithPhoneDialog extends Fragment implements LoginWithPhoneCont
 
     @Override
     public void goToNextDialog(MobileLoginStep1 step1) {
-        ((DismissDialog)getParentFragment()).goToConfirmDialog(step1, phoneNumber.getText().toString());
+        ((OnLoginDialogActionListener)getParentFragment()).goTovarificationFragment(step1, phoneNumber.getText().toString());
     }
 
     @Override
     public void showErrorMessage(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(getView() == null){
-            return;
-        }
-
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-                    ((DismissDialog)getParentFragment()).goToSelectLoginType();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
-
-
-    public interface DismissDialog {
-        void goToConfirmDialog(MobileLoginStep1 step1, String phoneNum);
-        void goToSelectLoginType();
     }
 }

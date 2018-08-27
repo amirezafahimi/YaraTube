@@ -1,18 +1,17 @@
-package com.yaratech.yaratube.ui.login.loginconfirmphone;
-
-import android.util.Log;
+package com.yaratech.yaratube.ui.login.loginvarifification;
 
 import com.yaratech.yaratube.data.model.MobileLoginStep2;
 import com.yaratech.yaratube.data.source.GetResultInterface;
 import com.yaratech.yaratube.data.source.Repository;
+import com.yaratech.yaratube.ui.login.loginvarifification.VarificationContract;
 
-public class ConfirmPresenter implements ConfirmContract.Presenter {
+public class VarificationPresenter implements VarificationContract.Presenter {
 
-    ConfirmContract.View confirmViewListener;
+    VarificationContract.View varificationViewListener;
     Repository repository;
 
-    public ConfirmPresenter(ConfirmContract.View confirmViewListener, Repository repository) {
-        this.confirmViewListener = confirmViewListener;
+    public VarificationPresenter(VarificationContract.View varificationViewListener, Repository repository) {
+        this.varificationViewListener = varificationViewListener;
         this.repository = repository;
 
     }
@@ -22,15 +21,15 @@ public class ConfirmPresenter implements ConfirmContract.Presenter {
                                   String deviceId,
                                   String activationCode,
                                   String nickname) {
-        repository.confirmationCode(num, deviceId, activationCode, nickname, new GetResultInterface<MobileLoginStep2>() {
+        repository.varificationationCode(num, deviceId, activationCode, nickname, new GetResultInterface<MobileLoginStep2>() {
                     @Override
                     public void onSuccess(MobileLoginStep2 step2) {
-                        confirmViewListener.loginMessege(step2);
+                        varificationViewListener.loginMessege(step2);
                     }
 
                     @Override
                     public void onFail(String err) {
-                        confirmViewListener.showErrorMessage(err);
+                        varificationViewListener.showErrorMessage(err);
                     }
                 }
         );

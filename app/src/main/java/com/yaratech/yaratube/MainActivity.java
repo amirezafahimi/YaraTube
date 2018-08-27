@@ -18,9 +18,9 @@ import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.source.local.AppDatabase;
 import com.yaratech.yaratube.data.source.local.utility.DataGenerator;
 import com.yaratech.yaratube.data.source.local.utility.LocalDataSource;
+import com.yaratech.yaratube.ui.login.LoginDialogContainer;
 import com.yaratech.yaratube.ui.mainpage.MainPageFragment;
 import com.yaratech.yaratube.ui.OnProductActionListener;
-import com.yaratech.yaratube.ui.login.DialogContainer;
 import com.yaratech.yaratube.ui.productdetails.ProductDetailsFragment;
 import com.yaratech.yaratube.ui.mainpage.categories.CategoriesFragment;
 import com.yaratech.yaratube.ui.products.ProductListFragment;
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity
 
     /*public static SharedPreferences sharedPreferences;*/
 
-    DialogContainer dialogContainer;
+    LoginDialogContainer loginDialogContainer;
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -120,12 +120,9 @@ public class MainActivity extends AppCompatActivity
                     "productDetailsFragment",
                     true);
         } else {
-            dialogContainer = DialogContainer.newInstance();
-            /*dialogContainer.setCancelable(false);
-            FragmentTransaction ft=
-                    getFragmentManager().beginTransaction();
-            ft.addToBackStack("login dialog");*/
-            dialogContainer.show(getSupportFragmentManager(), "login dialog");
+            loginDialogContainer = LoginDialogContainer.newInstance();
+            /*loginDialogContainer.setCancelable(false);*/
+            loginDialogContainer.show(getSupportFragmentManager(), "login dialog");
         }
     }
 }
