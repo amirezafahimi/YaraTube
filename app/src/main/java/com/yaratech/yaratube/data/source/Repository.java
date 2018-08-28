@@ -1,6 +1,6 @@
 package com.yaratech.yaratube.data.source;
 
-import android.util.Log;
+import android.content.Context;
 
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Comment;
@@ -9,6 +9,10 @@ import com.yaratech.yaratube.data.model.MobileLoginStep1;
 import com.yaratech.yaratube.data.model.MobileLoginStep2;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.model.ProductDetail;
+import com.yaratech.yaratube.data.source.local.AppDatabase;
+import com.yaratech.yaratube.data.source.local.entity.User;
+import com.yaratech.yaratube.data.source.local.utility.DataGenerator;
+import com.yaratech.yaratube.data.source.local.utility.LocalDataSource;
 import com.yaratech.yaratube.data.source.remote.Services;
 import com.yaratech.yaratube.data.source.remote.Client;
 
@@ -20,7 +24,7 @@ import retrofit2.Response;
 
 public class Repository {
 
-    public void getHome(final GetResultInterface<Home> homeInterfacee) {
+    public void getHome(final ApiResultCallback<Home> homeInterfacee) {
 
         Client.getRetrofitInstance().create(Services.class).getHome().enqueue(new Callback<Home>() {
             @Override
@@ -43,7 +47,7 @@ public class Repository {
         });
     }
 
-    public void getCategories(final GetResultInterface<List<Category>> categoryInterface) {
+    public void getCategories(final ApiResultCallback<List<Category>> categoryInterface) {
         Client.getRetrofitInstance().create(Services.class).getCategory().enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
@@ -63,7 +67,7 @@ public class Repository {
         });
     }
 
-    public void getProducts(int id, final GetResultInterface<List<Product>> productInterface) {
+    public void getProducts(int id, final ApiResultCallback<List<Product>> productInterface) {
 
         Client.getRetrofitInstance().create(Services.class).getProductList(id).enqueue(new Callback<List<Product>>() {
             @Override
@@ -84,7 +88,7 @@ public class Repository {
         });
     }
 
-    public void getProductDetails(int id, final GetResultInterface<ProductDetail> productDetailsInterface) {
+    public void getProductDetails(int id, final ApiResultCallback<ProductDetail> productDetailsInterface) {
 
         Client.getRetrofitInstance().create(Services.class).getProductDetail(id).enqueue(new Callback<ProductDetail>() {
             @Override
@@ -104,7 +108,7 @@ public class Repository {
         });
     }
 
-    public void getCommentList(int id, final GetResultInterface<List<Comment>> commentListInterface) {
+    public void getCommentList(int id, final ApiResultCallback<List<Comment>> commentListInterface) {
         Client.getRetrofitInstance().create(Services.class).getCommentList(id).enqueue(new Callback<List<Comment>>() {
             @Override
             public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
@@ -129,7 +133,7 @@ public class Repository {
                                       String deviceModel,
                                       String deviceOs,
                                       String gcm,
-                                      final GetResultInterface<MobileLoginStep1> mobileLoginInterface) {
+                                      final ApiResultCallback<MobileLoginStep1> mobileLoginInterface) {
         System.out.println(Client.getRetrofitInstance().create(Services.class).sendPhoneNumber(num,
                 deviceId,
                 deviceModel,
@@ -145,7 +149,7 @@ public class Repository {
                 if (response.isSuccessful()) {
                     mobileLoginInterface.onSuccess(response.body());
                 } else {
-                    mobileLoginInterface.onFail(response.code()+" error");
+                    mobileLoginInterface.onFail(response.code() + " error");
                 }
             }
 
@@ -161,7 +165,7 @@ public class Repository {
                                  String deviceId,
                                  String activationCode,
                                  String nickname,
-                                 final GetResultInterface<MobileLoginStep2> mobileLoginInterface) {
+                                 final ApiResultCallback<MobileLoginStep2> mobileLoginInterface) {
         Client.getRetrofitInstance().create(Services.class).sendActivationCode(num,
                 deviceId,
                 activationCode,
@@ -171,7 +175,7 @@ public class Repository {
                 if (response.isSuccessful()) {
                     mobileLoginInterface.onSuccess(response.body());
                 } else {
-                    mobileLoginInterface.onFail(response.code()+" error");
+                    mobileLoginInterface.onFail(response.code() + " error");
                 }
             }
 
@@ -181,5 +185,31 @@ public class Repository {
             }
         });
 
+    }
+
+    public void checkIfUserIsLogedIn(Context context,
+                                     ReadFromDatabaseCallback<Boolean> readFromDatabaseCallback) {
+        if (LocalDataSource.with(AppDatabase.getAppDatabase(context)).userIsLogin()) {
+            readFromDatabaseCallback.onUserDataLoded(true);
+        } else {
+            readFromDatabaseCallback.onUserDataLoded(false);
+        }
+    }
+
+    public void sendUserDataToDatabase(Context context,
+                                       MobileLoginStep2 step2,
+                                       String phoneNumber,
+                                       InsertIntoDatabaseCallback insertIntoDatabaseCallback) {
+
+        User user = DataGenerator.userInstance();
+        user.setId(1);
+        user.setFinoToken(step2.getFinoToken());
+        user.setNickname(step2.getNickname());
+        user.setToken(step2.getToken());
+        user.setMessage(step2.getMessage());
+        user.setPhoneNember(phoneNumber);
+        DataGenerator.with(AppDatabase.getAppDatabase(context)).addUser(user);
+
+        insertIntoDatabaseCallback.onUserDataInserted(step2.getMessage());
     }
 }

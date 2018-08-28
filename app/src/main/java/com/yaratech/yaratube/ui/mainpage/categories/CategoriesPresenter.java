@@ -1,7 +1,7 @@
 package com.yaratech.yaratube.ui.mainpage.categories;
 
 import com.yaratech.yaratube.data.model.Category;
-import com.yaratech.yaratube.data.source.GetResultInterface;
+import com.yaratech.yaratube.data.source.ApiResultCallback;
 import com.yaratech.yaratube.data.source.Repository;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class CategoriesPresenter implements CategoriesContract.presenter {
     public void fetchCategories() {
 
         categoriesViewListener.showProgrssBar();
-        repository.getCategories(new GetResultInterface<List<Category>>() {
+        repository.getCategories(new ApiResultCallback<List<Category>>() {
             @Override
             public void onSuccess(List<Category> categories) {
                 categoriesViewListener.hideProgrssBar();

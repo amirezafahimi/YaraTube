@@ -1,13 +1,11 @@
 package com.yaratech.yaratube.ui.productdetails;
 
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +24,7 @@ import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.model.ProductDetail;
 import com.yaratech.yaratube.data.source.Repository;
+import com.yaratech.yaratube.ui.login.LoginDialogContainer;
 import com.yaratech.yaratube.ui.productdetails.commentdialog.CommentDialog;
 
 import java.util.List;
@@ -36,6 +35,7 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
 
     ProductDetailsPresenter productDetailsPresenter;
     Product product;
+    boolean userIsLogined;
     ProductDetail productDetail;
     List<Comment> comments;
     ImageView play;
@@ -52,12 +52,21 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
         // Required empty public constructor
     }
 
-    public static ProductDetailsFragment newInstance(Product product) {
+    public static ProductDetailsFragment newInstance(Product product, boolean userIsLogined) {
         ProductDetailsFragment fragment = new ProductDetailsFragment();
         Bundle args1 = new Bundle();
         args1.putParcelable("product", product);
+        args1.putBoolean("user is logined", userIsLogined);
         fragment.setArguments(args1);
         return fragment;
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        product = getArguments().getParcelable("product");
+        userIsLogined = getArguments().getBoolean("user is logined");
     }
 
     @Override
@@ -82,28 +91,58 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        progressBar.setVisibility(View.GONE);
-        productDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        DividerItemDecoration itemDecor = new DividerItemDecoration(productDetailsRecyclerView.getContext(), VERTICAL);
-        productDetailsRecyclerView.addItemDecoration(itemDecor);
-        adpter = new ProductDetailsRecyclerViewAdpter(getContext());
-        productDetailsRecyclerView.setAdapter(adpter);
-        productDetailsPresenter = new ProductDetailsPresenter(this, new Repository());
-        product = getArguments().getParcelable("product");
-        title.setText(product.getName());
-        Glide.with(getContext()).load(product.getFeatureAvatar().getXxxdpi()).into(imageView);
-        productDetailsPresenter.fetchProductDetails(product.getId());
+        hideProgrssBar();
+        bindViewProudctDetails();
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CommentDialog commentDialog = new CommentDialog();
                 FragmentManager fragmentManager = getFragmentManager();
-                commentDialog.show(fragmentManager, "comment dialog");
+                CommentDialog.newInstance().show(fragmentManager, "comment dialog");
             }
         });
 
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(userIsLogined){
+
+                }
+                else{
+                    LoginDialogContainer loginDialogContainer = LoginDialogContainer.newInstance();
+                    loginDialogContainer.setCancelable(false);
+                    loginDialogContainer.show(getChildFragmentManager(), "login dialog");
+                }
+            }
+        });
     }
 
+    //----------------------------------------------------------------------------------------------
+
+    private void bindViewProudctDetails() {
+        productDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        DividerItemDecoration itemDecor = new
+                DividerItemDecoration(productDetailsRecyclerView.getContext(), VERTICAL);
+        productDetailsRecyclerView.addItemDecoration(itemDecor);
+        adpter = new ProductDetailsRecyclerViewAdpter(getContext());
+        productDetailsRecyclerView.setAdapter(adpter);
+        title.setText(product.getName());
+        Glide.with(getContext()).load(product.getFeatureAvatar().getXxxdpi()).into(imageView);
+
+        showProgrssBar();
+        productDetailsPresenter = new
+                ProductDetailsPresenter(this, new Repository());
+        productDetailsPresenter.fetchProductDetails(product.getId());
+    }
+
+    public void showProgrssBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgrssBar() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    //----------------------------------------------------------------------------------------------
 
     @Override
     public void showProductDetail(ProductDetail productDetail) {
@@ -113,6 +152,7 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
 
     @Override
     public void showCommentList(List<Comment> comments) {
+        hideProgrssBar();
         this.comments = comments;
         adpter.setData(comments);
 
@@ -120,19 +160,11 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
 
     @Override
     public void showErrorMessage(String err) {
+        hideProgrssBar();
         Toast.makeText(getContext(), err, Toast.LENGTH_LONG);
     }
 
-    @Override
-    public void showProgrssBar() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideProgrssBar() {
-        progressBar.setVisibility(View.GONE);
-    }
-
+    //----------------------------------------------------------------------------------------------
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);

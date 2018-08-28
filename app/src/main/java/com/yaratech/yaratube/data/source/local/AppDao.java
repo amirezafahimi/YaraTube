@@ -9,8 +9,8 @@ import com.yaratech.yaratube.data.source.local.entity.User;
 
 @Dao
 public interface AppDao {
-    @Query("Select user_table.is_login from user_table where id = 1")
-    int isLogin();
+    @Query("Select user_table.token from user_table where id = 1")
+    String getToken();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUsers(User users);

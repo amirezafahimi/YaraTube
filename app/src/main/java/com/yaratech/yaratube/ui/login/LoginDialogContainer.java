@@ -13,25 +13,19 @@ import com.orhanobut.hawk.Hawk;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.MobileLoginStep1;
 import com.yaratech.yaratube.data.model.MobileLoginStep2;
-import com.yaratech.yaratube.data.source.local.AppDatabase;
-import com.yaratech.yaratube.data.source.local.utility.DataGenerator;
+import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.ui.login.logintype.SelectLoginTypeFragment;
 import com.yaratech.yaratube.ui.login.loginvarification.VarificationFragment;
 import com.yaratech.yaratube.ui.login.loginwithphone.LoginWithPhoneFragment;
 import com.yaratech.yaratube.util.AppConstants;
-
 
 public class LoginDialogContainer
         extends DialogFragment
         implements OnLoginDialogActionListener,
         LoginDialogContainerContract.View {
 
-    SelectLoginTypeFragment selectLoginTypeFragment;
-    LoginWithPhoneFragment loginWithPhoneFragment;
     ImageView close;
-    VarificationFragment varificationFragment;
     String phoneNumber;
-    MobileLoginStep2 step2;
 
     public LoginDialogContainer() {
         // Required empty public constructor
@@ -64,17 +58,7 @@ public class LoginDialogContainer
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         close = view.findViewById(R.id.close_login_dialog);
-        if (Hawk.contains("phone_number")) {
-            phoneNumber = Hawk.get("phone_number");
-            varificationFragment = VarificationFragment.newInstance(phoneNumber);
-            AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
-                    varificationFragment, "varificationFragment", true);
-
-        } else {
-            selectLoginTypeFragment = SelectLoginTypeFragment.newInstance();
-            AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
-                    selectLoginTypeFragment, "selectLoginTypeFragment", true);
-        }
+        PassLoginProcess();
     }
 
     @Override
@@ -95,49 +79,51 @@ public class LoginDialogContainer
 
     }
 
+    //----------------------------------------------------------------------------------------------
+
+    @Override
+    public void PassLoginProcess() {
+        if (Hawk.contains("phone_number")) {
+            phoneNumber = Hawk.get("phone_number");
+            AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
+                    VarificationFragment.newInstance(phoneNumber), "varificationFragment", true);
+        } else {
+            AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
+                    SelectLoginTypeFragment.newInstance(), "selectLoginTypeFragment", true);
+        }
+    }
+
     @Override
     public void goTologinWithPhoneFragment() {
         if (Hawk.contains("phone_number"))
             Hawk.delete("phone_number");
-        loginWithPhoneFragment = LoginWithPhoneFragment.newInstance();
         AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
-                loginWithPhoneFragment, "loginWithPhoneFragment", true);
+                LoginWithPhoneFragment.newInstance(), "loginWithPhoneFragment", true);
     }
 
     @Override
-    public void goTovarificationFragment(MobileLoginStep1 step1, String phoneNum) {
-        varificationFragment = VarificationFragment.newInstance(phoneNum);
+    public void goToVarificationFragment(MobileLoginStep1 step1, String phoneNum) {
         this.phoneNumber = phoneNum;
         AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
-                varificationFragment, "varificationFragment", true);
+                VarificationFragment.newInstance(phoneNum), "varificationFragment", true);
         Toast.makeText(getContext(), step1.getMessage(), Toast.LENGTH_LONG).show();
         Hawk.put("phone_number", phoneNumber);
-    }
-
-    @Override
-    public void goToSelectLoginType() {
-        AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
-                selectLoginTypeFragment, "selectLoginTypeFragment", true);
     }
 
     @Override
     public void dissmissVarificationFragment(MobileLoginStep2 step2) {
         if (Hawk.contains("phone_number"))
             Hawk.delete("phone_number");
+        LoginDialogContainerPresenter loginDialogContainerPresenter = new
+                LoginDialogContainerPresenter(this, new Repository());
+        loginDialogContainerPresenter.insertUserData(getContext(), step2, phoneNumber);
         dismiss();
-        DataGenerator
-                .with(AppDatabase.getAppDatabase(getContext()))
-                .addUser(1,
-                        step2.getFinoToken(),
-                        step2.getNickname(),
-                        step2.getToken(),
-                        step2.getMessage(),
-                        phoneNumber,
-                        1);
-        Toast.makeText(getContext(), step2.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     //----------------------------------------------------------------------------------------------
 
-
+    @Override
+    public void showMessege(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
 }

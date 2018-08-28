@@ -16,9 +16,6 @@ public interface ProductDetailsContract {
 
         void showErrorMessage(String err);
 
-        void showProgrssBar();
-
-        void hideProgrssBar();
     }
     interface Presenter{
         void fetchProductDetails(int id);

@@ -4,8 +4,9 @@ import com.yaratech.yaratube.data.model.MobileLoginStep1;
 import com.yaratech.yaratube.data.model.MobileLoginStep2;
 
 public interface OnLoginDialogActionListener {
+
+    void PassLoginProcess();
     void goTologinWithPhoneFragment();
-    void goTovarificationFragment(MobileLoginStep1 step1, String phoneNumber);
-    void goToSelectLoginType();
+    void goToVarificationFragment(MobileLoginStep1 step1, String phoneNumber);
     void dissmissVarificationFragment(MobileLoginStep2 step2);
 }

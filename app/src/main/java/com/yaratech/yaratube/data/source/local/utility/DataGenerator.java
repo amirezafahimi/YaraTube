@@ -10,7 +10,6 @@ public class DataGenerator {
     private static AppDatabase dataBase;
     private static User user;
 
-
     public static DataGenerator with(AppDatabase appDataBase) {
 
         if (dataBase == null)
@@ -23,6 +22,9 @@ public class DataGenerator {
     }
 
     public static User userInstance() {
+        if (user == null) {
+            user = new User();
+        }
         return user;
     }
 
@@ -30,20 +32,7 @@ public class DataGenerator {
         dataBase.DBDao().userDelete(id);
     }
 
-    public static void addUser(int id, String finoToken, String nickname, String token,
-                               String message, String phoneNember, int isLogin) {
-
-        if (user == null) {
-            user = new User();
-        }
-
-        user.setId(1);
-        user.setFinoToken(finoToken);
-        user.setNickname(nickname);
-        user.setToken(token);
-        user.setMessage(message);
-        user.setPhoneNember(phoneNember);
-        user.setIsLogin(isLogin);
+    public static void addUser(User user) {
         dataBase.DBDao().insertUsers(user);
     }
 }

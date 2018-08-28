@@ -3,6 +3,7 @@ package com.yaratech.yaratube;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import com.orhanobut.hawk.Hawk;
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Product;
+import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.data.source.local.AppDatabase;
 import com.yaratech.yaratube.data.source.local.utility.DataGenerator;
 import com.yaratech.yaratube.data.source.local.utility.LocalDataSource;
@@ -27,7 +29,8 @@ import com.yaratech.yaratube.ui.products.ProductListFragment;
 import com.yaratech.yaratube.util.AppConstants;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
+        implements MainContract.View,
+        NavigationView.OnNavigationItemSelectedListener,
         CategoriesFragment.OnCategoryFragmentActionListener,
         OnProductActionListener {
 
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     /*public static SharedPreferences sharedPreferences;*/
 
     LoginDialogContainer loginDialogContainer;
+    boolean userIsLogedIn;
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -86,12 +90,19 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.profile) {
-
+            MainPresenter mainPresenter = new MainPresenter(this, new Repository());
+            mainPresenter.checkIfUserIsLogedIn(this);
+            if (userIsLogedIn) {
+                //Go to profile.
+            } else {
+                loginDialogContainer = LoginDialogContainer.newInstance();
+                loginDialogContainer.setCancelable(false);
+                loginDialogContainer.show(getSupportFragmentManager(), "login dialog");
+            }
         } else if (id == R.id.aboutUs) {
 
         } else if (id == R.id.callUs) {
-            DataGenerator
-                    .with(AppDatabase.getAppDatabase(this)).deleteUser(1);
+            DataGenerator.with(AppDatabase.getAppDatabase(this)).deleteUser(1);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -112,17 +123,15 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void goFromProductToProdutDetails(Product product) {
-        /*boolean isLoggedIn = sharedPreferences.getBoolean("USER_LOGIN", false);*/
-        if (LocalDataSource.with(AppDatabase.getAppDatabase(this)).userIsLogin()) {
-            AppConstants.setFragment(R.id.fragment_container,
-                    getSupportFragmentManager(),
-                    ProductDetailsFragment.newInstance(product),
-                    "productDetailsFragment",
-                    true);
-        } else {
-            loginDialogContainer = LoginDialogContainer.newInstance();
-            loginDialogContainer.setCancelable(false);
-            loginDialogContainer.show(getSupportFragmentManager(), "login dialog");
-        }
+        AppConstants.setFragment(R.id.fragment_container,
+                getSupportFragmentManager(),
+                ProductDetailsFragment.newInstance(product, userIsLogedIn),
+                "productDetailsFragment",
+                true);
+    }
+
+    @Override
+    public void setUserIsLogedIn(boolean userIsLogedIn) {
+        this.userIsLogedIn = userIsLogedIn;
     }
 }

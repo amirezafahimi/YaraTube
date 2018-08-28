@@ -22,8 +22,6 @@ public class User {
     private String message;
     @ColumnInfo(name = "‌phone_number")
     private String phoneNember;
-    @ColumnInfo(name = "is_login")
-    private int isLogin;
 
     public int getId() {
         return id;
@@ -71,13 +69,5 @@ public class User {
 
     public void setPhoneNember(String phoneNember) {
         this.phoneNember = phoneNember;
-    }
-
-    public int getIsLogin() {
-        return isLogin;
-    }
-
-    public void setIsLogin(int isLogin) {
-        this.isLogin = isLogin;
     }
 }

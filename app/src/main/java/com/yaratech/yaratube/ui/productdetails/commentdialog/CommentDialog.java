@@ -12,6 +12,15 @@ import com.yaratech.yaratube.R;
 
 public class CommentDialog extends DialogFragment {
 
+
+    // TODO: Rename and change types and number of parameters
+    public static CommentDialog newInstance() {
+        CommentDialog fragment = new CommentDialog();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container

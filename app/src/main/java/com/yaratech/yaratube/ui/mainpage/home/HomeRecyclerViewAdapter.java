@@ -46,57 +46,6 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         sectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager);
     }
 
-    public void setData(Home home) {
-        headeritems = home.getHeaderitem();
-        homeitems = home.getHomeitem();
-        sectionsPagerAdapter.setData(headeritems);
-        notifyDataSetChanged();
-    }
-
-    private class HeaderListItemViewHolder extends RecyclerView.ViewHolder {
-
-        ViewPager viewPager;
-
-        public HeaderListItemViewHolder(View itemView) {
-            super(itemView);
-            viewPager = itemView.findViewById(R.id.header_item_viewpager);
-            viewPager.setRotationY(180);
-
-        }
-
-        public void bindViewHeaderList() {
-            Log.e("TAG","one");
-            viewPager.setAdapter(sectionsPagerAdapter);
-//            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, HORIZONTAL, false);
-//            headerRecyclerView.setLayoutManager(linearLayoutManager);
-//            HeaderItemsRecyclerViewAdapter headerItemsRecyclerViewAdapter = new HeaderItemsRecyclerViewAdapter(context, headeritems);
-//            headerRecyclerView.setAdapter(headerItemsRecyclerViewAdapter);
-        }
-
-    }
-
-    private class HomeListItemViewHolder extends RecyclerView.ViewHolder {
-
-        RecyclerView homeRecyclerView;
-
-        TextView title_name;
-
-        public HomeListItemViewHolder(View itemView) {
-            super(itemView);
-            homeRecyclerView = itemView.findViewById(R.id.home_item_recycler);
-            title_name = itemView.findViewById(R.id.items_name);
-        }
-
-        public void bindViewHomeList(HomeItem homeitem) {
-            homeRecyclerView.setLayoutManager(new LinearLayoutManager(context, HORIZONTAL, true));
-            SnapHelper snapHelperStart = new GravitySnapHelper(Gravity.END);
-            snapHelperStart.attachToRecyclerView(homeRecyclerView);
-            HomeItemsRecyclerViewAdapter homeItemsRecyclerViewAdapter = new HomeItemsRecyclerViewAdapter(context, homeitem.getProducts(), mClickListener);
-            homeRecyclerView.setAdapter(homeItemsRecyclerViewAdapter);
-            title_name.setText(homeitem.getTitle());
-        }
-    }
-
     // inflates the row layout from xml when needed
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -152,6 +101,53 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 return HOME_ITEM_LIST_ITEM_VIEW;
         }
 
+    }
+
+
+    public void setData(Home home) {
+        headeritems = home.getHeaderitem();
+        homeitems = home.getHomeitem();
+        sectionsPagerAdapter.setData(headeritems);
+        notifyDataSetChanged();
+    }
+
+    private class HeaderListItemViewHolder extends RecyclerView.ViewHolder {
+
+        ViewPager viewPager;
+
+        public HeaderListItemViewHolder(View itemView) {
+            super(itemView);
+            viewPager = itemView.findViewById(R.id.header_item_viewpager);
+            viewPager.setRotationY(180);
+
+        }
+
+        public void bindViewHeaderList() {
+            viewPager.setAdapter(sectionsPagerAdapter);
+        }
+
+    }
+
+    private class HomeListItemViewHolder extends RecyclerView.ViewHolder {
+
+        RecyclerView homeRecyclerView;
+
+        TextView title_name;
+
+        public HomeListItemViewHolder(View itemView) {
+            super(itemView);
+            homeRecyclerView = itemView.findViewById(R.id.home_item_recycler);
+            title_name = itemView.findViewById(R.id.items_name);
+        }
+
+        public void bindViewHomeList(HomeItem homeitem) {
+            homeRecyclerView.setLayoutManager(new LinearLayoutManager(context, HORIZONTAL, true));
+            SnapHelper snapHelperStart = new GravitySnapHelper(Gravity.END);
+            snapHelperStart.attachToRecyclerView(homeRecyclerView);
+            HomeItemsRecyclerViewAdapter homeItemsRecyclerViewAdapter = new HomeItemsRecyclerViewAdapter(context, homeitem.getProducts(), mClickListener);
+            homeRecyclerView.setAdapter(homeItemsRecyclerViewAdapter);
+            title_name.setText(homeitem.getTitle());
+        }
     }
 
 }

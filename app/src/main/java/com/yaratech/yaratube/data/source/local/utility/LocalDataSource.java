@@ -7,18 +7,19 @@ public class LocalDataSource {
 
     private static AppDatabase database;
     private static LocalDataSource localDataSource;
+
     public static LocalDataSource with(AppDatabase appDatabase) {
         if (database == null)
             database = appDatabase;
-        if (localDataSource==null)
+        if (localDataSource == null)
             localDataSource = new LocalDataSource();
         return localDataSource;
     }
 
     public boolean userIsLogin() {
-        if (database.DBDao().isLogin() == 1) {
-            return true;
-        } else return false;
+        if (database.DBDao().getToken() == null) {
+            return false;
+        } else return true;
     }
 }
 

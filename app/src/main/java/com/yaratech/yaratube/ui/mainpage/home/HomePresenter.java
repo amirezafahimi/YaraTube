@@ -1,6 +1,6 @@
 package com.yaratech.yaratube.ui.mainpage.home;
 
-import com.yaratech.yaratube.data.source.GetResultInterface;
+import com.yaratech.yaratube.data.source.ApiResultCallback;
 import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.data.model.Home;
 
@@ -20,7 +20,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
         homeViewListener.showProgrssBar();
 
-        repository.getHome(new GetResultInterface<Home>() {
+        repository.getHome(new ApiResultCallback<Home>() {
 
             @Override
             public void onSuccess(Home home) {

@@ -64,7 +64,6 @@ public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<Product
         public void onBind(Product product) {
             Glide.with(context).load(product.getFeatureAvatar().getXxxdpi()).into(productAvatar);
             productTitle.setText(product.getName());
-
             itemView.setOnClickListener(this);
         }
 
