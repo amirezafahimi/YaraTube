@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity
                     true);
         } else {
             loginDialogContainer = LoginDialogContainer.newInstance();
-            /*loginDialogContainer.setCancelable(false);*/
+            loginDialogContainer.setCancelable(false);
             loginDialogContainer.show(getSupportFragmentManager(), "login dialog");
         }
     }

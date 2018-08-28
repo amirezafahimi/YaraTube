@@ -145,7 +145,7 @@ public class Repository {
                 if (response.isSuccessful()) {
                     mobileLoginInterface.onSuccess(response.body());
                 } else {
-                    mobileLoginInterface.onFail(response.code()+"error");
+                    mobileLoginInterface.onFail(response.code()+" error");
                 }
             }
 
@@ -157,7 +157,7 @@ public class Repository {
 
     }
 
-    public void varificationationCode(String num,
+    public void varificationCode(String num,
                                  String deviceId,
                                  String activationCode,
                                  String nickname,
@@ -171,7 +171,7 @@ public class Repository {
                 if (response.isSuccessful()) {
                     mobileLoginInterface.onSuccess(response.body());
                 } else {
-                    mobileLoginInterface.onFail(response.code()+"");
+                    mobileLoginInterface.onFail(response.code()+" error");
                 }
             }
 

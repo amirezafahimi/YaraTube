@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.yaratech.yaratube.R;
@@ -15,7 +16,7 @@ import com.yaratech.yaratube.data.model.MobileLoginStep2;
 import com.yaratech.yaratube.data.source.local.AppDatabase;
 import com.yaratech.yaratube.data.source.local.utility.DataGenerator;
 import com.yaratech.yaratube.ui.login.logintype.SelectLoginTypeFragment;
-import com.yaratech.yaratube.ui.login.loginvarifification.VarificationFragment;
+import com.yaratech.yaratube.ui.login.loginvarification.VarificationFragment;
 import com.yaratech.yaratube.ui.login.loginwithphone.LoginWithPhoneFragment;
 import com.yaratech.yaratube.util.AppConstants;
 
@@ -25,8 +26,9 @@ public class LoginDialogContainer
         implements OnLoginDialogActionListener,
         LoginDialogContainerContract.View {
 
-    public SelectLoginTypeFragment selectLoginTypeFragment;
+    SelectLoginTypeFragment selectLoginTypeFragment;
     LoginWithPhoneFragment loginWithPhoneFragment;
+    ImageView close;
     VarificationFragment varificationFragment;
     String phoneNumber;
     MobileLoginStep2 step2;
@@ -61,6 +63,7 @@ public class LoginDialogContainer
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        close = view.findViewById(R.id.close_login_dialog);
         if (Hawk.contains("phone_number")) {
             phoneNumber = Hawk.get("phone_number");
             varificationFragment = VarificationFragment.newInstance(phoneNumber);
@@ -77,6 +80,18 @@ public class LoginDialogContainer
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
 
     }
 

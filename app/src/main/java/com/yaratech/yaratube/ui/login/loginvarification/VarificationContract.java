@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.login.loginvarifification;
+package com.yaratech.yaratube.ui.login.loginvarification;
 
 import com.yaratech.yaratube.data.model.MobileLoginStep2;
 
