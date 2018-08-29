@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity
 
 
     /*public static SharedPreferences sharedPreferences;*/
-
+    MainPresenter mainPresenter;
     LoginDialogContainer loginDialogContainer;
-    boolean userIsLogedIn;
+    public static boolean USER_IS_LOGED_IN;
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity
 
         /*sharedPreferences = getSharedPreferences("USER_LOGIN", MODE_PRIVATE);*/
 
+        mainPresenter = new MainPresenter(this, new Repository());
+        mainPresenter.checkIfUserIsLogedIn(this);
+
         Hawk.init(this).build();
 
     }
@@ -90,9 +93,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.profile) {
-            MainPresenter mainPresenter = new MainPresenter(this, new Repository());
-            mainPresenter.checkIfUserIsLogedIn(this);
-            if (userIsLogedIn) {
+            if (USER_IS_LOGED_IN) {
                 //Go to profile.
             } else {
                 loginDialogContainer = LoginDialogContainer.newInstance();
@@ -103,6 +104,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.callUs) {
             DataGenerator.with(AppDatabase.getAppDatabase(this)).deleteUser(1);
+            setUserIsLogedIn(false);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -125,13 +127,13 @@ public class MainActivity extends AppCompatActivity
     public void goFromProductToProdutDetails(Product product) {
         AppConstants.setFragment(R.id.fragment_container,
                 getSupportFragmentManager(),
-                ProductDetailsFragment.newInstance(product, userIsLogedIn),
+                ProductDetailsFragment.newInstance(product),
                 "productDetailsFragment",
                 true);
     }
 
     @Override
     public void setUserIsLogedIn(boolean userIsLogedIn) {
-        this.userIsLogedIn = userIsLogedIn;
+        USER_IS_LOGED_IN = userIsLogedIn;
     }
 }

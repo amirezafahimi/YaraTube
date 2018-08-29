@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MobileLoginStep1 implements Parcelable {
+public class MobileLoginStepOneResponse implements Parcelable {
 
     @SerializedName("error")
     @Expose
@@ -16,21 +16,21 @@ public class MobileLoginStep1 implements Parcelable {
     @Expose
     private String message;
 
-    protected MobileLoginStep1(Parcel in) {
+    protected MobileLoginStepOneResponse(Parcel in) {
         error = in.readString();
         message = in.readString();
         nickname = in.readString();
     }
 
-    public static final Creator<MobileLoginStep1> CREATOR = new Creator<MobileLoginStep1>() {
+    public static final Creator<MobileLoginStepOneResponse> CREATOR = new Creator<MobileLoginStepOneResponse>() {
         @Override
-        public MobileLoginStep1 createFromParcel(Parcel in) {
-            return new MobileLoginStep1(in);
+        public MobileLoginStepOneResponse createFromParcel(Parcel in) {
+            return new MobileLoginStepOneResponse(in);
         }
 
         @Override
-        public MobileLoginStep1[] newArray(int size) {
-            return new MobileLoginStep1[size];
+        public MobileLoginStepOneResponse[] newArray(int size) {
+            return new MobileLoginStepOneResponse[size];
         }
     };
 

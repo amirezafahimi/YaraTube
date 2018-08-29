@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,12 +31,12 @@ import com.yaratech.yaratube.ui.productdetails.commentdialog.CommentDialog;
 import java.util.List;
 
 import static android.widget.GridLayout.VERTICAL;
+import static com.yaratech.yaratube.MainActivity.USER_IS_LOGED_IN;
 
 public class ProductDetailsFragment extends Fragment implements ProductDetailsContract.View {
 
     ProductDetailsPresenter productDetailsPresenter;
     Product product;
-    boolean userIsLogined;
     ProductDetail productDetail;
     List<Comment> comments;
     ImageView play;
@@ -52,11 +53,10 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
         // Required empty public constructor
     }
 
-    public static ProductDetailsFragment newInstance(Product product, boolean userIsLogined) {
+    public static ProductDetailsFragment newInstance(Product product) {
         ProductDetailsFragment fragment = new ProductDetailsFragment();
         Bundle args1 = new Bundle();
         args1.putParcelable("product", product);
-        args1.putBoolean("user is logined", userIsLogined);
         fragment.setArguments(args1);
         return fragment;
     }
@@ -66,7 +66,6 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         product = getArguments().getParcelable("product");
-        userIsLogined = getArguments().getBoolean("user is logined");
     }
 
     @Override
@@ -91,8 +90,15 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.e("onActivityCreated","111111111111111111");
         hideProgrssBar();
         bindViewProudctDetails();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,7 +110,7 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(userIsLogined){
+                if(USER_IS_LOGED_IN){
 
                 }
                 else{

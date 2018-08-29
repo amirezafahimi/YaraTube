@@ -5,8 +5,8 @@ import android.content.Context;
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.Home;
-import com.yaratech.yaratube.data.model.MobileLoginStep1;
-import com.yaratech.yaratube.data.model.MobileLoginStep2;
+import com.yaratech.yaratube.data.model.MobileLoginStepOneResponse;
+import com.yaratech.yaratube.data.model.MobileLoginStepTwoResponse;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.model.ProductDetail;
 import com.yaratech.yaratube.data.source.local.AppDatabase;
@@ -133,7 +133,7 @@ public class Repository {
                                       String deviceModel,
                                       String deviceOs,
                                       String gcm,
-                                      final ApiResultCallback<MobileLoginStep1> mobileLoginInterface) {
+                                      final ApiResultCallback<MobileLoginStepOneResponse> mobileLoginInterface) {
         System.out.println(Client.getRetrofitInstance().create(Services.class).sendPhoneNumber(num,
                 deviceId,
                 deviceModel,
@@ -143,9 +143,9 @@ public class Repository {
                 deviceId,
                 deviceModel,
                 deviceOs,
-                gcm).enqueue(new Callback<MobileLoginStep1>() {
+                gcm).enqueue(new Callback<MobileLoginStepOneResponse>() {
             @Override
-            public void onResponse(Call<MobileLoginStep1> call, Response<MobileLoginStep1> response) {
+            public void onResponse(Call<MobileLoginStepOneResponse> call, Response<MobileLoginStepOneResponse> response) {
                 if (response.isSuccessful()) {
                     mobileLoginInterface.onSuccess(response.body());
                 } else {
@@ -154,7 +154,7 @@ public class Repository {
             }
 
             @Override
-            public void onFailure(Call<MobileLoginStep1> call, Throwable t) {
+            public void onFailure(Call<MobileLoginStepOneResponse> call, Throwable t) {
                 mobileLoginInterface.onFail("عملیات با خطا مواجه شد!");
             }
         });
@@ -165,13 +165,13 @@ public class Repository {
                                  String deviceId,
                                  String activationCode,
                                  String nickname,
-                                 final ApiResultCallback<MobileLoginStep2> mobileLoginInterface) {
+                                 final ApiResultCallback<MobileLoginStepTwoResponse> mobileLoginInterface) {
         Client.getRetrofitInstance().create(Services.class).sendActivationCode(num,
                 deviceId,
                 activationCode,
-                nickname).enqueue(new Callback<MobileLoginStep2>() {
+                nickname).enqueue(new Callback<MobileLoginStepTwoResponse>() {
             @Override
-            public void onResponse(Call<MobileLoginStep2> call, Response<MobileLoginStep2> response) {
+            public void onResponse(Call<MobileLoginStepTwoResponse> call, Response<MobileLoginStepTwoResponse> response) {
                 if (response.isSuccessful()) {
                     mobileLoginInterface.onSuccess(response.body());
                 } else {
@@ -180,7 +180,7 @@ public class Repository {
             }
 
             @Override
-            public void onFailure(Call<MobileLoginStep2> call, Throwable t) {
+            public void onFailure(Call<MobileLoginStepTwoResponse> call, Throwable t) {
                 mobileLoginInterface.onFail("عملیات با خطا مواجه شد!");
             }
         });
@@ -197,7 +197,7 @@ public class Repository {
     }
 
     public void sendUserDataToDatabase(Context context,
-                                       MobileLoginStep2 step2,
+                                       MobileLoginStepTwoResponse step2,
                                        String phoneNumber,
                                        InsertIntoDatabaseCallback insertIntoDatabaseCallback) {
 

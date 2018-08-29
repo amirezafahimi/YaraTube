@@ -11,13 +11,15 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.yaratech.yaratube.R;
-import com.yaratech.yaratube.data.model.MobileLoginStep1;
-import com.yaratech.yaratube.data.model.MobileLoginStep2;
+import com.yaratech.yaratube.data.model.MobileLoginStepOneResponse;
+import com.yaratech.yaratube.data.model.MobileLoginStepTwoResponse;
 import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.ui.login.logintype.SelectLoginTypeFragment;
 import com.yaratech.yaratube.ui.login.loginvarification.VarificationFragment;
 import com.yaratech.yaratube.ui.login.loginwithphone.LoginWithPhoneFragment;
 import com.yaratech.yaratube.util.AppConstants;
+
+import static com.yaratech.yaratube.MainActivity.USER_IS_LOGED_IN;
 
 public class LoginDialogContainer
         extends DialogFragment
@@ -102,7 +104,7 @@ public class LoginDialogContainer
     }
 
     @Override
-    public void goToVarificationFragment(MobileLoginStep1 step1, String phoneNum) {
+    public void goToVarificationFragment(MobileLoginStepOneResponse step1, String phoneNum) {
         this.phoneNumber = phoneNum;
         AppConstants.setDialogFragment(R.id.dialog_container, getChildFragmentManager(),
                 VarificationFragment.newInstance(phoneNum), "varificationFragment", true);
@@ -111,7 +113,7 @@ public class LoginDialogContainer
     }
 
     @Override
-    public void dissmissVarificationFragment(MobileLoginStep2 step2) {
+    public void dissmissVarificationFragment(MobileLoginStepTwoResponse step2) {
         if (Hawk.contains("phone_number"))
             Hawk.delete("phone_number");
         LoginDialogContainerPresenter loginDialogContainerPresenter = new
@@ -121,6 +123,11 @@ public class LoginDialogContainer
     }
 
     //----------------------------------------------------------------------------------------------
+
+    @Override
+    public void setUserIsLogedIn(boolean userIsLogedIn) {
+        USER_IS_LOGED_IN = userIsLogedIn;
+    }
 
     @Override
     public void showMessege(String message) {

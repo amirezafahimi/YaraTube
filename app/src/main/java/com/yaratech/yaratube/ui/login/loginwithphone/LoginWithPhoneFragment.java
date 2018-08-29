@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.yaratech.yaratube.R;
-import com.yaratech.yaratube.data.model.MobileLoginStep1;
+import com.yaratech.yaratube.data.model.MobileLoginStepOneResponse;
 import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.ui.login.OnLoginDialogActionListener;
 import com.yaratech.yaratube.util.AppConstants;
@@ -74,7 +74,7 @@ public class LoginWithPhoneFragment extends Fragment implements LoginWithPhoneCo
     }
 
     @Override
-    public void goToNextDialog(MobileLoginStep1 step1) {
+    public void goToNextDialog(MobileLoginStepOneResponse step1) {
         ((OnLoginDialogActionListener)getParentFragment())
                 .goToVarificationFragment(step1, phoneNumber.getText().toString());
     }

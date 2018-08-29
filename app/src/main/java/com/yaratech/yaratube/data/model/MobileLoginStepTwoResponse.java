@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class MobileLoginStep2 {
+public class MobileLoginStepTwoResponse {
 
     @SerializedName("fino_token")
     @Expose

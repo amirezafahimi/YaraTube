@@ -1,13 +1,8 @@
 package com.yaratech.yaratube.ui.login.loginvarification;
 
-import android.widget.Toast;
-
-import com.yaratech.yaratube.data.model.MobileLoginStep2;
+import com.yaratech.yaratube.data.model.MobileLoginStepTwoResponse;
 import com.yaratech.yaratube.data.source.ApiResultCallback;
 import com.yaratech.yaratube.data.source.Repository;
-import com.yaratech.yaratube.data.source.local.AppDatabase;
-import com.yaratech.yaratube.data.source.local.entity.User;
-import com.yaratech.yaratube.data.source.local.utility.DataGenerator;
 
 public class VarificationPresenter implements VarificationContract.Presenter {
 
@@ -26,9 +21,9 @@ public class VarificationPresenter implements VarificationContract.Presenter {
                                   String activationCode,
                                   String nickname) {
         repository.varificationCode(phoneNumber, deviceId, activationCode, nickname,
-                new ApiResultCallback<MobileLoginStep2>() {
+                new ApiResultCallback<MobileLoginStepTwoResponse>() {
                     @Override
-                    public void onSuccess(MobileLoginStep2 step2) {
+                    public void onSuccess(MobileLoginStepTwoResponse step2) {
                         varificationViewListener.loginMessege(step2);
                     }
 

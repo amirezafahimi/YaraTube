@@ -2,12 +2,9 @@ package com.yaratech.yaratube.ui.login;
 
 import android.content.Context;
 
-import com.yaratech.yaratube.data.model.MobileLoginStep2;
+import com.yaratech.yaratube.data.model.MobileLoginStepTwoResponse;
 import com.yaratech.yaratube.data.source.InsertIntoDatabaseCallback;
 import com.yaratech.yaratube.data.source.Repository;
-import com.yaratech.yaratube.data.source.local.AppDatabase;
-import com.yaratech.yaratube.data.source.local.entity.User;
-import com.yaratech.yaratube.data.source.local.utility.DataGenerator;
 
 public class LoginDialogContainerPresenter implements LoginDialogContainerContract.Presenter {
 
@@ -23,7 +20,7 @@ public class LoginDialogContainerPresenter implements LoginDialogContainerContra
 
 
     @Override
-    public void insertUserData(Context context, MobileLoginStep2 step2, String phoneNumber) {
+    public void insertUserData(Context context, MobileLoginStepTwoResponse step2, String phoneNumber) {
         repository.sendUserDataToDatabase(
                 context,
                 step2,
@@ -32,6 +29,7 @@ public class LoginDialogContainerPresenter implements LoginDialogContainerContra
             @Override
             public void onUserDataInserted(String message) {
                 loginDialogContainerViewListener.showMessege(message);
+                loginDialogContainerViewListener.setUserIsLogedIn(true);
             }
         });
     }

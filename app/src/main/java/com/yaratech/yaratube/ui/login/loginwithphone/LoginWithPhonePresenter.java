@@ -1,8 +1,6 @@
 package com.yaratech.yaratube.ui.login.loginwithphone;
 
-import android.util.Log;
-
-import com.yaratech.yaratube.data.model.MobileLoginStep1;
+import com.yaratech.yaratube.data.model.MobileLoginStepOneResponse;
 import com.yaratech.yaratube.data.source.ApiResultCallback;
 import com.yaratech.yaratube.data.source.Repository;
 
@@ -27,9 +25,9 @@ public class LoginWithPhonePresenter implements LoginWithPhoneContract.Presenter
                 deviceModel,
                 deviceOs,
                 gcm,
-                new ApiResultCallback<MobileLoginStep1>() {
+                new ApiResultCallback<MobileLoginStepOneResponse>() {
                     @Override
-                    public void onSuccess(MobileLoginStep1 step1) {
+                    public void onSuccess(MobileLoginStepOneResponse step1) {
                         loginWithPhoneViewListener.goToNextDialog(step1);
                     }
 

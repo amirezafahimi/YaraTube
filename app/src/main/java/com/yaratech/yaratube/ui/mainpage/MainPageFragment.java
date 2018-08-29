@@ -16,6 +16,8 @@ import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.ui.mainpage.categories.CategoriesFragment;
 import com.yaratech.yaratube.ui.mainpage.home.HomeFragment;
 
+import static com.yaratech.yaratube.ui.mainpage.home.HomeFragment.HOME_FRAGMENT_TAG;
+
 public class MainPageFragment extends Fragment {
 
     FragmentManager fragmentManager;
@@ -76,8 +78,7 @@ public class MainPageFragment extends Fragment {
             fragmentManager = getChildFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.mainPageFragmentContainer, homeFragment).commit();
-            fragmentTransaction.addToBackStack("home_fragment");
-
+            fragmentTransaction.addToBackStack(HOME_FRAGMENT_TAG);
         } else if (!homeFragment.isVisible()) {
             fragmentManager.beginTransaction().hide(categoriesFragment).commit();
             fragmentManager.beginTransaction().show(homeFragment).commit();

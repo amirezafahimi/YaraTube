@@ -2,8 +2,8 @@ package com.yaratech.yaratube.data.source.remote;
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.Home;
-import com.yaratech.yaratube.data.model.MobileLoginStep1;
-import com.yaratech.yaratube.data.model.MobileLoginStep2;
+import com.yaratech.yaratube.data.model.MobileLoginStepOneResponse;
+import com.yaratech.yaratube.data.model.MobileLoginStepTwoResponse;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.model.ProductDetail;
 import com.yaratech.yaratube.util.AppConstants;
@@ -35,7 +35,7 @@ public interface Services {
 
     @FormUrlEncoded
     @POST("mobile_login_step1/" + AppConstants.STORE_ID)
-    Call<MobileLoginStep1> sendPhoneNumber(
+    Call<MobileLoginStepOneResponse> sendPhoneNumber(
             @Field("mobile") String mobile,
             @Field("device_id") String deviceId,
             @Field("device_model") String deviceModel,
@@ -44,7 +44,7 @@ public interface Services {
 
     @FormUrlEncoded
     @POST("mobile_login_step2/" + AppConstants.STORE_ID)
-    Call<MobileLoginStep1> sendPhoneNumber(
+    Call<MobileLoginStepOneResponse> sendPhoneNumber(
             @Field("mobile") String mobile,
             @Field("device_id") String deviceId,
             @Field("verification_code") String deviceModel,
@@ -52,7 +52,7 @@ public interface Services {
 
     @FormUrlEncoded
     @POST("mobile_login_step2/" + AppConstants.STORE_ID)
-    Call<MobileLoginStep2> sendActivationCode(
+    Call<MobileLoginStepTwoResponse> sendActivationCode(
             @Field("mobile") String mobile,
             @Field("device_id") String deviceId,
             @Field("verification_code") String verificationCode,
