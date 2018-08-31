@@ -1,9 +1,11 @@
 package com.yaratech.yaratube.data.source;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Comment;
+import com.yaratech.yaratube.data.model.CommentResponse;
 import com.yaratech.yaratube.data.model.Home;
 import com.yaratech.yaratube.data.model.MobileLoginStepOneResponse;
 import com.yaratech.yaratube.data.model.MobileLoginStepTwoResponse;
@@ -187,6 +189,31 @@ public class Repository {
 
     }
 
+
+    public void sendComment(int productId, String token, float score, String comment,
+                            ApiResultCallback<CommentResponse> commentResponseInterface) {
+
+        Client.getRetrofitInstance().create(Services.class).sendComment(productId,
+                "Token "+token,
+                "",
+                (int) score,
+                comment).enqueue(new Callback<CommentResponse>() {
+            @Override
+            public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
+                if (response.isSuccessful()) {
+                    commentResponseInterface.onSuccess(response.body());
+                } else {
+                    commentResponseInterface.onFail(response.code()+" error");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommentResponse> call, Throwable t) {
+                commentResponseInterface.onFail("عملیات با خطا مواجه شد!");
+            }
+        });
+    }
+
     public void checkIfUserIsLogedIn(Context context,
                                      ReadFromDatabaseCallback<Boolean> readFromDatabaseCallback) {
         if (LocalDataSource.with(AppDatabase.getAppDatabase(context)).userIsLogin()) {
@@ -211,5 +238,9 @@ public class Repository {
         DataGenerator.with(AppDatabase.getAppDatabase(context)).addUser(user);
 
         insertIntoDatabaseCallback.onUserDataInserted(step2.getMessage());
+    }
+
+    public String getUserToken() {
+        return LocalDataSource.getToken();
     }
 }

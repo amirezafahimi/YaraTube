@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,7 @@ import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.model.ProductDetail;
 import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.ui.login.LoginDialogContainer;
-import com.yaratech.yaratube.ui.productdetails.commentdialog.CommentDialog;
+import com.yaratech.yaratube.ui.productdetails.commentdialog.CommentDialogFragment;
 
 import java.util.List;
 
@@ -90,7 +89,6 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.e("onActivityCreated","111111111111111111");
         hideProgrssBar();
         bindViewProudctDetails();
     }
@@ -102,8 +100,15 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getFragmentManager();
-                CommentDialog.newInstance().show(fragmentManager, "comment dialog");
+                if(USER_IS_LOGED_IN){
+                    FragmentManager fragmentManager = getFragmentManager();
+                    CommentDialogFragment.newInstance(product.getId()).show(fragmentManager, "comment dialog");
+                }
+                else{
+                    LoginDialogContainer loginDialogContainer = LoginDialogContainer.newInstance();
+                    loginDialogContainer.setCancelable(false);
+                    loginDialogContainer.show(getChildFragmentManager(), "login dialog");
+                }
             }
         });
 

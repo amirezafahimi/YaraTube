@@ -16,10 +16,14 @@ public class LocalDataSource {
         return localDataSource;
     }
 
-    public boolean userIsLogin() {
+    static public boolean userIsLogin() {
         if (database.DBDao().getToken() == null) {
             return false;
         } else return true;
+    }
+
+    static public String getToken() {
+        return database.DBDao().getToken();
     }
 }
 
