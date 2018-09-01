@@ -69,9 +69,9 @@ public class Repository {
         });
     }
 
-    public void getProducts(int id, final ApiResultCallback<List<Product>> productInterface) {
+    public void getProducts(int id, int offset, final ApiResultCallback<List<Product>> productInterface) {
 
-        Client.getRetrofitInstance().create(Services.class).getProductList(id).enqueue(new Callback<List<Product>>() {
+        Client.getRetrofitInstance().create(Services.class).getProductList(id, offset).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {

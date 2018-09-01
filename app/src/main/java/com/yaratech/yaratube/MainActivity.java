@@ -3,7 +3,6 @@ package com.yaratech.yaratube;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,13 +18,12 @@ import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.data.source.local.AppDatabase;
 import com.yaratech.yaratube.data.source.local.utility.DataGenerator;
-import com.yaratech.yaratube.data.source.local.utility.LocalDataSource;
 import com.yaratech.yaratube.ui.login.LoginDialogContainer;
 import com.yaratech.yaratube.ui.mainpage.MainPageFragment;
 import com.yaratech.yaratube.ui.OnProductActionListener;
 import com.yaratech.yaratube.ui.productdetails.ProductDetailsFragment;
 import com.yaratech.yaratube.ui.mainpage.categories.CategoriesFragment;
-import com.yaratech.yaratube.ui.products.ProductListFragment;
+import com.yaratech.yaratube.ui.productlist.ProductListFragment;
 import com.yaratech.yaratube.util.AppConstants;
 
 public class MainActivity extends AppCompatActivity
@@ -125,6 +123,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void goFromProductToProdutDetails(Product product) {
+
         AppConstants.setFragment(R.id.fragment_container,
                 getSupportFragmentManager(),
                 ProductDetailsFragment.newInstance(product),

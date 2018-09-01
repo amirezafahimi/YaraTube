@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.products;
+package com.yaratech.yaratube.ui.productlist;
 
 import com.yaratech.yaratube.data.model.Product;
 
@@ -18,6 +18,6 @@ public interface ProductListContract {
     }
 
     interface Presenter{
-        void fetchProducts(int id);
+        void fetchProducts(int id, int offset);
     }
 }

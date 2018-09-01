@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.products;
+package com.yaratech.yaratube.ui.productlist;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +23,19 @@ import java.util.List;
 
 
 public class ProductListFragment extends Fragment implements ProductListContract.View,
-        ProductListRecyclerViewAdapter.ProductClickListener{
+        ProductListRecyclerViewAdapter.ProductClickListener {
 
     ProductListPresenter productListPresenter;
     List<Product> products = new ArrayList<>();
     ProductListRecyclerViewAdapter adapter;
     RecyclerView productsRecyclerView;
     ProgressBar progressBar;
+
+
+    private boolean loading = true;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
+    int offset = 0;
+
 
     public ProductListFragment() {
         // Required empty public constructor
@@ -62,22 +69,52 @@ public class ProductListFragment extends Fragment implements ProductListContract
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        productsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        adapter = new ProductListRecyclerViewAdapter(getContext(), ProductListFragment.this);
-        productsRecyclerView.setAdapter(adapter);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+
         productListPresenter = new ProductListPresenter(this, new Repository());
-        productListPresenter.fetchProducts(getArguments().getInt("category_id"));
+        productListPresenter.fetchProducts(getArguments().getInt("category_id"), offset);
+
+        productsRecyclerView.setLayoutManager(layoutManager);
+
+        adapter = new ProductListRecyclerViewAdapter(getContext(), ProductListFragment.this);
+        adapter.setHasStableIds(true);
+        productsRecyclerView.setAdapter(adapter);
+        productsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = layoutManager.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
+
+                    if (loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            loading = false;
+                            Log.v("...", "Last Item Wow !");
+                            //Do pagination.. i.e. fetch new data
+                            productListPresenter.fetchProducts(getArguments().getInt("category_id"), offset);
+                        }
+                    }
+                }
+            }
+        });
+
     }
 
     @Override
     public void showListProducts(List<Product> products) {
-        this.products = products;
-        adapter.setData(products);
+        if (products.size() != 0) {
+            this.products = products;
+            adapter.updateData(products);
+            offset += products.size();
+        }
+        loading = true;
     }
 
     @Override
     public void showErrorMessage(String err) {
-        Toast.makeText(getContext(), err, Toast.LENGTH_LONG);
+        Toast.makeText(getContext(), err, Toast.LENGTH_LONG).show();
     }
 
     @Override

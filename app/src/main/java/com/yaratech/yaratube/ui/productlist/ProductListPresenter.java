@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.products;
+package com.yaratech.yaratube.ui.productlist;
 
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.source.ApiResultCallback;
@@ -15,9 +15,9 @@ public class ProductListPresenter implements ProductListContract.Presenter {
     }
 
     @Override
-    public void fetchProducts(int id) {
+    public void fetchProducts(int id, int offset) {
         productsViewListener.showProgrssBar();
-        repository.getProducts(id, new ApiResultCallback<List<Product>>() {
+        repository.getProducts(id, offset, new ApiResultCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> result) {
                 productsViewListener.hideProgrssBar();

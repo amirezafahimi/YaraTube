@@ -14,7 +14,6 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.yaratech.yaratube.R;
-import com.yaratech.yaratube.data.model.CommentResponse;
 import com.yaratech.yaratube.data.source.Repository;
 
 public class CommentDialogFragment extends DialogFragment implements CommentContract.View{

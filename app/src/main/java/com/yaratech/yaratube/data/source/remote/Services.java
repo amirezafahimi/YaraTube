@@ -18,6 +18,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Services {
     @GET("store/"+ AppConstants.STORE_ID)
@@ -26,8 +27,8 @@ public interface Services {
     @GET("category/"+ AppConstants.STORE_ID+"/463")
     Call<List<Category>> getCategory();
 
-    @GET("listproducts/{category_id}")
-    Call<List<Product>> getProductList(@Path("category_id") int categoryId);
+    @GET("listproducts/{category_id}?limit="+AppConstants.LIMIT+"&")
+    Call<List<Product>> getProductList(@Path("category_id") int categoryId, @Query("offset") int offset);
 
     @GET("product/{product_id}")
     Call<ProductDetail> getProductDetail(@Path("product_id") int productId);
