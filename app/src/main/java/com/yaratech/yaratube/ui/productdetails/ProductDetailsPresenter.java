@@ -40,15 +40,12 @@ public class ProductDetailsPresenter implements ProductDetailsContract.Presenter
             @Override
             public void onSuccess(List<Comment> result) {
                 productDetailsViewListener.showCommentList(result);
-
             }
 
             @Override
             public void onFail(String err) {
                 productDetailsViewListener.showErrorMessage(err);
-
             }
         });
-
     }
 }

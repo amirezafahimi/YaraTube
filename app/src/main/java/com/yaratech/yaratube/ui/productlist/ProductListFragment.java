@@ -1,15 +1,18 @@
 package com.yaratech.yaratube.ui.productlist;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -17,6 +20,7 @@ import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.ui.OnProductActionListener;
+import com.yaratech.yaratube.ui.productdetails.ProductDetailsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,43 +76,41 @@ public class ProductListFragment extends Fragment implements ProductListContract
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
 
         productListPresenter = new ProductListPresenter(this, new Repository());
+
+        showProgrssBar();
         productListPresenter.fetchProducts(getArguments().getInt("category_id"), offset);
 
         productsRecyclerView.setLayoutManager(layoutManager);
 
         adapter = new ProductListRecyclerViewAdapter(getContext(), ProductListFragment.this);
         adapter.setHasStableIds(true);
+        productsRecyclerView.setHasFixedSize(true);
         productsRecyclerView.setAdapter(adapter);
         productsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0) //check for scroll down
-                {
+                Log.e("999999999", dy+"");
+                if (dy > 0) {
                     visibleItemCount = layoutManager.getChildCount();
                     totalItemCount = layoutManager.getItemCount();
                     pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
 
                     if (loading) {
-                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        if (!recyclerView.canScrollVertically(1)) {
                             loading = false;
-                            Log.v("...", "Last Item Wow !");
-                            //Do pagination.. i.e. fetch new data
                             productListPresenter.fetchProducts(getArguments().getInt("category_id"), offset);
                         }
                     }
                 }
             }
         });
-
     }
 
     @Override
     public void showListProducts(List<Product> products) {
-        if (products.size() != 0) {
-            this.products = products;
-            adapter.updateData(products);
-            offset += products.size();
-        }
+        this.products = products;
+        adapter.updateData(products);
+        offset += products.size();
         loading = true;
     }
 
@@ -128,7 +130,7 @@ public class ProductListFragment extends Fragment implements ProductListContract
     }
 
     @Override
-    public void onItemClick(View view, Product product) {
-        ((OnProductActionListener) getContext()).goFromProductToProdutDetails(product);
+    public void onItemClick(View view, Product product, ImageView imageView) {
+        ((OnProductActionListener) getContext()).goFromProductToProdutDetails(product, imageView);
     }
 }

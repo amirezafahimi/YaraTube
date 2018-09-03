@@ -3,6 +3,8 @@ package com.yaratech.yaratube;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.view.ViewCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,6 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.orhanobut.hawk.Hawk;
 import com.yaratech.yaratube.data.model.Category;
@@ -110,11 +113,13 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    ProductListFragment productListFragment;
     @Override
     public void goFromCategoryToProductList(Category category) {
+        productListFragment = ProductListFragment.newInstance(category.getId());
         AppConstants.setFragment(R.id.fragment_container,
                 getSupportFragmentManager(),
-                ProductListFragment.newInstance(category.getId()),
+                productListFragment,
                 "productListFragment",
                 true);
 
@@ -122,13 +127,29 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    public void goFromProductToProdutDetails(Product product) {
+    public void goFromProductToProdutDetails(Product product, ImageView imageView) {
 
-        AppConstants.setFragment(R.id.fragment_container,
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            imageView.setTransitionName("transition" + product.getId());
+        }
+
+        ProductDetailsFragment productDetailsFragment = ProductDetailsFragment.newInstance(product);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .addSharedElement(imageView, ViewCompat.getTransitionName(imageView))
+                    .setReorderingAllowed(true)
+                    .hide(getSupportFragmentManager().findFragmentById(R.id.fragment_container))
+                    .add(R.id.fragment_container, productDetailsFragment, "productDetailsFragment")
+                    .addToBackStack("productDetailsFragment")
+                    .commit();
+        }
+        /*AppConstants.setFragment(R.id.fragment_container,
                 getSupportFragmentManager(),
                 ProductDetailsFragment.newInstance(product),
                 "productDetailsFragment",
-                true);
+                true);*/
     }
 
     @Override

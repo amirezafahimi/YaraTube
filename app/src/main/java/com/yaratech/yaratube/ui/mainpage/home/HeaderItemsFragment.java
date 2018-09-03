@@ -62,7 +62,7 @@ public class HeaderItemsFragment extends Fragment {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.goFromProductToProdutDetails(headerItem);
+                mListener.goFromProductToProdutDetails(headerItem, imageView);
             }
         });
         Glide.with(getContext()).load(headerItem.getFeatureAvatar().getXxxdpi()).into(imageView);

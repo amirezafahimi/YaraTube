@@ -14,7 +14,6 @@
 
 
         <ImageView
-            android:transitionName="MyTransition"
             android:id="@+id/product_image"
             android:layout_width="0dp"
             android:layout_height="0dp"

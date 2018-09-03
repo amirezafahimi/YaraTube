@@ -1,6 +1,8 @@
 package com.yaratech.yaratube.ui.productdetails;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.Product;
@@ -65,6 +73,11 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         product = getArguments().getParcelable("product");
+
+        postponeEnterTransition();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.simple_fragment_transition));
+        }
     }
 
     @Override
@@ -137,7 +150,29 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
         adpter = new ProductDetailsRecyclerViewAdpter(getContext());
         productDetailsRecyclerView.setAdapter(adpter);
         title.setText(product.getName());
-        Glide.with(getContext()).load(product.getFeatureAvatar().getXxxdpi()).into(imageView);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            imageView.setTransitionName("transition" + product.getId());
+        }
+
+        Glide.with(getContext()).load(product.getFeatureAvatar().getXxxdpi())
+
+                .apply(new RequestOptions().dontAnimate())
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        startPostponedEnterTransition();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        startPostponedEnterTransition();
+                        return false;
+                    }
+                })
+                .into(imageView);
 
         showProgrssBar();
         productDetailsPresenter = new

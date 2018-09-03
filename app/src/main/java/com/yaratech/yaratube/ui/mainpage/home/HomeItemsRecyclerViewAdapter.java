@@ -73,7 +73,7 @@ public class HomeItemsRecyclerViewAdapter extends RecyclerView.Adapter<HomeItems
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.goFromProductToProdutDetails(products.get(getAdapterPosition()));
+            if (mClickListener != null) mClickListener.goFromProductToProdutDetails(products.get(getAdapterPosition()), productAvatar);
         }
     }
 }

@@ -1,8 +1,11 @@
 package com.yaratech.yaratube.ui.productlist;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +16,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Product;
 
@@ -78,7 +86,7 @@ public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<Product
         @Override
         public void onClick(View view) {
             if (mClickListener != null)
-                mClickListener.onItemClick(view, products.get(getAdapterPosition()));
+                mClickListener.onItemClick(view, products.get(getAdapterPosition()), productAvatar);
         }
     }
 
@@ -107,7 +115,6 @@ public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<Product
         @Override
         public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
             boolean shambalile = oldProducts.get(oldItemPosition).getId() == newProducts.get(newItemPosition).getId();
-            Log.e("Tag", shambalile+" "+oldProducts.size()+" "+newProducts.size());
             return shambalile;
         }
 
@@ -130,6 +137,6 @@ public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<Product
     }
 
     public interface ProductClickListener {
-        void onItemClick(View view, Product product);
+        void onItemClick(View view, Product product, ImageView imageView);
     }
 }
