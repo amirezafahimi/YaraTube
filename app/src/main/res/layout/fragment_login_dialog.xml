@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:orientation="vertical"
+    android:padding="@dimen/dialog_padding">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:text="ورود"
+        android:textSize="@dimen/textSize"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/dialog_component_marginTop"
+        android:layout_marginBottom="16dp"/>
+    
+    <LinearLayout
+        android:id="@+id/login_with_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dialog_component_marginTop"
+        android:layout_marginBottom="@dimen/dialog_component_marginBottom"
+        android:background="@color/login_with_phone_number_color"
+        android:layoutDirection="rtl"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingRight="8dp"
+        android:paddingLeft="48dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/smartphone__1_"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_with_phone_number_text"
+            android:textSize="@dimen/textSize"
+            android:textColor="@color/white"
+            android:layout_marginRight="16dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/login_with_google_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dialog_component_marginTop"
+        android:layout_marginBottom="@dimen/dialog_component_marginBottom"
+        android:background="@color/login_with_google_account_color"
+        android:layoutDirection="rtl"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingRight="8dp"
+        android:paddingLeft="48dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/g_plus"
+            android:layout_marginLeft="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_google_account_text"
+            android:textSize="@dimen/textSize"
+            android:textColor="@color/white"
+            android:layout_marginRight="12dp"/>
+    </LinearLayout>
+    
+    
+
+</LinearLayout>

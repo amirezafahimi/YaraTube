@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".ui.productdetails.ProductDetailsFragment">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="@dimen/default_paddig"
+                app:cardCornerRadius="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!--<com.halilibo.bettervideoplayer.BetterVideoPlayer
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/product_video"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/videoview_height" />-->
+                    <ImageView
+                        android:id="@+id/product_video"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/videoview_height" />
+
+                    <LinearLayout
+                        android:id="@+id/constraintLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/default_paddig">
+
+                        <TextView
+                            android:id="@+id/product_name"
+                            android:layout_width="0px"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_weight="5"
+                            android:textSize="@dimen/textSize"
+                            android:textStyle="bold" />
+
+                        <RelativeLayout
+                            android:layout_width="0px"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_gravity="end">
+
+                            <ImageButton
+                                android:id="@+id/play"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:src="@drawable/ic_play_circle_filled_black_24dp"
+                                android:layout_alignParentLeft="true" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="@dimen/default_paddig"
+                app:cardCornerRadius="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/default_paddig"
+                        android:text="توضیحات"
+                        android:textSize="@dimen/textSize"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/product_explain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/default_paddig"
+                        android:textSize="@dimen/textSize" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="@dimen/default_paddig"
+                app:cardCornerRadius="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/comment_constraintLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/default_paddig">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/users_comment"
+                            android:textSize="@dimen/textSize"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/comment_button"
+                            app:layout_constraintEnd_toEndOf="@id/comment_constraintLayout"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@id/comment_constraintLayout"
+                            app:layout_constraintTop_toTopOf="@+id/comment_button" />
+
+                        <Button
+                            android:id="@+id/comment_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#3B89D2"
+                            android:text="@string/comment_button_text"
+                            android:textColor="#ffffff"
+                            app:layout_constraintEnd_toEndOf="@id/comment_constraintLayout"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="@id/comment_constraintLayout" />
+
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/product_comments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <ProgressBar
+        android:id="@+id/loading_product_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center" />
+
+
+</FrameLayout>

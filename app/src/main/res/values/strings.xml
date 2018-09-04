@@ -6,4 +6,17 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="categories">دسته بندی ها</string>
+    <string name="home_page">صفحه اصلی</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="comment_button_text">نظر دهید</string>
+    <string name="users_comment">نظرات کاربران</string>
+    <string name="send">ثبت</string>
+    <string name="login_with_phone_number_text">از طریق شماره موبایل</string>
+    <string name="login_google_account_text">از طریق حساب google</string>
+    <string name="phone_correction">تصحیح شماره</string>
 </resources>

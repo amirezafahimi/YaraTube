@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_today_black_24dp"
+        android:title="@string/home_page" />
+
+    <item
+        android:id="@+id/navigation_category"
+        android:icon="@drawable/ic_dehaze_black_24dp"
+        android:title="@string/categories" />
+
+</menu>
