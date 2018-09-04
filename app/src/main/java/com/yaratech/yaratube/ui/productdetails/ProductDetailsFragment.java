@@ -28,6 +28,8 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.github.ybq.android.spinkit.style.ThreeBounce;
+import com.github.ybq.android.spinkit.style.Wave;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.Product;
@@ -103,6 +105,10 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        /*ThreeBounce threeBounce = new ThreeBounce();
+        threeBounce.setColor(R.color.colorAccent);
+        productDetailsProgressBar.setIndeterminateDrawable(threeBounce);
+        commentProgressBar.setIndeterminateDrawable(threeBounce);*/
         hideProductDetailsProgrssBar();
         hideCommentProgrssBar();
         bindViewProudctDetails();

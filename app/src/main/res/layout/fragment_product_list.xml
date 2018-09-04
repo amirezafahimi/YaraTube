@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,14 +14,18 @@
             android:id="@+id/productsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/prouct_list_item_offset"
-            android:clipToPadding="false" />
+            android:clipToPadding="false"
+            android:padding="@dimen/prouct_list_item_offset" />
+
 
         <ProgressBar
             android:id="@+id/loading_product"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="8dp" />
+
     </RelativeLayout>
 
 </FrameLayout>

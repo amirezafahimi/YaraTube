@@ -68,7 +68,6 @@ public class ProductListFragment extends Fragment implements ProductListContract
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         progressBar = view.findViewById(R.id.loading_product);
-        progressBar.setVisibility(View.GONE);
         productsRecyclerView = view.findViewById(R.id.productsRecyclerView);
 
     }
@@ -76,14 +75,13 @@ public class ProductListFragment extends Fragment implements ProductListContract
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        hideProgrssBar();
         productsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R.dimen.prouct_list_item_offset);
         productsRecyclerView.addItemDecoration(itemDecoration);
 
         productListPresenter = new ProductListPresenter(this, new Repository());
 
-        showProgrssBar();
         productListPresenter.fetchProducts(getArguments().getInt("category_id"), offset);
 
         adapter = new ProductListRecyclerViewAdapter(getContext(), ProductListFragment.this);
