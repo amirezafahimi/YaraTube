@@ -93,6 +93,13 @@
                         android:textSize="@dimen/textSize"
                         android:textStyle="bold" />
 
+                    <ProgressBar
+                        android:id="@+id/loading_product_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center" />
+
                     <TextView
                         android:id="@+id/product_explain"
                         android:layout_width="match_parent"
@@ -146,6 +153,13 @@
 
                     </android.support.constraint.ConstraintLayout>
 
+                    <ProgressBar
+                        android:id="@+id/loading_commens"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center" />
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/product_comments"
                         android:layout_width="match_parent"
@@ -158,13 +172,6 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-
-    <ProgressBar
-        android:id="@+id/loading_product_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center" />
 
 
 </FrameLayout>

@@ -52,7 +52,7 @@ public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<Product
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.home_item,
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.pruduct_item,
                 parent, false));
     }
 
@@ -78,7 +78,9 @@ public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<Product
         }
 
         public void onBind(Product product) {
-            Glide.with(context).load(product.getFeatureAvatar().getXxxdpi()).into(productAvatar);
+            Glide.with(context).load(product.getFeatureAvatar().getXxxdpi())
+                    .apply(RequestOptions.centerCropTransform())
+                    .into(productAvatar);
             productTitle.setText(product.getName());
             itemView.setOnClickListener(this);
         }

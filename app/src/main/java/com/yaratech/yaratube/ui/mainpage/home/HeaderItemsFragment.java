@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.ui.OnProductActionListener;
@@ -65,7 +66,8 @@ public class HeaderItemsFragment extends Fragment {
                 mListener.goFromProductToProdutDetails(headerItem, imageView);
             }
         });
-        Glide.with(getContext()).load(headerItem.getFeatureAvatar().getXxxdpi()).into(imageView);
+        Glide.with(getContext()).load(headerItem.getFeatureAvatar().getXxxdpi())
+                .apply(RequestOptions.centerCropTransform()).into(imageView);
         /*imageView.setScaleX(-1);*/
     }
 

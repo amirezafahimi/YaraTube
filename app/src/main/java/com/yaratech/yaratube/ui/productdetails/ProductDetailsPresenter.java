@@ -20,11 +20,12 @@ public class ProductDetailsPresenter implements ProductDetailsContract.Presenter
 
     @Override
     public void fetchProductDetails(final int id) {
-        productDetailsViewListener.showProgrssBar();
+        productDetailsViewListener.showProductDetailsProgrssBar();
         repository.getProductDetails(id, new ApiResultCallback<ProductDetail>() {
             @Override
             public void onSuccess(ProductDetail result) {
                 productDetailsViewListener.showProductDetail(result);
+                productDetailsViewListener.hideProductDetailsProgrssBar();
                 fetchCommentList(id);
             }
 
@@ -41,17 +42,17 @@ public class ProductDetailsPresenter implements ProductDetailsContract.Presenter
     }
 
     public void fetchCommentList(int id) {
-
+        productDetailsViewListener.showCommentProgrssBar();
         repository.getCommentList(id, new ApiResultCallback<List<Comment>>() {
             @Override
             public void onSuccess(List<Comment> result) {
-                productDetailsViewListener.hideProgrssBar();
+                productDetailsViewListener.hideCommentProgrssBar();
                 productDetailsViewListener.showCommentList(result);
             }
 
             @Override
             public void onFail(String err) {
-                productDetailsViewListener.hideProgrssBar();
+                productDetailsViewListener.hideCommentProgrssBar();
                 productDetailsViewListener.showErrorMessage(err);
             }
         });

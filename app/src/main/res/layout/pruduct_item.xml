@@ -2,9 +2,8 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/image_header"
-    android:layout_width="@dimen/cardview_width"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/cardview_height"
-    android:layout_margin="@dimen/cardview_margin"
     app:cardCornerRadius="4dp">
 
     <android.support.constraint.ConstraintLayout
@@ -14,18 +13,18 @@
 
 
         <ImageView
-            android:id="@+id/home_item_image"
+            android:id="@+id/product_image"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:background="#f7f7f7"
-            app:layout_constraintBottom_toTopOf="@+id/home_item_title"
+            app:layout_constraintBottom_toTopOf="@+id/product_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread" />
 
         <TextView
-            android:id="@+id/home_item_title"
+            android:id="@+id/product_title"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
@@ -38,11 +37,11 @@
             android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_item_image"
-            app:layout_constraintBottom_toTopOf="@id/home_item_description"/>
+            app:layout_constraintTop_toBottomOf="@+id/product_image"
+            app:layout_constraintBottom_toTopOf="@id/description_product"/>
 
         <TextView
-            android:id="@+id/home_item_description"
+            android:id="@+id/description_product"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
@@ -56,6 +55,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_item_title" />
+            app:layout_constraintTop_toBottomOf="@+id/product_title" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

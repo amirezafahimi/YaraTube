@@ -17,4 +17,5 @@
     <dimen name="dialog_component_marginBottom">12dp</dimen>
     <dimen name="phone_edit_text_size">12sp</dimen>
     <dimen name="comment_edit_text_size">12sp</dimen>
+    <dimen name="prouct_list_item_offset">4dp</dimen>
 </resources>

@@ -14,9 +14,13 @@ public interface ProductDetailsContract {
 
         void showErrorMessage(String err);
 
-        void showProgrssBar();
+        void showCommentProgrssBar();
 
-        void hideProgrssBar();
+        void hideCommentProgrssBar();
+
+        void showProductDetailsProgrssBar();
+
+        void hideProductDetailsProgrssBar();
     }
 
     interface Presenter {

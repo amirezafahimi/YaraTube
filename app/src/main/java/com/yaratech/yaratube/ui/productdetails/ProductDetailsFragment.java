@@ -51,7 +51,8 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     TextView title;
     TextView description;
     Button commentButton;
-    ProgressBar progressBar;
+    ProgressBar commentProgressBar;
+    ProgressBar productDetailsProgressBar;
     ProductDetailsRecyclerViewAdpter adpter;
     RecyclerView productDetailsRecyclerView;
 
@@ -89,7 +90,8 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        progressBar = view.findViewById(R.id.loading_product_details);
+        commentProgressBar = view.findViewById(R.id.loading_commens);
+        productDetailsProgressBar = view.findViewById(R.id.loading_product_details);
         play = view.findViewById(R.id.play);
         imageView = view.findViewById(R.id.product_video);
         title = view.findViewById(R.id.product_name);
@@ -101,7 +103,8 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        hideProgrssBar();
+        hideProductDetailsProgrssBar();
+        hideCommentProgrssBar();
         bindViewProudctDetails();
     }
 
@@ -112,11 +115,10 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(productDetailsPresenter.checkIfUserIsLogedIn()){
+                if (productDetailsPresenter.checkIfUserIsLogedIn()) {
                     FragmentManager fragmentManager = getFragmentManager();
                     CommentDialogFragment.newInstance(product.getId()).show(fragmentManager, "comment dialog");
-                }
-                else{
+                } else {
                     LoginDialogContainer loginDialogContainer = LoginDialogContainer.newInstance();
                     loginDialogContainer.setCancelable(false);
                     loginDialogContainer.show(getChildFragmentManager(), "login dialog");
@@ -127,10 +129,9 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(productDetailsPresenter.checkIfUserIsLogedIn()){
+                if (productDetailsPresenter.checkIfUserIsLogedIn()) {
 
-                }
-                else{
+                } else {
                     LoginDialogContainer loginDialogContainer = LoginDialogContainer.newInstance();
                     loginDialogContainer.setCancelable(false);
                     loginDialogContainer.show(getChildFragmentManager(), "login dialog");
@@ -153,6 +154,7 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
         startPostponedEnterTransition();
         Glide.with(getContext()).load(product.getFeatureAvatar().getXxxdpi())
                 .apply(new RequestOptions().dontAnimate())
+                .apply(RequestOptions.centerCropTransform())
                 /*.listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -200,14 +202,25 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     }
 
     @Override
-    public void showProgrssBar() {
-        progressBar.setVisibility(View.VISIBLE);
+    public void showCommentProgrssBar() {
+        commentProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void hideProgrssBar() {
-        progressBar.setVisibility(View.GONE);
+    public void hideCommentProgrssBar() {
+        commentProgressBar.setVisibility(View.GONE);
     }
+
+    @Override
+    public void showProductDetailsProgrssBar() {
+        productDetailsProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProductDetailsProgrssBar() {
+        productDetailsProgressBar.setVisibility(View.GONE);
+    }
+
 
     //----------------------------------------------------------------------------------------------
 

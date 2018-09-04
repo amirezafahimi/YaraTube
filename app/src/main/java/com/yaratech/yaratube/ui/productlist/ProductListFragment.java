@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.yaratech.yaratube.R;
+import com.yaratech.yaratube.custom.ItemOffsetDecoration;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.ui.OnProductActionListener;
@@ -72,14 +76,15 @@ public class ProductListFragment extends Fragment implements ProductListContract
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+
+        productsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R.dimen.prouct_list_item_offset);
+        productsRecyclerView.addItemDecoration(itemDecoration);
 
         productListPresenter = new ProductListPresenter(this, new Repository());
 
         showProgrssBar();
         productListPresenter.fetchProducts(getArguments().getInt("category_id"), offset);
-
-        productsRecyclerView.setLayoutManager(layoutManager);
 
         adapter = new ProductListRecyclerViewAdapter(getContext(), ProductListFragment.this);
         adapter.setHasStableIds(true);
