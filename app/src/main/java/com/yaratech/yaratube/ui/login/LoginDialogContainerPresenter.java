@@ -20,17 +20,16 @@ public class LoginDialogContainerPresenter implements LoginDialogContainerContra
 
 
     @Override
-    public void insertUserData(Context context, MobileLoginStepTwoResponse step2, String phoneNumber) {
+    public void saveUserData(MobileLoginStepTwoResponse step2, String phoneNumber) {
         repository.sendUserDataToDatabase(
-                context,
                 step2,
                 phoneNumber,
                 new InsertIntoDatabaseCallback() {
             @Override
             public void onUserDataInserted(String message) {
                 loginDialogContainerViewListener.showMessege(message);
-                loginDialogContainerViewListener.setUserIsLogedIn(true);
             }
         });
+        repository.setUserIsLogedIn(true);
     }
 }

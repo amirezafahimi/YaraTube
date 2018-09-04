@@ -114,8 +114,7 @@ public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<Product
 
         @Override
         public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-            boolean shambalile = oldProducts.get(oldItemPosition).getId() == newProducts.get(newItemPosition).getId();
-            return shambalile;
+            return oldProducts.get(oldItemPosition).getId() == newProducts.get(newItemPosition).getId();
         }
 
         @Override

@@ -214,33 +214,42 @@ public class Repository {
         });
     }
 
-    public void checkIfUserIsLogedIn(Context context,
-                                     ReadFromDatabaseCallback<Boolean> readFromDatabaseCallback) {
-        if (LocalDataSource.with(AppDatabase.getAppDatabase(context)).userIsLogin()) {
-            readFromDatabaseCallback.onUserDataLoded(true);
-        } else {
-            readFromDatabaseCallback.onUserDataLoded(false);
-        }
+    //----------------------------------------------------------------------------------------------
+
+    public AppDatabase getDatabaseWithContext(Context context){
+        return AppDatabase.getAppDatabase(context);
     }
 
-    public void sendUserDataToDatabase(Context context,
-                                       MobileLoginStepTwoResponse step2,
+    public void setDatabase(AppDatabase appDatabase){
+        DataGenerator.with(appDatabase);
+        LocalDataSource.with(appDatabase);
+    }
+
+    public boolean checkIfUserIsLogedIn() {
+        return LocalDataSource.getUserIsLogedIn();
+    }
+
+    public void sendUserDataToDatabase(MobileLoginStepTwoResponse step2,
                                        String phoneNumber,
                                        InsertIntoDatabaseCallback insertIntoDatabaseCallback) {
 
-        User user = DataGenerator.userInstance();
+        User user = User.userInstance();
         user.setId(1);
         user.setFinoToken(step2.getFinoToken());
         user.setNickname(step2.getNickname());
         user.setToken(step2.getToken());
         user.setMessage(step2.getMessage());
         user.setPhoneNember(phoneNumber);
-        DataGenerator.with(AppDatabase.getAppDatabase(context)).addUser(user);
+        DataGenerator.insertUserData(user);
 
         insertIntoDatabaseCallback.onUserDataInserted(step2.getMessage());
     }
 
     public String getUserToken() {
         return LocalDataSource.getToken();
+    }
+
+    public void setUserIsLogedIn(boolean isLogedIn) {
+        LocalDataSource.setUserIsLogedIn(isLogedIn);
     }
 }

@@ -4,9 +4,11 @@ import android.content.Context;
 
 public interface MainContract {
     interface View{
-        void setUserIsLogedIn(boolean userIsLogedIn);
+
     }
     interface Presenter{
-        void checkIfUserIsLogedIn(Context context);
+        void setDatabaseWithContext(Context context);
+        boolean checkIfUserIsLogedIn();
+        void setUserIsLogedIn(boolean isLogedIn);
     }
 }

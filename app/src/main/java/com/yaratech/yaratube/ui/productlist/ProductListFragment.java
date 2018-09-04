@@ -37,7 +37,6 @@ public class ProductListFragment extends Fragment implements ProductListContract
 
 
     private boolean loading = true;
-    int pastVisiblesItems, visibleItemCount, totalItemCount;
     int offset = 0;
 
 
@@ -89,11 +88,7 @@ public class ProductListFragment extends Fragment implements ProductListContract
         productsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                Log.e("999999999", dy+"");
                 if (dy > 0) {
-                    visibleItemCount = layoutManager.getChildCount();
-                    totalItemCount = layoutManager.getItemCount();
-                    pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
 
                     if (loading) {
                         if (!recyclerView.canScrollVertically(1)) {

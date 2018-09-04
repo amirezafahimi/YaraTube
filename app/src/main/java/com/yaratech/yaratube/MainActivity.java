@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity
     /*public static SharedPreferences sharedPreferences;*/
     MainPresenter mainPresenter;
     LoginDialogContainer loginDialogContainer;
-    public static boolean USER_IS_LOGED_IN;
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity
         /*sharedPreferences = getSharedPreferences("USER_LOGIN", MODE_PRIVATE);*/
 
         mainPresenter = new MainPresenter(this, new Repository());
-        mainPresenter.checkIfUserIsLogedIn(this);
+        mainPresenter.setDatabaseWithContext(this);
 
         Hawk.init(this).build();
 
@@ -86,7 +85,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -94,7 +92,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.profile) {
-            if (USER_IS_LOGED_IN) {
+            if (mainPresenter.checkIfUserIsLogedIn()) {
                 //Go to profile.
             } else {
                 loginDialogContainer = LoginDialogContainer.newInstance();
@@ -105,7 +103,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.callUs) {
             DataGenerator.with(AppDatabase.getAppDatabase(this)).deleteUser(1);
-            setUserIsLogedIn(false);
+            mainPresenter.setUserIsLogedIn(false);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -152,8 +150,4 @@ public class MainActivity extends AppCompatActivity
                 true);*/
     }
 
-    @Override
-    public void setUserIsLogedIn(boolean userIsLogedIn) {
-        USER_IS_LOGED_IN = userIsLogedIn;
-    }
 }

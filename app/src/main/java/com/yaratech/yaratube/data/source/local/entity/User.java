@@ -23,6 +23,14 @@ public class User {
     @ColumnInfo(name = "‌phone_number")
     private String phoneNember;
 
+    private static User user;
+    public static User userInstance() {
+        if (user == null) {
+            user = new User();
+        }
+        return user;
+    }
+
     public int getId() {
         return id;
     }

@@ -7,18 +7,21 @@ import java.util.List;
 
 public interface ProductDetailsContract {
 
-    interface View{
-
-
+    interface View {
         void showProductDetail(ProductDetail productDetail);
 
         void showCommentList(List<Comment> comments);
 
         void showErrorMessage(String err);
 
+        void showProgrssBar();
+
+        void hideProgrssBar();
     }
-    interface Presenter{
+
+    interface Presenter {
         void fetchProductDetails(int id);
+        boolean checkIfUserIsLogedIn();
     }
 
 }

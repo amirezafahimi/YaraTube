@@ -16,13 +16,17 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void checkIfUserIsLogedIn(Context context) {
-        repository.checkIfUserIsLogedIn(context, new ReadFromDatabaseCallback<Boolean>(){
+    public void setDatabaseWithContext(Context context) {
+        repository.setDatabase(repository.getDatabaseWithContext(context));
+    }
 
-            @Override
-            public void onUserDataLoded(Boolean result) {
-                mainActivityViewListener.setUserIsLogedIn(result);
-            }
-        });
+    @Override
+    public boolean checkIfUserIsLogedIn() {
+        return  repository.checkIfUserIsLogedIn();
+    }
+
+    @Override
+    public void setUserIsLogedIn(boolean isLogedIn) {
+        repository.setUserIsLogedIn(isLogedIn);
     }
 }

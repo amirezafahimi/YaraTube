@@ -38,31 +38,37 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/videoview_height" />
 
-                    <android.support.constraint.ConstraintLayout
+                    <LinearLayout
                         android:id="@+id/constraintLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         android:padding="@dimen/default_paddig">
 
                         <TextView
                             android:id="@+id/product_name"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0px"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_weight="5"
                             android:textSize="@dimen/textSize"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@id/constraintLayout"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@id/constraintLayout" />
+                            android:textStyle="bold" />
 
-                        <ImageView
-                            android:id="@+id/play"
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:layout_width="0px"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_play_circle_filled_black_24dp"
-                            app:layout_constraintEnd_toEndOf="@id/constraintLayout"
-                            app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="@id/constraintLayout" />
-                    </android.support.constraint.ConstraintLayout>
+                            android:layout_weight="1"
+                            android:layout_gravity="end">
+
+                            <ImageButton
+                                android:id="@+id/play"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:src="@drawable/ic_play_circle_filled_black_24dp"
+                                android:layout_alignParentLeft="true" />
+                        </RelativeLayout>
+                    </LinearLayout>
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -135,7 +141,7 @@
                             android:textColor="#ffffff"
                             app:layout_constraintEnd_toEndOf="@id/comment_constraintLayout"
                             app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="@id/comment_constraintLayout"/>
+                            app:layout_constraintStart_toStartOf="@id/comment_constraintLayout" />
 
 
                     </android.support.constraint.ConstraintLayout>
@@ -158,8 +164,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        />
+        android:layout_gravity="center" />
 
 
 </FrameLayout>

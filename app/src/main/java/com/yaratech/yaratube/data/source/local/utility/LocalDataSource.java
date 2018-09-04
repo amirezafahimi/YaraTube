@@ -7,6 +7,7 @@ public class LocalDataSource {
 
     private static AppDatabase database;
     private static LocalDataSource localDataSource;
+    private static Boolean userIsLogedIn;
 
     public static LocalDataSource with(AppDatabase appDatabase) {
         if (database == null)
@@ -16,10 +17,14 @@ public class LocalDataSource {
         return localDataSource;
     }
 
-    static public boolean userIsLogin() {
-        if (database.DBDao().getToken() == null) {
-            return false;
-        } else return true;
+    static public boolean getUserIsLogedIn() {
+        if (userIsLogedIn == null)
+            userIsLogedIn = database.DBDao().getToken() != null;
+        return userIsLogedIn;
+    }
+
+    public static void setUserIsLogedIn(boolean userIsLogined) {
+        LocalDataSource.userIsLogedIn = userIsLogined;
     }
 
     static public String getToken() {

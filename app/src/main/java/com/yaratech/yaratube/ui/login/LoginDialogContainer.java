@@ -19,8 +19,6 @@ import com.yaratech.yaratube.ui.login.loginvarification.VarificationFragment;
 import com.yaratech.yaratube.ui.login.loginwithphone.LoginWithPhoneFragment;
 import com.yaratech.yaratube.util.AppConstants;
 
-import static com.yaratech.yaratube.MainActivity.USER_IS_LOGED_IN;
-
 public class LoginDialogContainer
         extends DialogFragment
         implements OnLoginDialogActionListener,
@@ -118,17 +116,11 @@ public class LoginDialogContainer
             Hawk.delete("phone_number");
         LoginDialogContainerPresenter loginDialogContainerPresenter = new
                 LoginDialogContainerPresenter(this, new Repository());
-        loginDialogContainerPresenter.insertUserData(getContext(), step2, phoneNumber);
+        loginDialogContainerPresenter.saveUserData(step2, phoneNumber);
         dismiss();
     }
 
     //----------------------------------------------------------------------------------------------
-
-    @Override
-    public void setUserIsLogedIn(boolean userIsLogedIn) {
-        USER_IS_LOGED_IN = userIsLogedIn;
-    }
-
     @Override
     public void showMessege(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();

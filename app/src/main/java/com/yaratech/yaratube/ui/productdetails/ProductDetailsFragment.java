@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,7 +39,6 @@ import com.yaratech.yaratube.ui.productdetails.commentdialog.CommentDialogFragme
 import java.util.List;
 
 import static android.widget.GridLayout.VERTICAL;
-import static com.yaratech.yaratube.MainActivity.USER_IS_LOGED_IN;
 
 public class ProductDetailsFragment extends Fragment implements ProductDetailsContract.View {
 
@@ -46,7 +46,7 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     Product product;
     ProductDetail productDetail;
     List<Comment> comments;
-    ImageView play;
+    ImageButton play;
     ImageView imageView;
     TextView title;
     TextView description;
@@ -73,7 +73,6 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         product = getArguments().getParcelable("product");
-
         postponeEnterTransition();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.simple_fragment_transition));
@@ -113,7 +112,7 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(USER_IS_LOGED_IN){
+                if(productDetailsPresenter.checkIfUserIsLogedIn()){
                     FragmentManager fragmentManager = getFragmentManager();
                     CommentDialogFragment.newInstance(product.getId()).show(fragmentManager, "comment dialog");
                 }
@@ -128,7 +127,7 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(USER_IS_LOGED_IN){
+                if(productDetailsPresenter.checkIfUserIsLogedIn()){
 
                 }
                 else{
@@ -143,12 +142,7 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
     //----------------------------------------------------------------------------------------------
 
     private void bindViewProudctDetails() {
-        productDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        DividerItemDecoration itemDecor = new
-                DividerItemDecoration(productDetailsRecyclerView.getContext(), VERTICAL);
-        productDetailsRecyclerView.addItemDecoration(itemDecor);
-        adpter = new ProductDetailsRecyclerViewAdpter(getContext());
-        productDetailsRecyclerView.setAdapter(adpter);
+
         title.setText(product.getName());
 
 
@@ -156,10 +150,10 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
             imageView.setTransitionName("transition" + product.getId());
         }
 
+        startPostponedEnterTransition();
         Glide.with(getContext()).load(product.getFeatureAvatar().getXxxdpi())
-
                 .apply(new RequestOptions().dontAnimate())
-                .listener(new RequestListener<Drawable>() {
+                /*.listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         startPostponedEnterTransition();
@@ -171,21 +165,18 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
                         startPostponedEnterTransition();
                         return false;
                     }
-                })
+                })*/
                 .into(imageView);
+        productDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        DividerItemDecoration itemDecor = new
+                DividerItemDecoration(productDetailsRecyclerView.getContext(), VERTICAL);
+        productDetailsRecyclerView.addItemDecoration(itemDecor);
+        adpter = new ProductDetailsRecyclerViewAdpter(getContext());
+        productDetailsRecyclerView.setAdapter(adpter);
 
-        showProgrssBar();
         productDetailsPresenter = new
                 ProductDetailsPresenter(this, new Repository());
         productDetailsPresenter.fetchProductDetails(product.getId());
-    }
-
-    public void showProgrssBar() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    public void hideProgrssBar() {
-        progressBar.setVisibility(View.GONE);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -198,7 +189,6 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
 
     @Override
     public void showCommentList(List<Comment> comments) {
-        hideProgrssBar();
         this.comments = comments;
         adpter.setData(comments);
 
@@ -206,8 +196,17 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
 
     @Override
     public void showErrorMessage(String err) {
-        hideProgrssBar();
         Toast.makeText(getContext(), err, Toast.LENGTH_LONG);
+    }
+
+    @Override
+    public void showProgrssBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgrssBar() {
+        progressBar.setVisibility(View.GONE);
     }
 
     //----------------------------------------------------------------------------------------------
