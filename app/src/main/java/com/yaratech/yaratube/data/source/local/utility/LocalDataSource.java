@@ -26,7 +26,6 @@ public class LocalDataSource {
     public static void setUserIsLogedIn(boolean userIsLogined) {
         LocalDataSource.userIsLogedIn = userIsLogined;
     }
-
     static public String getToken() {
         return database.DBDao().getToken();
     }

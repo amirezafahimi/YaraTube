@@ -2,5 +2,5 @@
     <changeBounds/>
     <changeTransform/>
     <changeClipBounds/>
-    <changeImageTransform/>
+    <!--<changeImageTransform/>-->
 </transitionSet>

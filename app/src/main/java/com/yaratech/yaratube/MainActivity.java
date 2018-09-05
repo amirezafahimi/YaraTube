@@ -60,18 +60,19 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        AppConstants.setFragment(R.id.fragment_container,
-                getSupportFragmentManager(),
-                MainPageFragment.newInstance(),
-                "mainPageFragment",
-                false);
-
         /*sharedPreferences = getSharedPreferences("USER_LOGIN", MODE_PRIVATE);*/
 
         mainPresenter = new MainPresenter(this, new Repository());
         mainPresenter.setDatabaseWithContext(this);
 
         Hawk.init(this).build();
+
+
+        AppConstants.setFragment(R.id.fragment_container,
+                getSupportFragmentManager(),
+                MainPageFragment.newInstance(),
+                "mainPageFragment",
+                false);
 
     }
 

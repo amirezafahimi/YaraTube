@@ -30,7 +30,7 @@ public interface Services {
     @GET("listproducts/{category_id}?limit="+AppConstants.LIMIT+"&")
     Call<List<Product>> getProductList(@Path("category_id") int categoryId, @Query("offset") int offset);
 
-    @GET("product/{product_id}")
+    @GET("product/{product_id}?device_os=ios")
     Call<ProductDetail> getProductDetail(@Path("product_id") int productId);
 
     @GET("comment/{product_id}")

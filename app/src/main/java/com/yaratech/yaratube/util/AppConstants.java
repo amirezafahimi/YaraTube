@@ -22,7 +22,8 @@ public class AppConstants {
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    public static void setFragment(int container, FragmentManager fragmentManager, Fragment fragment, String tag, boolean addToBackStack) {
+    public static void setFragment(int container, FragmentManager fragmentManager, Fragment fragment,
+                                   String tag, boolean addToBackStack) {
         if (!fragment.isVisible()) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(container, fragment, tag);
@@ -32,7 +33,8 @@ public class AppConstants {
         }
     }
 
-    public static void setDialogFragment(int container, FragmentManager fragmentManager, Fragment fragment, String tag, boolean addToBackStack) {
+    public static void setDialogFragment(int container, FragmentManager fragmentManager,
+                                         Fragment fragment, String tag, boolean addToBackStack) {
         if (!fragment.isVisible()) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(container, fragment, tag);

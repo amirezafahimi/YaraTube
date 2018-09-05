@@ -1,5 +1,6 @@
 package com.yaratech.yaratube.ui.productdetails;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -28,19 +29,19 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.github.ybq.android.spinkit.style.ThreeBounce;
-import com.github.ybq.android.spinkit.style.Wave;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.model.ProductDetail;
 import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.ui.login.LoginDialogContainer;
+import com.yaratech.yaratube.ui.player.PlayerActivity;
 import com.yaratech.yaratube.ui.productdetails.commentdialog.CommentDialogFragment;
 
 import java.util.List;
 
 import static android.widget.GridLayout.VERTICAL;
+import static com.yaratech.yaratube.ui.player.PlayerActivity.PLAYER_ACTIVITY_KEY;
 
 public class ProductDetailsFragment extends Fragment implements ProductDetailsContract.View {
 
@@ -136,7 +137,9 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
             @Override
             public void onClick(View view) {
                 if (productDetailsPresenter.checkIfUserIsLogedIn()) {
-
+                    Intent intent = new Intent(getActivity(), PlayerActivity.class);
+                    intent.putExtra(PLAYER_ACTIVITY_KEY, productDetail.getFiles().get(0).getFile());
+                    startActivity(intent);
                 } else {
                     LoginDialogContainer loginDialogContainer = LoginDialogContainer.newInstance();
                     loginDialogContainer.setCancelable(false);

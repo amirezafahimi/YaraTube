@@ -85,11 +85,13 @@ public class MainPageFragment extends Fragment {
         }
     }
 
+
     private void setCategoryFragment() {
         if (categoriesFragment == null) {
             if (homeFragment != null && homeFragment.isVisible()) {
                 fragmentManager.beginTransaction().hide(homeFragment).commit();
             }
+
             categoriesFragment = categoriesFragment.newInstance();
             fragmentManager = getChildFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
