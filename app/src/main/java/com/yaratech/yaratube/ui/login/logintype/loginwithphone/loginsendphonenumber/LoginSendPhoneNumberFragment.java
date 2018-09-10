@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.login.loginwithphone;
+package com.yaratech.yaratube.ui.login.logintype.loginwithphone.loginsendphonenumber;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,22 +15,22 @@ import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.model.MobileLoginStepOneResponse;
 import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.ui.login.OnLoginDialogActionListener;
-import com.yaratech.yaratube.util.AppConstants;
+import com.yaratech.yaratube.util.Util;
 
-public class LoginWithPhoneFragment extends Fragment implements LoginWithPhoneContract.View{
+public class LoginSendPhoneNumberFragment extends Fragment implements LoginSendPhoneNumberContract.View{
 
     Button send;
     EditText phoneNumber;
 
-    LoginWithPhonePresenter loginWithPhonePresenter;
+    LoginSendPhoneNumberPresenter loginSendPhoneNumberPresenter;
 
 
-    public LoginWithPhoneFragment() {
+    public LoginSendPhoneNumberFragment() {
         // Required empty public constructor
     }
 
-    public static LoginWithPhoneFragment newInstance() {
-        LoginWithPhoneFragment fragment = new LoginWithPhoneFragment();
+    public static LoginSendPhoneNumberFragment newInstance() {
+        LoginSendPhoneNumberFragment fragment = new LoginSendPhoneNumberFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -60,14 +60,14 @@ public class LoginWithPhoneFragment extends Fragment implements LoginWithPhoneCo
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        loginWithPhonePresenter = new LoginWithPhonePresenter(new Repository(), this);
+        loginSendPhoneNumberPresenter = new LoginSendPhoneNumberPresenter(new Repository(), this);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginWithPhonePresenter.sendPhoneNumber(phoneNumber.getText().toString(),
-                        AppConstants.getDeviceId(getContext()),
-                        AppConstants.getDeviceModel(),
-                        AppConstants.getDeviceOS(),
+                loginSendPhoneNumberPresenter.sendPhoneNumber(phoneNumber.getText().toString(),
+                        Util.getDeviceId(getContext()),
+                        Util.getDeviceModel(),
+                        Util.getDeviceOS(),
                         "");
             }
         });

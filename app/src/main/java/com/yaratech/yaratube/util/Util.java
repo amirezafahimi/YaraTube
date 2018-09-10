@@ -10,11 +10,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-public class AppConstants {
+public class Util {
 
     public static final String BASE_URL = "https://api.vasapi.click/";
     public static final String STORE_ID = "16";
     public static final String LIMIT = "10";
+    public static final String OTP_SENDER_NUMBER = "+98200049103";
 
     public static boolean isOnline(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

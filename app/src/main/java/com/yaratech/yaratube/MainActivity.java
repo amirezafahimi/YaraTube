@@ -1,8 +1,12 @@
 package com.yaratech.yaratube;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +31,7 @@ import com.yaratech.yaratube.ui.OnProductActionListener;
 import com.yaratech.yaratube.ui.productdetails.ProductDetailsFragment;
 import com.yaratech.yaratube.ui.mainpage.categories.CategoriesFragment;
 import com.yaratech.yaratube.ui.productlist.ProductListFragment;
-import com.yaratech.yaratube.util.AppConstants;
+import com.yaratech.yaratube.util.Util;
 
 public class MainActivity extends AppCompatActivity
         implements MainContract.View,
@@ -68,7 +72,7 @@ public class MainActivity extends AppCompatActivity
         Hawk.init(this).build();
 
 
-        AppConstants.setFragment(R.id.fragment_container,
+        Util.setFragment(R.id.fragment_container,
                 getSupportFragmentManager(),
                 MainPageFragment.newInstance(),
                 "mainPageFragment",
@@ -103,8 +107,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.aboutUs) {
 
         } else if (id == R.id.callUs) {
+        } else if (id == R.id.sign_out) {
+            mainPresenter.signOutUser(1);
             DataGenerator.with(AppDatabase.getAppDatabase(this)).deleteUser(1);
-            mainPresenter.setUserIsLogedIn(false);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -113,10 +118,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     ProductListFragment productListFragment;
+
     @Override
     public void goFromCategoryToProductList(Category category) {
         productListFragment = ProductListFragment.newInstance(category.getId());
-        AppConstants.setFragment(R.id.fragment_container,
+        Util.setFragment(R.id.fragment_container,
                 getSupportFragmentManager(),
                 productListFragment,
                 "productListFragment",
@@ -144,7 +150,7 @@ public class MainActivity extends AppCompatActivity
                     .addToBackStack("productDetailsFragment")
                     .commit();
         }
-        /*AppConstants.setFragment(R.id.fragment_container,
+        /*Util.setFragment(R.id.fragment_container,
                 getSupportFragmentManager(),
                 ProductDetailsFragment.newInstance(product),
                 "productDetailsFragment",

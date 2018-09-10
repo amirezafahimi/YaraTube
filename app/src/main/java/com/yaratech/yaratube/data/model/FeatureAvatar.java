@@ -3,7 +3,7 @@ package com.yaratech.yaratube.data.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.yaratech.yaratube.util.AppConstants;
+import com.yaratech.yaratube.util.Util;
 
 public class FeatureAvatar {
 
@@ -12,7 +12,7 @@ public class FeatureAvatar {
     private String xxxdpi;
 
     public String getXxxdpi() {
-        return AppConstants.BASE_URL + xxxdpi;
+        return Util.BASE_URL + xxxdpi;
     }
 
     public void setXxxdpi(String xxxdpi) {

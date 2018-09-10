@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -21,9 +22,15 @@ public class PlayerActivity extends AppCompatActivity {
 
     PlayerView playerView;
 
+    private void hideStatusBar() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        hideStatusBar();
         setContentView(R.layout.activity_player);
         playerView = findViewById(R.id.player_view);
 
@@ -40,11 +47,6 @@ public class PlayerActivity extends AppCompatActivity {
         player.prepare(mediaSource);
         player.setPlayWhenReady(true);
         playerView.setPlayer(player);
-
-//        ExtractorMediaSource mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-//                .createMediaSource(Uri.parse(videoUri));
-//        player.prepare(mediaSource);
-//        player.setPlayWhenReady(true);
     }
 
     @Override

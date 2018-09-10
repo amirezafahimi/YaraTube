@@ -1,4 +1,4 @@
-package com.yaratech.yaratube.ui.login.loginvarification;
+package com.yaratech.yaratube.ui.login.logintype.loginwithphone.loginvarification;
 
 import com.yaratech.yaratube.data.model.MobileLoginStepTwoResponse;
 import com.yaratech.yaratube.data.source.ApiResultCallback;

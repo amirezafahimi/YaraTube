@@ -3,6 +3,7 @@ package com.yaratech.yaratube.data.source;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.CommentResponse;
@@ -240,7 +241,7 @@ public class Repository {
         user.setToken(step2.getToken());
         user.setMessage(step2.getMessage());
         user.setPhoneNember(phoneNumber);
-        DataGenerator.insertUserData(user);
+        DataGenerator.putUserData(user);
 
         insertIntoDatabaseCallback.onUserDataInserted(step2.getMessage());
     }
@@ -251,5 +252,11 @@ public class Repository {
 
     public void setUserIsLogedIn(boolean isLogedIn) {
         LocalDataSource.setUserIsLogedIn(isLogedIn);
+    }
+
+    public void deleteUserToken(int userId) {
+        User user = User.userInstance();
+        user.setToken(null);
+        DataGenerator.putUserData(user);
     }
 }

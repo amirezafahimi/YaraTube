@@ -1,14 +1,14 @@
-package com.yaratech.yaratube.ui.login.loginwithphone;
+package com.yaratech.yaratube.ui.login.logintype.loginwithphone.loginsendphonenumber;
 
 import com.yaratech.yaratube.data.model.MobileLoginStepOneResponse;
 import com.yaratech.yaratube.data.source.ApiResultCallback;
 import com.yaratech.yaratube.data.source.Repository;
 
-public class LoginWithPhonePresenter implements LoginWithPhoneContract.Presenter {
+public class LoginSendPhoneNumberPresenter implements LoginSendPhoneNumberContract.Presenter {
     Repository repository;
-    LoginWithPhoneContract.View loginWithPhoneViewListener;
+    LoginSendPhoneNumberContract.View loginWithPhoneViewListener;
 
-    public LoginWithPhonePresenter(Repository repository, LoginWithPhoneContract.View loginWithPhoneViewListener) {
+    public LoginSendPhoneNumberPresenter(Repository repository, LoginSendPhoneNumberContract.View loginWithPhoneViewListener) {
         this.repository = repository;
         this.loginWithPhoneViewListener = loginWithPhoneViewListener;
     }

@@ -1,8 +1,8 @@
-package com.yaratech.yaratube.ui.login.loginwithphone;
+package com.yaratech.yaratube.ui.login.logintype.loginwithphone.loginsendphonenumber;
 
 import com.yaratech.yaratube.data.model.MobileLoginStepOneResponse;
 
-public interface LoginWithPhoneContract {
+public interface LoginSendPhoneNumberContract {
     interface View{
         void goToNextDialog(MobileLoginStepOneResponse step1);
         void showErrorMessage(String msg);

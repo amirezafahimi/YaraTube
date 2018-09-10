@@ -9,4 +9,6 @@ public interface OnLoginDialogActionListener {
     void goTologinWithPhoneFragment();
     void goToVarificationFragment(MobileLoginStepOneResponse step1, String phoneNumber);
     void dissmissVarificationFragment(MobileLoginStepTwoResponse step2);
+    //----------------------------------------------------------------------------------------------
+    void goTologinWithGoogleActivity();
 }

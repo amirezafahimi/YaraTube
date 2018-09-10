@@ -16,6 +16,11 @@ public class MobileLoginStepOneResponse implements Parcelable {
     @Expose
     private String message;
 
+    @SerializedName("nickname")
+    @Expose
+    private String nickname;
+
+
     protected MobileLoginStepOneResponse(Parcel in) {
         error = in.readString();
         message = in.readString();
@@ -37,11 +42,6 @@ public class MobileLoginStepOneResponse implements Parcelable {
     public String getError() {
         return error;
     }
-
-    @SerializedName("nickname")
-    @Expose
-    private String nickname;
-
 
     public void setError(String error) {
         this.error = error;

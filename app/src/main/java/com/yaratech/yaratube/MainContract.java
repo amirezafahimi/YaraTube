@@ -10,5 +10,6 @@ public interface MainContract {
         void setDatabaseWithContext(Context context);
         boolean checkIfUserIsLogedIn();
         void setUserIsLogedIn(boolean isLogedIn);
+        void signOutUser(int userId);
     }
 }

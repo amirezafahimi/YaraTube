@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'yaratech'
+            keyPassword '&p2=Z9XZRGt3f<qU'
+            storeFile file('E:/yaratech/yaratech_sign.jks')
+            storePassword '&p2=Z9XZRGt3f<qU'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.yaratech.yaratube"
@@ -15,6 +23,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.config
+        }
     }
     compileOptions {
         targetCompatibility 1.8
@@ -24,19 +35,20 @@ android {
 
 dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.8.4'
-    /*implementation 'com.github.ybq:Android-SpinKit:1.1.0'*/
-    implementation "com.orhanobut:hawk:2.0.1"
+    implementation 'com.github.ybq:Android-SpinKit:1.1.0'
+    implementation 'com.orhanobut:hawk:2.0.1'
     implementation 'android.arch.persistence.room:runtime:1.0.0'
     annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
     implementation 'com.github.halilozercan:BetterVideoPlayer:1.2.alpha1'
     implementation 'com.github.rubensousa:gravitysnaphelper:1.5'
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     implementation 'com.android.support:support-v4:27.1.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -45,3 +57,4 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
+apply plugin: 'com.google.gms.google-services'

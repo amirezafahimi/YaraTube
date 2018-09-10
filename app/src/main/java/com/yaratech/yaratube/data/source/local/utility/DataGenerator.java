@@ -24,7 +24,7 @@ public class DataGenerator {
         dataBase.DBDao().userDelete(id);
     }
 
-    public static void insertUserData(User user) {
+    public static void putUserData(User user) {
         dataBase.DBDao().insertUsers(user);
     }
 }
