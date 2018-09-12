@@ -3,6 +3,7 @@ package com.yaratech.yaratube.data.source.remote;
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.CommentResponse;
+import com.yaratech.yaratube.data.model.GoogleLoginResponse;
 import com.yaratech.yaratube.data.model.Home;
 import com.yaratech.yaratube.data.model.MobileLoginStepOneResponse;
 import com.yaratech.yaratube.data.model.MobileLoginStepTwoResponse;
@@ -73,7 +74,7 @@ public interface Services {
 
     @FormUrlEncoded
     @POST("login_google/" + Util.STORE_ID)
-    Call<MobileLoginStepTwoResponse> sendTokenId(
+    Call<GoogleLoginResponse> sendTokenId(
             @Field("token_id") String token_id,
             @Field("device_id") String deviceId,
             @Field("device_os") String device_os,

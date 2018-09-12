@@ -11,6 +11,14 @@ public interface LoginDialogContainerContract {
     }
 
     interface Presenter {
+        void sendGoogleToken(String tokenId,
+                             String deviceId,
+                             String deviceOs,
+                             String deviceModel,
+                             String name,
+                             String email,
+                             String photoUrl);
+
         void saveUserData(MobileLoginStepTwoResponse step2, String phoneNumber);
     }
 }

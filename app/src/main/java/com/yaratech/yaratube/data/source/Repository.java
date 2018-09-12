@@ -7,6 +7,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.CommentResponse;
+import com.yaratech.yaratube.data.model.GoogleLoginResponse;
 import com.yaratech.yaratube.data.model.Home;
 import com.yaratech.yaratube.data.model.MobileLoginStepOneResponse;
 import com.yaratech.yaratube.data.model.MobileLoginStepTwoResponse;
@@ -195,7 +196,7 @@ public class Repository {
                             ApiResultCallback<CommentResponse> commentResponseInterface) {
 
         Client.getRetrofitInstance().create(Services.class).sendComment(productId,
-                "Token "+token,
+                "Token " + token,
                 "",
                 (int) score,
                 comment).enqueue(new Callback<CommentResponse>() {
@@ -204,7 +205,7 @@ public class Repository {
                 if (response.isSuccessful()) {
                     commentResponseInterface.onSuccess(response.body());
                 } else {
-                    commentResponseInterface.onFail(response.code()+" error");
+                    commentResponseInterface.onFail(response.code() + " error");
                 }
             }
 
@@ -215,13 +216,38 @@ public class Repository {
         });
     }
 
+    public void googleLogin(String tokenId, String deviceId, String deviceOs, String deviceModel,
+                            ApiResultCallback<GoogleLoginResponse> googleLoginResponseInterface) {
+        Client.getRetrofitInstance().create(Services.class)
+                .sendTokenId(
+                        tokenId,
+                        deviceId,
+                        deviceOs,
+                        deviceModel).enqueue(new Callback<GoogleLoginResponse>() {
+
+            @Override
+            public void onResponse(Call<GoogleLoginResponse> call, Response<GoogleLoginResponse> response) {
+                if (response.isSuccessful()) {
+                    googleLoginResponseInterface.onSuccess(response.body());
+                } else {
+                    googleLoginResponseInterface.onFail(response.code() + " error");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GoogleLoginResponse> call, Throwable t) {
+                googleLoginResponseInterface.onFail("عملیات با خطا مواجه شد!");
+            }
+        });
+
+    }
     //----------------------------------------------------------------------------------------------
 
-    public AppDatabase getDatabaseWithContext(Context context){
+    public AppDatabase getDatabaseWithContext(Context context) {
         return AppDatabase.getAppDatabase(context);
     }
 
-    public void setDatabase(AppDatabase appDatabase){
+    public void setDatabase(AppDatabase appDatabase) {
         DataGenerator.with(appDatabase);
         LocalDataSource.with(appDatabase);
     }
@@ -230,20 +256,10 @@ public class Repository {
         return LocalDataSource.getUserIsLogedIn();
     }
 
-    public void sendUserDataToDatabase(MobileLoginStepTwoResponse step2,
-                                       String phoneNumber,
+    public void sendUserDataToDatabase(User user,
                                        InsertIntoDatabaseCallback insertIntoDatabaseCallback) {
-
-        User user = User.userInstance();
-        user.setId(1);
-        user.setFinoToken(step2.getFinoToken());
-        user.setNickname(step2.getNickname());
-        user.setToken(step2.getToken());
-        user.setMessage(step2.getMessage());
-        user.setPhoneNember(phoneNumber);
         DataGenerator.putUserData(user);
-
-        insertIntoDatabaseCallback.onUserDataInserted(step2.getMessage());
+        insertIntoDatabaseCallback.onUserDataInserted();
     }
 
     public String getUserToken() {

@@ -39,6 +39,7 @@ public class LoginDialogContainer
     String phoneNumber;
     private int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
+    LoginDialogContainerPresenter loginDialogContainerPresenter;
 
 
     public LoginDialogContainer() {
@@ -65,6 +66,8 @@ public class LoginDialogContainer
                         .requestIdToken(getString(R.string.default_web_client_id))
                         .requestEmail()
                         .build());
+        loginDialogContainerPresenter = new
+                LoginDialogContainerPresenter(this, new Repository());
     }
 
     @Override
@@ -95,7 +98,6 @@ public class LoginDialogContainer
                 dismiss();
             }
         });
-
     }
 
     //----------------------------------------------------------------------------------------------
@@ -133,25 +135,27 @@ public class LoginDialogContainer
     public void dissmissVarificationFragment(MobileLoginStepTwoResponse step2) {
         if (Hawk.contains("phone_number"))
             Hawk.delete("phone_number");
-        LoginDialogContainerPresenter loginDialogContainerPresenter = new
-                LoginDialogContainerPresenter(this, new Repository());
         loginDialogContainerPresenter.saveUserData(step2, phoneNumber);
         dismiss();
     }
 
-    @Override
-    public void goTologinWithGoogleActivity() {
-        signIn();
-    }
-
     //----------------------------------------------------------------------------------------------
+
     @Override
     public void showMessege(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+        dismiss();
     }
 
 
     //----------------------------------------------------------------------------------------------
+
+    @Override
+    public void goTologinWithGoogleActivity() {
+        getChildFragmentManager().beginTransaction().hide(this).commit();
+        signIn();
+    }
+
     private void signIn() {
         Intent intent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(intent, RC_SIGN_IN);
@@ -167,7 +171,7 @@ public class LoginDialogContainer
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             int statusCode = result.getStatus().getStatusCode();
             String statusMessage = result.getStatus().getStatusMessage();
-            Log.e("result status code", "onActivityResult: "+statusCode + " "+ statusMessage);
+            Log.e("result status code", "onActivityResult: " + statusCode + " " + statusMessage);
             // developer error; status: 10
             // SHA-1 doesn't set up correctly
 
@@ -179,8 +183,16 @@ public class LoginDialogContainer
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            Log.d("to try", "handleSignInResult: "+account.getEmail()
-                    +" "+account.getIdToken());
+            Log.d("to try", "handleSignInResult: " + account.getEmail()
+                    + " " + account.getIdToken());
+            loginDialogContainerPresenter.sendGoogleToken(
+                    account.getIdToken(),
+                    Util.getDeviceId(getContext()),
+                    Util.getDeviceOS(),
+                    Util.getDeviceModel(),
+                    account.getDisplayName(),
+                    account.getEmail(),
+                    account.getPhotoUrl().toString());
             // Signed in successfully, show authenticated UI.
             updateUI(account);
         } catch (ApiException e) {
