@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.yaratech.yaratube.ui.OnProductActionListener;
 import com.yaratech.yaratube.ui.productdetails.ProductDetailsFragment;
 import com.yaratech.yaratube.ui.mainpage.categories.CategoriesFragment;
 import com.yaratech.yaratube.ui.productlist.ProductListFragment;
+import com.yaratech.yaratube.ui.profile.ProfileFragment;
 import com.yaratech.yaratube.util.Util;
 
 public class MainActivity extends AppCompatActivity
@@ -98,7 +100,11 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.profile) {
             if (mainPresenter.checkIfUserIsLogedIn()) {
-                //Go to profile.
+                Util.setFragment(R.id.fragment_container,
+                        getSupportFragmentManager(),
+                        ProfileFragment.newInstance(),
+                        "profile_fragment",
+                        true);
             } else {
                 loginDialogContainer = LoginDialogContainer.newInstance();
                 loginDialogContainer.setCancelable(false);
