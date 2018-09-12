@@ -20,4 +20,5 @@
     <string name="login_google_account_text">از طریق حساب google</string>
     <string name="phone_correction">تصحیح شماره</string>
     <string name="sign_out">خروج از سیستم</string>
+    <string name="more">بیشتر</string>
 </resources>

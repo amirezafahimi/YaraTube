@@ -10,5 +10,9 @@
         android:id="@+id/navigation_category"
         android:icon="@drawable/ic_dehaze_black_24dp"
         android:title="@string/categories" />
+    <item
+        android:id="@+id/more"
+        android:icon="@drawable/ic_more_vert_black_24dp"
+        android:title="@string/more"/>
 
 </menu>
