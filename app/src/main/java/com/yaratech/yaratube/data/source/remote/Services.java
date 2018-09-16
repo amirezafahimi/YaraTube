@@ -9,8 +9,10 @@ import com.yaratech.yaratube.data.model.MobileLoginStepOneResponse;
 import com.yaratech.yaratube.data.model.MobileLoginStepTwoResponse;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.model.ProductDetail;
+import com.yaratech.yaratube.data.model.ProfilePostResponse;
 import com.yaratech.yaratube.util.Util;
 
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -79,4 +81,11 @@ public interface Services {
             @Field("device_id") String deviceId,
             @Field("device_os") String device_os,
             @Field("device_model") String device_model);
+
+    @FormUrlEncoded
+    @POST("profile")
+    Call<ProfilePostResponse> sendProfile(@Field("nickname") String nickname,
+                                          @Field("date_of_birth") Date birthDate,
+                                          @Field("gender") String gender,
+                                          @Header("Authorization") String tokenId);
 }

@@ -3,10 +3,16 @@ package com.yaratech.yaratube.ui.profile;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.yaratech.yaratube.R;
 
@@ -14,6 +20,7 @@ import com.yaratech.yaratube.R;
 public class ProfileFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private View submitInfo;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -41,6 +48,20 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        submitInfo = view.findViewById(R.id.save);
+        /*Button cancel = view.findViewById(R.id.);
+        Button logout = view.findViewById(R.id.logout_butt);
+        ImageView profileImage = view.findViewById(R.id.profile_image);
+
+        EditText nickname = view.findViewById(R.id.nickname);
+        EditText name = view.findViewById(R.id.user_name);
+        EditText sex = view.findViewById(R.id.user_sex);
+        TextView birthDate = view.findViewById(R.id.user_birth_date);*/
     }
 
     // TODO: Rename method, update argument and hook method into UI event
