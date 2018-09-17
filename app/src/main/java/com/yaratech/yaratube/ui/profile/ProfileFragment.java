@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 import static android.media.MediaRecorder.VideoSource.CAMERA;
@@ -53,6 +57,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.present
     EditText nickName;
     TextView birthDate;
     private static int PICK_IMAGE = 12;
+    private String imageFilePath = "";
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -151,7 +156,10 @@ public class ProfileFragment extends Fragment implements ProfileContract.present
         if (resultCode == RESULT_OK) {
 
             if (requestCode == CAMERA) {
-                beginCrop(data.getData());
+
+                Glide.with(getContext()).load(Uri.parse(imageFilePath))
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(profileImage);
             }
 
             else if (requestCode == PICK_IMAGE) {
@@ -159,49 +167,37 @@ public class ProfileFragment extends Fragment implements ProfileContract.present
                         .apply(RequestOptions.circleCropTransform())
                         .into(profileImage);
             }
-
-            else if (requestCode == Crop.REQUEST_PICK) {
-                beginCrop(data.getData());
-
-            } else if (requestCode == Crop.REQUEST_CROP) {
-                imagePath = Crop.getOutput(data);
-                Bitmap bitmap = null;
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imagePath);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                destination = new File(Environment.getExternalStorageDirectory(),
-                        System.currentTimeMillis() + ".jpg");
-                FileOutputStream fileOutputStream = null;
-
-                try {
-                    destination.createNewFile();
-                    fileOutputStream = new FileOutputStream(destination);
-                    fileOutputStream.write(byteArrayOutputStream.toByteArray());
-                    fileOutputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Glide.with(getContext()).load(destination).into(profileImage);
-            }
         }
-    }
-
-    private void beginCrop(Uri source) {
-        Uri destination = Uri.fromFile(new File(getContext().getCacheDir(), "cropped"));
-        Crop.of(source, destination).asSquare().start(getContext(), this);
     }
 
 
     public void onCamera() {
-        if (Util.checkCameraPermissions(getContext())) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-            this.startActivityForResult(intent, CAMERA);
-        }
+            Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (pictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                    imageFilePath = photoFile.getAbsolutePath();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+                Uri photoUri = FileProvider.getUriForFile(getContext(), getActivity().getPackageName() +".provider", photoFile);
+                pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(pictureIntent, CAMERA);
+            }
+    }
+
+    private File createImageFile() throws IOException{
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+
+        return image;
     }
 
     public void onGallery() {
