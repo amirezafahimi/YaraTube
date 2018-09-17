@@ -22,13 +22,14 @@ import java.util.List;
 import static android.widget.GridLayout.VERTICAL;
 
 
-public class CategoriesFragment extends Fragment implements CategoriesContract.view, CategoryItemsRecyclerViewAdapter.ItemClickListener{
+public class CategoriesFragment extends Fragment implements CategoriesContract.view, CategoryItemsRecyclerViewAdapter.ItemClickListener {
 
     List<Category> categories;
     CategoriesPresenter categoriesPresenter;
     CategoryItemsRecyclerViewAdapter adapter;
     RecyclerView categoriesRecyclerView;
     ProgressBar progressBar;
+    public static String Catergory_FRAGMENT_TAG = "category_fragment";
 
     public CategoriesFragment() {
         // Required empty public constructor
@@ -91,7 +92,6 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.v
     public void hideProgrssBar() {
         progressBar.setVisibility(View.GONE);
     }
-
 
 
     @Override

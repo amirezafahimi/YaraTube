@@ -26,11 +26,6 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void setUserIsLogedIn(boolean isLogedIn) {
-        repository.setUserIsLogedIn(isLogedIn);
-    }
-
-    @Override
     public void signOutUser(int userId) {
         repository.deleteUserToken(userId);
         repository.setUserIsLogedIn(false);

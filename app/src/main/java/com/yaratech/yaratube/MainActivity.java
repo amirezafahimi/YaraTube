@@ -29,6 +29,7 @@ import com.yaratech.yaratube.data.source.local.utility.DataGenerator;
 import com.yaratech.yaratube.ui.login.LoginDialogContainer;
 import com.yaratech.yaratube.ui.mainpage.MainPageFragment;
 import com.yaratech.yaratube.ui.OnProductActionListener;
+import com.yaratech.yaratube.ui.mainpage.more.MoreFragment;
 import com.yaratech.yaratube.ui.productdetails.ProductDetailsFragment;
 import com.yaratech.yaratube.ui.mainpage.categories.CategoriesFragment;
 import com.yaratech.yaratube.ui.productlist.ProductListFragment;
@@ -39,13 +40,12 @@ public class MainActivity extends AppCompatActivity
         implements MainContract.View,
         NavigationView.OnNavigationItemSelectedListener,
         CategoriesFragment.OnCategoryFragmentActionListener,
+        MoreFragment.OnMoreFragmentInteractionListener,
         OnProductActionListener {
 
 
     /*public static SharedPreferences sharedPreferences;*/
     MainPresenter mainPresenter;
-    LoginDialogContainer loginDialogContainer;
-
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -92,37 +92,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.profile) {
-            if (mainPresenter.checkIfUserIsLogedIn()) {
-                Util.setFragment(R.id.fragment_container,
-                        getSupportFragmentManager(),
-                        ProfileFragment.newInstance(),
-                        "profile_fragment",
-                        true);
-            } else {
-                loginDialogContainer = LoginDialogContainer.newInstance();
-                loginDialogContainer.setCancelable(false);
-                loginDialogContainer.show(getSupportFragmentManager(), "login dialog");
-            }
-        } else if (id == R.id.aboutUs) {
-
-        } else if (id == R.id.callUs) {
-        } else if (id == R.id.sign_out) {
-            mainPresenter.signOutUser(1);
-            DataGenerator.with(AppDatabase.getAppDatabase(this)).deleteUser(1);
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
     ProductListFragment productListFragment;
 
     @Override
@@ -163,4 +132,17 @@ public class MainActivity extends AppCompatActivity
                 true);*/
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public void goToProfile() {
+        Util.setFragment(R.id.fragment_container,
+                getSupportFragmentManager(),
+                ProfileFragment.newInstance(),
+                "profile_fragment",
+                true);
+    }
 }

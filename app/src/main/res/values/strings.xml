@@ -28,4 +28,8 @@
     <string name="name">نام نمایشی</string>
     <string name="gender">جنسیت</string>
     <string name="birthday">تاریخ تولد</string>
+    <string name="dialog_camera">از دوربین موبایل</string>
+    <string name="dialog_open">Open</string>
+    <string name="dialog_gallery">از گالری</string>
+    <string name="dialog_delete">عکسو پاک کن</string>
 </resources>

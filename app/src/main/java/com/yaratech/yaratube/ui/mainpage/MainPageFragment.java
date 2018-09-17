@@ -11,17 +11,22 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.ui.mainpage.categories.CategoriesFragment;
 import com.yaratech.yaratube.ui.mainpage.home.HomeFragment;
+import com.yaratech.yaratube.ui.mainpage.more.MoreFragment;
 
+import static com.yaratech.yaratube.ui.mainpage.categories.CategoriesFragment.Catergory_FRAGMENT_TAG;
 import static com.yaratech.yaratube.ui.mainpage.home.HomeFragment.HOME_FRAGMENT_TAG;
+import static com.yaratech.yaratube.ui.mainpage.more.MoreFragment.More_FRAGMENT_TAG;
 
 public class MainPageFragment extends Fragment {
 
     FragmentManager fragmentManager;
     HomeFragment homeFragment;
+    MoreFragment moreFragment;
     CategoriesFragment categoriesFragment;
 
     public MainPageFragment() {
@@ -47,7 +52,9 @@ public class MainPageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setHomeFragment();
+        previousFragment = getChildFragmentManager()
+                .findFragmentById(R.id.mainPageFragmentContainer);
+        setFragment(homeFragment, HOME_FRAGMENT_TAG);
         final BottomNavigationView bottomNavigationView = view.findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -56,11 +63,15 @@ public class MainPageFragment extends Fragment {
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
                                 item.setChecked(true);
-                                setHomeFragment();
+                                setFragment(homeFragment, HOME_FRAGMENT_TAG);
                                 break;
                             case R.id.navigation_category:
                                 item.setChecked(true);
-                                setCategoryFragment();
+                                setFragment(categoriesFragment, Catergory_FRAGMENT_TAG);
+                                break;
+                            case R.id.navigation_more:
+                                item.setChecked(true);
+                                setFragment(moreFragment, More_FRAGMENT_TAG);
                                 break;
                         }
                         return false;
@@ -68,38 +79,39 @@ public class MainPageFragment extends Fragment {
                 });
     }
 
-    private void setHomeFragment() {
-        if (homeFragment == null) {
-            if (categoriesFragment != null && categoriesFragment.isVisible()) {
-                fragmentManager.beginTransaction().hide(categoriesFragment).commit();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            }
-            homeFragment = HomeFragment.newInstance();
-            fragmentManager = getChildFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.mainPageFragmentContainer, homeFragment).commit();
-            fragmentTransaction.addToBackStack(HOME_FRAGMENT_TAG);
-        } else if (!homeFragment.isVisible()) {
-            fragmentManager.beginTransaction().hide(categoriesFragment).commit();
-            fragmentManager.beginTransaction().show(homeFragment).commit();
-        }
-    }
 
+    Fragment previousFragment;
 
-    private void setCategoryFragment() {
-        if (categoriesFragment == null) {
-            if (homeFragment != null && homeFragment.isVisible()) {
-                fragmentManager.beginTransaction().hide(homeFragment).commit();
+    private void setFragment(Fragment fragment, String tag) {
+        fragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (fragment == null) {
+
+            if (getChildFragmentManager().findFragmentById(R.id.mainPageFragmentContainer) != null
+                    && getChildFragmentManager().findFragmentById(R.id.mainPageFragmentContainer)
+                    .isVisible()) {
+                fragmentManager.beginTransaction().hide(previousFragment).commit();
             }
 
-            categoriesFragment = categoriesFragment.newInstance();
-            fragmentManager = getChildFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.mainPageFragmentContainer, categoriesFragment).commit();
-            fragmentTransaction.addToBackStack("category_fragment");
-        } else if (!categoriesFragment.isVisible()) {
-            fragmentManager.beginTransaction().hide(homeFragment).commit();
-            fragmentManager.beginTransaction().show(categoriesFragment).commit();
+            if (tag == HOME_FRAGMENT_TAG) {
+                homeFragment = HomeFragment.newInstance();
+                fragmentTransaction.add(R.id.mainPageFragmentContainer, homeFragment);
+                previousFragment = homeFragment;
+            } else if (tag == Catergory_FRAGMENT_TAG) {
+                categoriesFragment = CategoriesFragment.newInstance();
+                fragmentTransaction.add(R.id.mainPageFragmentContainer, categoriesFragment);
+                previousFragment = categoriesFragment;
+            } else if (tag == More_FRAGMENT_TAG) {
+                moreFragment = MoreFragment.newInstance();
+                fragmentTransaction.add(R.id.mainPageFragmentContainer, moreFragment);
+                previousFragment = moreFragment;
+            }
+            fragmentTransaction.addToBackStack(tag)
+                    .commit();
+        } else if (!fragment.isVisible()) {
+            fragmentManager.beginTransaction().hide(previousFragment).commit();
+            fragmentTransaction.show(fragment).commit();
+            previousFragment = fragment;
         }
     }
 }
