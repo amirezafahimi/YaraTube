@@ -1,4 +1,25 @@
 package com.yaratech.yaratube.ui.profile;
 
-public class ProfilePresenter implements ProfileContract.presenter {
+import com.yaratech.yaratube.data.source.Repository;
+
+public class ProfilePresenter implements ProfileContract.Presenter {
+    ProfileContract.View profileViewListener;
+    Repository repository;
+
+    public ProfilePresenter(Repository repository, ProfileContract.View profileViewListener) {
+        this.repository = repository;
+        this.profileViewListener = profileViewListener;
+
+    }
+
+    @Override
+    public String getUserToken() {
+        return repository.getUserToken();
+    }
+
+    @Override
+    public void sendProfileData(String authorization, String name, String gender, String birthday) {
+
+    }
+
 }

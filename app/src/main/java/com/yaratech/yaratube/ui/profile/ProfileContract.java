@@ -1,11 +1,15 @@
 package com.yaratech.yaratube.ui.profile;
 
 public interface ProfileContract {
-    interface view{
+    interface View {
 
     }
 
-    interface presenter{
-
+    interface Presenter {
+        String getUserToken();
+        void sendProfileData(String authorization,
+                             String name,
+                             String gender,
+                             String birthday);
     }
 }
