@@ -102,7 +102,7 @@ public class MoreFragment extends Fragment implements MoreContract.View{
                                     mListener.goToProfile();
                                 } else {
                                     loginDialogContainer = LoginDialogContainer.newInstance();
-                                    loginDialogContainer.setCancelable(false);
+                                    /*loginDialogContainer.setCancelable(true);*/
                                     loginDialogContainer.show(getFragmentManager(), "login dialog");
                                 }
                                 break;

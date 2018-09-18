@@ -24,14 +24,7 @@ android:orientation="vertical" >
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/close_login_dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:clickable="true"
-        android:src="@drawable/ic_close_black_24dp"
-        android:padding="4dp"/>
+
 </FrameLayout>
 
 </LinearLayout>

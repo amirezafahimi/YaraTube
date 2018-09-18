@@ -6,6 +6,5 @@ public interface MoreContract {
     }
     interface Presenter{
         boolean checkIfUserIsLogedIn();
-        void signOutUser(int userId);
     }
 }

@@ -8,7 +8,5 @@ public interface MainContract {
     }
     interface Presenter{
         void setDatabaseWithContext(Context context);
-        boolean checkIfUserIsLogedIn();
-        void signOutUser(int userId);
     }
 }

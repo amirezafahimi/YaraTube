@@ -3,6 +3,7 @@ package com.yaratech.yaratube.ui.profile;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.util.Util;
@@ -58,8 +60,12 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     Spinner sex;
     EditText nickName;
     TextView birthDate;
-    private static int PICK_IMAGE = 12;
     private Uri imageFileUri;
+
+    final int CAMERA = 0;
+    final int GALLERY = 1;
+    private static final int CAMERA_PERMISSION = 2;
+    private static final int GALERY_PERMISSION = 3;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -129,13 +135,21 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
                     @Override
                     public void onClick(View view) {
                         mBottomSheetDialog.hide();
-                        onCamera();
+                        if (!Util.checkCameraPermissions(getContext())) {
+                            requestCameraPermission();
+                        } else {
+                            onCamera();
+                        }
                     }
                 });
                 gallery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        onGallery();
+                        if (!Util.checkGalleryPermissions(getContext())) {
+                            requestGalleryPermission();
+                        } else {
+                            onGallery();
+                        }
                         mBottomSheetDialog.hide();
                     }
                 });
@@ -164,23 +178,60 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         if (resultCode == RESULT_OK) {
 
             if (requestCode == CAMERA) {
-                CropImage.activity(imageFileUri)
-                        .start(getActivity(), this);
-            } else if (requestCode == PICK_IMAGE) {
+                CropImage
+                        .activity(imageFileUri)
+                        .setAllowFlipping(true)
+                        .setAllowRotation(true)
+                        .setCropShape(CropImageView.CropShape.RECTANGLE)
+                        .setOutputCompressQuality(50)
+                        .setFixAspectRatio(true)
+                        .start(getContext(), this);
+            } else if (requestCode == GALLERY) {
                 {
                     CropImage.activity(data.getData())
-                            .start(getActivity(), this);
+                            .setAllowFlipping(true)
+                            .setAllowRotation(true)
+                            .setCropShape(CropImageView.CropShape.RECTANGLE)
+                            .setOutputCompressQuality(50)
+                            .setFixAspectRatio(true)
+                            .start(getContext(), this);
                 }
             } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 resultUri = result.getUri();
-                Log.d("123546", "onActivityResult: "+resultUri.getPath());
+                Log.d("123546", "onActivityResult: " + resultUri.getPath());
                 Glide.with(getContext()).load(resultUri)
                         .apply(RequestOptions.circleCropTransform())
                         .into(profileImage);
             }
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case CAMERA_PERMISSION:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    onCamera();
+
+                } else {
+                    Log.e("permission", " denied");
+                }
+                return;
+            case GALERY_PERMISSION:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    onGallery();
+
+                } else {
+                    Log.e("permission", " denied");
+                }
+                return;
+        }
+    }
+
 
     //----------------------------------------------------------------------------------------------
 
@@ -207,6 +258,19 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
             default:
                 return "";
         }
+    }
+
+    private void requestCameraPermission() {
+        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA},
+                CAMERA_PERMISSION);
+    }
+
+
+    private void requestGalleryPermission() {
+        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                GALERY_PERMISSION);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -243,7 +307,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
 
-        startActivityForResult(chooserIntent, PICK_IMAGE);
+        startActivityForResult(chooserIntent, GALLERY);
     }
 
     public void onRemove() {

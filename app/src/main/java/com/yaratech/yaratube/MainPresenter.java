@@ -19,15 +19,4 @@ public class MainPresenter implements MainContract.Presenter {
     public void setDatabaseWithContext(Context context) {
         repository.setDatabase(repository.getDatabaseWithContext(context));
     }
-
-    @Override
-    public boolean checkIfUserIsLogedIn() {
-        return  repository.checkIfUserIsLogedIn();
-    }
-
-    @Override
-    public void signOutUser(int userId) {
-        repository.deleteUserToken(userId);
-        repository.setUserIsLogedIn(false);
-    }
 }

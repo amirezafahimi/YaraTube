@@ -35,7 +35,7 @@ public class LoginDialogContainer
         implements OnLoginDialogActionListener,
         LoginDialogContainerContract.View {
 
-    ImageView close;
+    /*ImageView close;*/
     String phoneNumber;
     private int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
@@ -80,7 +80,9 @@ public class LoginDialogContainer
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        close = view.findViewById(R.id.close_login_dialog);
+        if (getDialog() != null )
+            getDialog().setCanceledOnTouchOutside(false);
+        /*close = view.findViewById(R.id.close_login_dialog);*/
     }
 
     @Override
@@ -92,12 +94,12 @@ public class LoginDialogContainer
     @Override
     public void onResume() {
         super.onResume();
-        close.setOnClickListener(new View.OnClickListener() {
+        /*close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
             }
-        });
+        });*/
     }
 
     //----------------------------------------------------------------------------------------------

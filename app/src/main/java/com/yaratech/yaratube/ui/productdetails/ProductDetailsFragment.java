@@ -127,7 +127,7 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
                     CommentDialogFragment.newInstance(product.getId()).show(fragmentManager, "comment dialog");
                 } else {
                     LoginDialogContainer loginDialogContainer = LoginDialogContainer.newInstance();
-                    loginDialogContainer.setCancelable(false);
+                    /*loginDialogContainer.setCancelable(false);*/
                     loginDialogContainer.show(getChildFragmentManager(), "login dialog");
                 }
             }
@@ -142,7 +142,7 @@ public class ProductDetailsFragment extends Fragment implements ProductDetailsCo
                     startActivity(intent);
                 } else {
                     LoginDialogContainer loginDialogContainer = LoginDialogContainer.newInstance();
-                    loginDialogContainer.setCancelable(false);
+                    /*loginDialogContainer.setCancelable(false);*/
                     loginDialogContainer.show(getChildFragmentManager(), "login dialog");
                 }
             }

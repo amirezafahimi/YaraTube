@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:numStars="5"
         android:layout_marginTop="@dimen/dialog_component_marginTop"
-        android:pointerIcon="@drawable/ic_star_black_24dp"
         android:stepSize="1"/>
 
     <EditText

@@ -11,5 +11,7 @@ public interface ProfileContract {
                              String name,
                              String gender,
                              String birthday);
+
+        void signOutUser(int userId);
     }
 }

@@ -22,4 +22,9 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
     }
 
+    @Override
+    public void signOutUser(int userId) {
+        repository.deleteUserToken(userId);
+        repository.setUserIsLogedIn(false);
+    }
 }

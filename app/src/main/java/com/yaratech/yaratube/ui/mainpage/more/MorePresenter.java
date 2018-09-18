@@ -14,12 +14,6 @@ public class MorePresenter implements MoreContract.Presenter {
 
     @Override
     public boolean checkIfUserIsLogedIn() {
-        return  repository.checkIfUserIsLogedIn();
-    }
-
-    @Override
-    public void signOutUser(int userId) {
-        repository.deleteUserToken(userId);
-        repository.setUserIsLogedIn(false);
+        return repository.checkIfUserIsLogedIn();
     }
 }
