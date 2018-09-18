@@ -3,6 +3,7 @@ package com.yaratech.yaratube.ui.profile;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.soundcloud.android.crop.Crop;
+import com.theartofdev.edmodo.cropper.CropImage;
 import com.yaratech.yaratube.R;
 import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.util.Util;
@@ -58,7 +59,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     EditText nickName;
     TextView birthDate;
     private static int PICK_IMAGE = 12;
-    private String imageFilePath = "";
+    private Uri imageFileUri;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -159,31 +160,40 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Uri resultUri = null;
         if (resultCode == RESULT_OK) {
 
             if (requestCode == CAMERA) {
-                Glide.with(getContext()).load(imageFilePath)
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(profileImage);
+                CropImage.activity(imageFileUri)
+                        .start(getActivity(), this);
             } else if (requestCode == PICK_IMAGE) {
-                Glide.with(getContext()).load(data.getData())
+                {
+                    CropImage.activity(data.getData())
+                            .start(getActivity(), this);
+                }
+            } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                resultUri = result.getUri();
+                Log.d("123546", "onActivityResult: "+resultUri.getPath());
+                Glide.with(getContext()).load(resultUri)
                         .apply(RequestOptions.circleCropTransform())
                         .into(profileImage);
             }
         }
     }
 
-    public void saveProfileDetail(){
+    //----------------------------------------------------------------------------------------------
+
+    public void saveProfileDetail() {
         if (imagePath != null)
 
             // send image
 
-        profilePresenter.sendProfileData(
-                profilePresenter.getUserToken(),
-                nickName.getText().toString(),
-                getSex(sex),
-                birthDate.getText().toString());
+            profilePresenter.sendProfileData(
+                    profilePresenter.getUserToken(),
+                    nickName.getText().toString(),
+                    getSex(sex),
+                    birthDate.getText().toString());
     }
 
     private String getSex(Spinner gender) {
@@ -199,6 +209,8 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         }
     }
 
+    //----------------------------------------------------------------------------------------------
+
     public void onCamera() {
         Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (pictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
@@ -206,26 +218,18 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
-                imageFilePath = photoFile.getAbsolutePath();
+
+                imageFileUri = Uri.fromFile(new File(photoFile.getAbsolutePath()));
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
             }
-            Uri photoUri = FileProvider.getUriForFile(getContext(), getActivity().getPackageName() + ".provider", photoFile);
+            Uri photoUri = FileProvider.getUriForFile(getContext(),
+                    getActivity().getPackageName() + ".provider",
+                    photoFile);
             pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-            Log.d("1235456", "onCamera: "+photoUri.getPath()+"/n"+imageFilePath);
             startActivityForResult(pictureIntent, CAMERA);
         }
-    }
-
-    private File createImageFile() throws IOException {
-
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        String imageFileName = "IMG_" + timeStamp + "_";
-        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-
-        return image;
     }
 
     public void onGallery() {
@@ -244,6 +248,16 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
 
     public void onRemove() {
         profileImage.setImageResource(R.drawable.ic_account_circle_black_24dp);
+    }
+
+    private File createImageFile() throws IOException {
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+
+        return image;
     }
 
     @Override
