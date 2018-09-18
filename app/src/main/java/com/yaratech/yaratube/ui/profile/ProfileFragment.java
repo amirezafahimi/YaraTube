@@ -213,6 +213,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
             }
             Uri photoUri = FileProvider.getUriForFile(getContext(), getActivity().getPackageName() + ".provider", photoFile);
             pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            Log.d("1235456", "onCamera: "+photoUri.getPath()+"/n"+imageFilePath);
             startActivityForResult(pictureIntent, CAMERA);
         }
     }
