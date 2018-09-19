@@ -26,7 +26,7 @@ public class MoreFragment extends Fragment implements MoreContract.View{
 
     private OnMoreFragmentInteractionListener mListener;
     LoginDialogContainer loginDialogContainer;
-    public static String More_FRAGMENT_TAG = "more_fragment";
+    public static String MORE_FRAGMENT_TAG = "more_fragment";
 
     MorePresenter morePresenter;
     ListView listView;

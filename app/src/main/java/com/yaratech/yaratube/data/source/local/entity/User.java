@@ -15,7 +15,7 @@ public class User {
     @ColumnInfo(name = "fino_token")
     private String finoToken;
     @ColumnInfo(name = "nickname")
-    private String nickname;
+    private String nickname="";
     @ColumnInfo(name = "token")
     private String token;
     @ColumnInfo(name = "message")
@@ -23,21 +23,15 @@ public class User {
     @ColumnInfo(name = "‌phone_number")
     private String phoneNember;
     @ColumnInfo(name = "name")
-    private String name;
+    private String name="";
     @ColumnInfo(name = "sex")
-    private String sex;
+    private String sex="";
+    @ColumnInfo(name = "birth_date")
+    private String birhDate;
     @ColumnInfo(name = "email")
     private String email;
     @ColumnInfo(name = "photo_url")
-    private String photoUrl;
-
-    private static User user;
-    public static User userInstance() {
-        if (user == null) {
-            user = new User();
-        }
-        return user;
-    }
+    private String photoUri="";
 
     public int getId() {
         return id;
@@ -103,6 +97,14 @@ public class User {
         this.sex = sex;
     }
 
+    public String getBirhDate() {
+        return birhDate;
+    }
+
+    public void setBirhDate(String birhDate) {
+        this.birhDate = birhDate;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -111,11 +113,11 @@ public class User {
         this.email = email;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
+    public String getPhotoUri() {
+        return photoUri;
     }
 
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
+    public void setPhotoUri(String photoUri) {
+        this.photoUri = photoUri;
     }
 }

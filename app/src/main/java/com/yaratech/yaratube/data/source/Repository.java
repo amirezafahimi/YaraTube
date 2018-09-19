@@ -270,9 +270,12 @@ public class Repository {
         LocalDataSource.setUserIsLogedIn(isLogedIn);
     }
 
-    public void deleteUserToken(int userId) {
-        User user = User.userInstance();
+    public void deleteUserToken(User user) {
         user.setToken(null);
         DataGenerator.putUserData(user);
+    }
+
+    public User getUserFromDB(){
+        return DataGenerator.userInstance();
     }
 }

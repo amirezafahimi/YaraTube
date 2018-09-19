@@ -18,9 +18,9 @@ import com.yaratech.yaratube.ui.mainpage.categories.CategoriesFragment;
 import com.yaratech.yaratube.ui.mainpage.home.HomeFragment;
 import com.yaratech.yaratube.ui.mainpage.more.MoreFragment;
 
-import static com.yaratech.yaratube.ui.mainpage.categories.CategoriesFragment.Catergory_FRAGMENT_TAG;
+import static com.yaratech.yaratube.ui.mainpage.categories.CategoriesFragment.CATEGORY_FRAGMENT_TAG;
 import static com.yaratech.yaratube.ui.mainpage.home.HomeFragment.HOME_FRAGMENT_TAG;
-import static com.yaratech.yaratube.ui.mainpage.more.MoreFragment.More_FRAGMENT_TAG;
+import static com.yaratech.yaratube.ui.mainpage.more.MoreFragment.MORE_FRAGMENT_TAG;
 
 public class MainPageFragment extends Fragment {
 
@@ -67,11 +67,11 @@ public class MainPageFragment extends Fragment {
                                 break;
                             case R.id.navigation_category:
                                 item.setChecked(true);
-                                setFragment(categoriesFragment, Catergory_FRAGMENT_TAG);
+                                setFragment(categoriesFragment, CATEGORY_FRAGMENT_TAG);
                                 break;
                             case R.id.navigation_more:
                                 item.setChecked(true);
-                                setFragment(moreFragment, More_FRAGMENT_TAG);
+                                setFragment(moreFragment, MORE_FRAGMENT_TAG);
                                 break;
                         }
                         return false;
@@ -87,9 +87,8 @@ public class MainPageFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragment == null) {
 
-            if (getChildFragmentManager().findFragmentById(R.id.mainPageFragmentContainer) != null
-                    && getChildFragmentManager().findFragmentById(R.id.mainPageFragmentContainer)
-                    .isVisible()) {
+            if (previousFragment != null
+                    && previousFragment.isVisible()) {
                 fragmentManager.beginTransaction().hide(previousFragment).commit();
             }
 
@@ -97,11 +96,11 @@ public class MainPageFragment extends Fragment {
                 homeFragment = HomeFragment.newInstance();
                 fragmentTransaction.add(R.id.mainPageFragmentContainer, homeFragment);
                 previousFragment = homeFragment;
-            } else if (tag == Catergory_FRAGMENT_TAG) {
+            } else if (tag == CATEGORY_FRAGMENT_TAG) {
                 categoriesFragment = CategoriesFragment.newInstance();
                 fragmentTransaction.add(R.id.mainPageFragmentContainer, categoriesFragment);
                 previousFragment = categoriesFragment;
-            } else if (tag == More_FRAGMENT_TAG) {
+            } else if (tag == MORE_FRAGMENT_TAG) {
                 moreFragment = MoreFragment.newInstance();
                 fragmentTransaction.add(R.id.mainPageFragmentContainer, moreFragment);
                 previousFragment = moreFragment;

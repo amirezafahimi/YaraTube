@@ -20,6 +20,14 @@ public class DataGenerator {
         return instance;
     }
 
+    private static User user;
+    public static User userInstance() {
+        if (user == null) {
+            user = dataBase.DBDao().getUser();
+        }
+        return user;
+    }
+
     public static void deleteUser(int id) {
         dataBase.DBDao().userDelete(id);
     }

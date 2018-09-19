@@ -9,6 +9,7 @@ import com.yaratech.yaratube.data.source.ApiResultCallback;
 import com.yaratech.yaratube.data.source.InsertIntoDatabaseCallback;
 import com.yaratech.yaratube.data.source.Repository;
 import com.yaratech.yaratube.data.source.local.entity.User;
+import com.yaratech.yaratube.data.source.local.utility.DataGenerator;
 
 public class LoginDialogContainerPresenter implements LoginDialogContainerContract.Presenter {
 
@@ -29,17 +30,17 @@ public class LoginDialogContainerPresenter implements LoginDialogContainerContra
                                 String deviceModel,
                                 String name,
                                 String email,
-                                String photoUrl) {
+                                String photoUri) {
         repository.googleLogin(tokenId, deviceId, deviceOs, deviceModel,
                 new ApiResultCallback<GoogleLoginResponse>() {
                     @Override
                     public void onSuccess(GoogleLoginResponse result) {
-                        User user = User.userInstance();
+                        User user = repository.getUserFromDB();
                         user.setId(1);
                         user.setToken(result.getToken());
-                        user.setName(name);
+                        user.setNickname(name);
                         user.setEmail(email);
-                        user.setPhotoUrl(photoUrl);
+                        user.setPhotoUri(photoUri);
                         repository.sendUserDataToDatabase(user,
                                 new InsertIntoDatabaseCallback() {
                                     @Override
@@ -60,7 +61,7 @@ public class LoginDialogContainerPresenter implements LoginDialogContainerContra
 
     @Override
     public void saveUserData(MobileLoginStepTwoResponse step2, String phoneNumber) {
-        User user = User.userInstance();
+        User user = repository.getUserFromDB();
         user.setId(1);
         user.setFinoToken(step2.getFinoToken());
         user.setNickname(step2.getNickname());

@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:numStars="5"
         android:layout_marginTop="@dimen/dialog_component_marginTop"
-        android:stepSize="1"/>
+        android:stepSize="1"
+        android:theme="@style/RatingBar"/>
 
     <EditText
         android:id="@+id/comment_edit_text"

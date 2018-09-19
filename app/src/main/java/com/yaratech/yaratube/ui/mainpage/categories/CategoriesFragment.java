@@ -29,7 +29,7 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.v
     CategoryItemsRecyclerViewAdapter adapter;
     RecyclerView categoriesRecyclerView;
     ProgressBar progressBar;
-    public static String Catergory_FRAGMENT_TAG = "category_fragment";
+    public static String CATEGORY_FRAGMENT_TAG = "category_fragment";
 
     public CategoriesFragment() {
         // Required empty public constructor

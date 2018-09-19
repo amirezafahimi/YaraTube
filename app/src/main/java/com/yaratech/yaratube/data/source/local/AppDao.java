@@ -11,6 +11,9 @@ public interface AppDao {
     @Query("Select user_table.token from user_table where id = 1")
     String getToken();
 
+    @Query("Select * from user_table where id = 1")
+    User getUser();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUsers(User users);
 

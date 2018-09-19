@@ -32,4 +32,6 @@
     <string name="dialog_open">Open</string>
     <string name="dialog_gallery">از گالری</string>
     <string name="dialog_delete">عکسو پاک کن</string>
+    <string name="cancel">انصراف</string>
+    <string name="save_profile_data_button">ثبت تغییرات</string>
 </resources>

@@ -1,6 +1,9 @@
 package com.yaratech.yaratube.ui.profile;
 
 import android.Manifest;
+
+import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,7 +22,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +34,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import com.yaratech.yaratube.R;
@@ -43,24 +50,27 @@ import java.util.Date;
 import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
-import static android.media.MediaRecorder.VideoSource.CAMERA;
-import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
 
 
-public class ProfileFragment extends Fragment implements ProfileContract.View {
+public class ProfileFragment extends Fragment
+        implements DatePickerDialog.OnDateSetListener,
+        ProfileContract.View {
 
     private OnFragmentInteractionListener mListener;
     ProfilePresenter profilePresenter;
 
     Button saveButton;
     Button cancelButton;
+    Button signOutButton;
     ImageView profileImage;
     File destination;
     Uri imagePath;
-    Spinner sex;
+    Spinner sexDropDown;
     EditText nickName;
     TextView birthDate;
-    private Uri imageFileUri;
+    Uri imageFileUri;
+    String birthDateString;
+    String gender;
 
     final int CAMERA = 0;
     final int GALLERY = 1;
@@ -78,14 +88,6 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        getFragmentManager().beginTransaction()
-                .show(getFragmentManager().findFragmentById(R.id.fragment_container)).commit();
     }
 
     @Override
@@ -109,8 +111,12 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         super.onViewCreated(view, savedInstanceState);
         saveButton = view.findViewById(R.id.save);
         cancelButton = view.findViewById(R.id.cancel);
+        signOutButton = view.findViewById(R.id.sign_out);
         profileImage = view.findViewById(R.id.profile_picture);
-        sex = view.findViewById(R.id.gender);
+        sexDropDown = view.findViewById(R.id.gender);
+        String[] items = new String[]{"مرد", "زن"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, items);
+        sexDropDown.setAdapter(adapter);
         nickName = view.findViewById(R.id.nick_name);
         birthDate = view.findViewById(R.id.birth_date);
     }
@@ -118,6 +124,37 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        profilePresenter.readUserDataFromDB();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        sexDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+
+                switch (position) {
+                    case 0:
+                        Log.e("item 1", "onItemSelected: ");
+                        gender = "Female";
+                        break;
+                    case 1:
+                        Log.e("item 2", "onItemSelected: ");
+                        gender = "Male";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+                // no-op
+            }
+        });
+
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,10 +199,33 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
                 });
             }
         });
+
+        birthDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDate();
+            }
+        });
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveProfileDetail();
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().popBackStack();
+            }
+        });
+
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                profilePresenter.signOutUser();
+                getFragmentManager().popBackStack();
             }
         });
     }
@@ -200,9 +260,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 resultUri = result.getUri();
                 Log.d("123546", "onActivityResult: " + resultUri.getPath());
-                Glide.with(getContext()).load(resultUri)
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(profileImage);
+                setProfileImage(resultUri);
             }
         }
     }
@@ -233,6 +291,20 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     }
 
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
     //----------------------------------------------------------------------------------------------
 
     public void saveProfileDetail() {
@@ -241,23 +313,9 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
             // send image
 
             profilePresenter.sendProfileData(
-                    profilePresenter.getUserToken(),
                     nickName.getText().toString(),
-                    getSex(sex),
+                    gender,
                     birthDate.getText().toString());
-    }
-
-    private String getSex(Spinner gender) {
-        switch (gender.getSelectedItemPosition()) {
-            case 0:
-                return "male";
-
-            case 1:
-                return "female";
-
-            default:
-                return "";
-        }
     }
 
     private void requestCameraPermission() {
@@ -271,6 +329,12 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     private void requestGalleryPermission() {
         requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                 GALERY_PERMISSION);
+    }
+
+    void setProfileImage(Uri imageUri){
+        Glide.with(getContext()).load(imageUri)
+                .apply(RequestOptions.circleCropTransform())
+                .into(profileImage);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -314,6 +378,18 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         profileImage.setImageResource(R.drawable.ic_account_circle_black_24dp);
     }
 
+    public void setDate() {
+        PersianCalendar now = new PersianCalendar();
+        DatePickerDialog dpd = DatePickerDialog.newInstance(
+                this,
+                now.getPersianYear(),
+                now.getPersianMonth(),
+                now.getPersianDay()
+        );
+        dpd.setThemeDark(false);
+        dpd.show(getActivity().getFragmentManager(), "tag");
+    }
+
     private File createImageFile() throws IOException {
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
@@ -325,17 +401,37 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        }
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String monthOfYearString;
+        String dayOfMonthString;
+
+        if (monthOfYear < 10)
+            monthOfYearString = "0" + monthOfYear;
+        else
+            monthOfYearString = "" + (monthOfYear + 1);
+
+        if (dayOfMonth < 10)
+            dayOfMonthString = "0" + dayOfMonth;
+        else
+            dayOfMonthString = "" + dayOfMonth
+                    ;
+        birthDateString = year + "-" + monthOfYearString + "-" + dayOfMonthString;
+        birthDate.setText(year + "/" + (monthOfYear + 1) + "/" + dayOfMonth);
+        Log.e("tag", birthDateString);
+
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void fillFroile(String nickName, String gender, String birthDate, String profileImageUri) {
+        this.nickName.setText(nickName);
+        this.birthDate.setText(birthDate);
+        if (gender != null && gender.equals("Female"))
+            sexDropDown.setSelection(0);
+        else if (gender != null && gender.equals("Male"))
+            sexDropDown.setSelection(1);
+        if (profileImageUri != "") {
+            setProfileImage(Uri.parse(profileImageUri));
+        }
     }
 
 
