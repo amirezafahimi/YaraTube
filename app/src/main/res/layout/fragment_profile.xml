@@ -224,10 +224,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
             android:layout_weight="1"
             android:backgroundTint="#3B89D2"
+            android:textSize="12sp"
             android:text="@string/save_profile_data_button"
             android:textColor="@android:color/white" />
 
@@ -236,10 +237,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
+            android:textSize="12sp"
             android:text="@string/cancel"
             android:textColor="@color/colorPrimary" />
 
@@ -248,10 +250,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
+            android:textSize="12sp"
             android:text="@string/sign_out"
             android:textColor="@color/colorPrimary" />
 

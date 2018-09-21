@@ -80,7 +80,7 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.v
 
     @Override
     public void showErrorMessage(String err) {
-        Toast.makeText(getContext(), err, Toast.LENGTH_LONG);
+        Toast.makeText(getContext(), err, Toast.LENGTH_LONG).show();
     }
 
     @Override

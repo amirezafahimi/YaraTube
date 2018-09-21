@@ -2,12 +2,17 @@ package com.yaratech.yaratube.ui.profile;
 
 import android.Manifest;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,12 +30,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -63,7 +68,8 @@ public class ProfileFragment extends Fragment
     Button cancelButton;
     Button signOutButton;
     ImageView profileImage;
-    File destination;
+    File profileImageFile;
+    File originalProfileImageFile;
     Uri imagePath;
     Spinner sexDropDown;
     EditText nickName;
@@ -125,8 +131,10 @@ public class ProfileFragment extends Fragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         profilePresenter.readUserDataFromDB();
+        if (Util.isNetworkAvailable(getContext())) {
+            profilePresenter.getProfileDataFromServer();
+        }
     }
-
 
     @Override
     public void onResume() {
@@ -139,11 +147,11 @@ public class ProfileFragment extends Fragment
                 switch (position) {
                     case 0:
                         Log.e("item 1", "onItemSelected: ");
-                        gender = "Female";
+                        gender = "Male";
                         break;
                     case 1:
                         Log.e("item 2", "onItemSelected: ");
-                        gender = "Male";
+                        gender = "Female";
                         break;
                 }
             }
@@ -193,8 +201,8 @@ public class ProfileFragment extends Fragment
                 delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        onRemove();
-                        mBottomSheetDialog.hide();
+                        /*onRemove();
+                        mBottomSheetDialog.hide();*/
                     }
                 });
             }
@@ -224,6 +232,21 @@ public class ProfileFragment extends Fragment
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .build();
+                // [END configure_signin]
+
+                // [START build_client]
+                // Build a GoogleSignInClient with the options specified by gso.
+                GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gso);
+                mGoogleSignInClient.signOut()
+                        .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                            }
+                        });
                 profilePresenter.signOutUser();
                 getFragmentManager().popBackStack();
             }
@@ -258,9 +281,40 @@ public class ProfileFragment extends Fragment
                 }
             } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                resultUri = result.getUri();
-                Log.d("123546", "onActivityResult: " + resultUri.getPath());
-                setProfileImage(resultUri);
+
+
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(
+                            getContext().getContentResolver(),
+                            result.getUri());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+                FileOutputStream fileOutputStream = null;
+
+                try {
+                    profileImageFile = originalProfileImageFile;
+                    profileImageFile.createNewFile();
+                    fileOutputStream = new FileOutputStream(profileImageFile);
+                    fileOutputStream.write(byteArrayOutputStream.toByteArray());
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                // because file name is always same
+                RequestOptions requestOptions = new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true);
+
+                if (profileImageFile != null) {
+                    profilePresenter.sendProfieImageToServer(profileImageFile);
+                } else {
+                    setProfileImage(null);
+                }
             }
         }
     }
@@ -308,14 +362,13 @@ public class ProfileFragment extends Fragment
     //----------------------------------------------------------------------------------------------
 
     public void saveProfileDetail() {
-        if (imagePath != null)
-
-            // send image
-
-            profilePresenter.sendProfileData(
-                    nickName.getText().toString(),
-                    gender,
-                    birthDate.getText().toString());
+        profilePresenter.sendProfileDataToServer(
+                nickName.getText().toString(),
+                gender,
+                birthDateString,
+                Util.getDeviceId(getContext()),
+                Util.getDeviceModel(),
+                Util.getDeviceOS());
     }
 
     private void requestCameraPermission() {
@@ -331,36 +384,35 @@ public class ProfileFragment extends Fragment
                 GALERY_PERMISSION);
     }
 
-    void setProfileImage(Uri imageUri){
-        Glide.with(getContext()).load(imageUri)
-                .apply(RequestOptions.circleCropTransform())
-                .into(profileImage);
-    }
-
     //----------------------------------------------------------------------------------------------
 
     public void onCamera() {
         Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (pictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
 
-            File photoFile = null;
             try {
-                photoFile = createImageFile();
-
-                imageFileUri = Uri.fromFile(new File(photoFile.getAbsolutePath()));
+                originalProfileImageFile = createImageFile();
+                imageFileUri = Uri.fromFile(new File(originalProfileImageFile.getAbsolutePath()));
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
             }
             Uri photoUri = FileProvider.getUriForFile(getContext(),
                     getActivity().getPackageName() + ".provider",
-                    photoFile);
+                    originalProfileImageFile);
             pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             startActivityForResult(pictureIntent, CAMERA);
         }
     }
 
     public void onGallery() {
+
+        try {
+            originalProfileImageFile = createImageFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
 
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
         getIntent.setType("image/*");
@@ -376,6 +428,9 @@ public class ProfileFragment extends Fragment
 
     public void onRemove() {
         profileImage.setImageResource(R.drawable.ic_account_circle_black_24dp);
+        /*profilePresenter.sendProfileImageToDB("");*/
+        profilePresenter.sendProfieImageToServer(null);
+        profileImageFile = null;
     }
 
     public void setDate() {
@@ -422,18 +477,35 @@ public class ProfileFragment extends Fragment
     }
 
     @Override
-    public void fillFroile(String nickName, String gender, String birthDate, String profileImageUri) {
-        this.nickName.setText(nickName);
-        this.birthDate.setText(birthDate);
-        if (gender != null && gender.equals("Female"))
-            sexDropDown.setSelection(0);
-        else if (gender != null && gender.equals("Male"))
-            sexDropDown.setSelection(1);
-        if (profileImageUri != "") {
-            setProfileImage(Uri.parse(profileImageUri));
-        }
+    public void showMessege(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void fillFroile(String nickName, String gender, String birthDate) {
+        if (nickName != "")
+            this.nickName.setText(nickName);
+        this.birthDate.setText(birthDate);
+        if (gender != null && gender.equals("Female"))
+            sexDropDown.setSelection(1);
+        else if (gender != null && gender.equals("Male"))
+            sexDropDown.setSelection(0);
+    }
+
+    @Override
+    public void setProfileImage(Uri imageUri) {
+        if (getActivity() == null) {
+            return;
+        }
+        if (imageUri != null) {
+            Glide.with(getContext()).load(imageUri)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(profileImage);
+            profileImageFile = null;
+        } else {
+            profileImageFile = null;
+        }
+    }
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

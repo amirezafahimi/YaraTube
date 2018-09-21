@@ -1,7 +1,11 @@
 package com.yaratech.yaratube.ui.login;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -12,6 +16,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -29,6 +38,15 @@ import com.yaratech.yaratube.ui.login.logintype.SelectLoginTypeFragment;
 import com.yaratech.yaratube.ui.login.logintype.loginwithphone.loginvarification.VarificationFragment;
 import com.yaratech.yaratube.ui.login.logintype.loginwithphone.loginsendphonenumber.LoginSendPhoneNumberFragment;
 import com.yaratech.yaratube.util.Util;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class LoginDialogContainer
         extends DialogFragment
@@ -80,7 +98,7 @@ public class LoginDialogContainer
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (getDialog() != null )
+        if (getDialog() != null)
             getDialog().setCanceledOnTouchOutside(false);
         /*close = view.findViewById(R.id.close_login_dialog);*/
     }
@@ -181,6 +199,7 @@ public class LoginDialogContainer
             handleSignInResult(task);
         }
     }
+
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {

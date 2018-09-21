@@ -127,7 +127,6 @@ public class MoreFragment extends Fragment implements MoreContract.View{
     }
 
     public interface OnMoreFragmentInteractionListener {
-        // TODO: Update argument type and name
         void goToProfile();
     }
 }

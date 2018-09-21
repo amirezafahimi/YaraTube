@@ -21,9 +21,14 @@ public class DataGenerator {
     }
 
     private static User user;
+
     public static User userInstance() {
         if (user == null) {
-            user = dataBase.DBDao().getUser();
+            if (dataBase.DBDao().loadAllUsers().length == 0) {
+                user = new User();
+            } else {
+                user = dataBase.DBDao().loadAllUsers()[0];
+            }
         }
         return user;
     }

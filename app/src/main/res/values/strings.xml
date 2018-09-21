@@ -23,7 +23,7 @@
     <string name="login_with_phone_number_text">از طریق شماره موبایل</string>
     <string name="login_google_account_text">از طریق حساب google</string>
     <string name="phone_correction">تصحیح شماره</string>
-    <string name="sign_out">خروج از سیستم</string>
+    <string name="sign_out">خروج</string>
     <string name="more">بیشتر</string>
     <string name="name">نام نمایشی</string>
     <string name="gender">جنسیت</string>
@@ -32,6 +32,6 @@
     <string name="dialog_open">Open</string>
     <string name="dialog_gallery">از گالری</string>
     <string name="dialog_delete">عکسو پاک کن</string>
-    <string name="cancel">انصراف</string>
+    <string name="cancel">لغو تغییرات</string>
     <string name="save_profile_data_button">ثبت تغییرات</string>
 </resources>

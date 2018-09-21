@@ -131,10 +131,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void goToProfile() {
-        Util.setFragment(R.id.fragment_container,
-                getSupportFragmentManager(),
-                ProfileFragment.newInstance(),
-                "profile_fragment",
-                true);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .hide(getSupportFragmentManager().findFragmentById(R.id.fragment_container))
+                .add(R.id.fragment_container, ProfileFragment.newInstance(),"profile_fragment")
+                .addToBackStack("profile_fragment")
+                .commit();
     }
 }

@@ -1,26 +1,33 @@
 package com.yaratech.yaratube.data.source.remote;
 
+import android.support.annotation.Nullable;
+
 import com.yaratech.yaratube.data.model.Category;
 import com.yaratech.yaratube.data.model.Comment;
 import com.yaratech.yaratube.data.model.CommentResponse;
+import java.io.File;
 import com.yaratech.yaratube.data.model.GoogleLoginResponse;
 import com.yaratech.yaratube.data.model.Home;
 import com.yaratech.yaratube.data.model.MobileLoginStepOneResponse;
 import com.yaratech.yaratube.data.model.MobileLoginStepTwoResponse;
 import com.yaratech.yaratube.data.model.Product;
 import com.yaratech.yaratube.data.model.ProductDetail;
+import com.yaratech.yaratube.data.model.ProfileGetResponse;
 import com.yaratech.yaratube.data.model.ProfilePostResponse;
 import com.yaratech.yaratube.util.Util;
 
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -85,7 +92,24 @@ public interface Services {
     @FormUrlEncoded
     @POST("profile")
     Call<ProfilePostResponse> sendProfile(@Field("nickname") String nickname,
-                                          @Field("date_of_birth") Date birthDate,
                                           @Field("gender") String gender,
+                                          @Field("date_of_birth") String birthDate,
+                                          @Field("device_id") String deviceId,
+                                          @Field("device_model") String deviceModel,
+                                          @Field("device_os") String deviceOs,
                                           @Header("Authorization") String tokenId);
+
+    @Multipart
+    @POST("profile")
+    Call<ProfilePostResponse> sendProfileImage(@Nullable @Part MultipartBody.Part image,
+                                               @Header("Authorization") String tokenId);
+
+
+    @FormUrlEncoded
+    @POST("profile")
+    Call<ProfilePostResponse> sendProfileImage(@Field("avatar") File imageFile,
+                                          @Header("Authorization") String tokenId);
+
+    @GET("profile")
+    Call<ProfileGetResponse> getProfile(@Header("Authorization") String tokenId);
 }

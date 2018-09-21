@@ -35,7 +35,7 @@ public class LoginDialogContainerPresenter implements LoginDialogContainerContra
                 new ApiResultCallback<GoogleLoginResponse>() {
                     @Override
                     public void onSuccess(GoogleLoginResponse result) {
-                        User user = repository.getUserFromDB();
+                        User user = new User();
                         user.setId(1);
                         user.setToken(result.getToken());
                         user.setNickname(name);
@@ -61,7 +61,7 @@ public class LoginDialogContainerPresenter implements LoginDialogContainerContra
 
     @Override
     public void saveUserData(MobileLoginStepTwoResponse step2, String phoneNumber) {
-        User user = repository.getUserFromDB();
+        User user = new User();
         user.setId(1);
         user.setFinoToken(step2.getFinoToken());
         user.setNickname(step2.getNickname());

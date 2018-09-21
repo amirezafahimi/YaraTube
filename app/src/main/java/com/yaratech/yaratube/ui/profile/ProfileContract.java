@@ -1,27 +1,39 @@
 package com.yaratech.yaratube.ui.profile;
 
 import android.net.Uri;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
+import com.yaratech.yaratube.data.model.Data;
 import com.yaratech.yaratube.data.source.local.entity.User;
+
+import java.io.File;
 
 public interface ProfileContract {
     interface View {
-        void fillFroile(String name, String gender, String birthDate,
-                   String profileImageUri);
+        void showMessege(String msg);
+
+        void fillFroile(String name, String gender, String birthDate);
+
+        void setProfileImage(Uri imageUri);
     }
 
     interface Presenter {
-        void getProfileData(String authorization);
+
         void readUserDataFromDB();
-        String getUserToken();
-        void sendProfieImage();
-        void sendProfileData(String name,
-                             String gender,
-                             String birthday);
+
+        void getProfileDataFromServer();
+
+        void sendProfileDataToServer(String name,
+                                     String gender,
+                                     String birthdate,
+                                     String deviceId,
+                                     String deviceModel,
+                                     String deviceOs);
+
+        void sendProfieImageToServer(File imageFile);
+
+        void sendProfileDetailToDB(Data data);
+
+        void sendProfileImageToDB(String imageFileAvatar);
 
         void signOutUser();
     }

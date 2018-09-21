@@ -6,13 +6,15 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import com.yaratech.yaratube.data.source.local.entity.User;
 
+import java.util.List;
+
 @Dao
 public interface AppDao {
     @Query("Select user_table.token from user_table where id = 1")
     String getToken();
 
-    @Query("Select * from user_table where id = 1")
-    User getUser();
+    @Query("Select * from user_table")
+    public User[] loadAllUsers();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUsers(User users);

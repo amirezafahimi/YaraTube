@@ -13,23 +13,23 @@ public class User {
     private int id;
 
     @ColumnInfo(name = "fino_token")
-    private String finoToken;
+    private String finoToken="";
     @ColumnInfo(name = "nickname")
     private String nickname="";
     @ColumnInfo(name = "token")
     private String token;
     @ColumnInfo(name = "message")
-    private String message;
+    private String message="";
     @ColumnInfo(name = "‌phone_number")
-    private String phoneNember;
+    private String phoneNember="";
     @ColumnInfo(name = "name")
     private String name="";
     @ColumnInfo(name = "sex")
     private String sex="";
     @ColumnInfo(name = "birth_date")
-    private String birhDate;
+    private String birhDate="";
     @ColumnInfo(name = "email")
-    private String email;
+    private String email="";
     @ColumnInfo(name = "photo_url")
     private String photoUri="";
 

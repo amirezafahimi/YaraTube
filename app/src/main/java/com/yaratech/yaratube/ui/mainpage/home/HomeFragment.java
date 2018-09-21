@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void showErrorMessage(String err) {
-        Toast.makeText(getContext(), err, Toast.LENGTH_LONG);
+        Toast.makeText(getContext(), err, Toast.LENGTH_LONG).show();
     }
 
     @Override

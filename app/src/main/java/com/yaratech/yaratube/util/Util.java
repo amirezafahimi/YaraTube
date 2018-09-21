@@ -48,6 +48,12 @@ public class Util {
         }
     }
 
+    public static boolean isNetworkAvailable(Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        assert connectivityManager != null;
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
     @SuppressLint("HardwareIds")
     public static String getDeviceId(Context context) {
         return Settings.Secure.getString(context.getContentResolver(),
